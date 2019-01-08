@@ -1,0 +1,25 @@
+﻿using System.Threading.Tasks;
+using NUnit.Framework;
+using Orleans.Security.IntegrationTests.Extensions;
+
+namespace Orleans.Security.IntegrationTests
+{
+    [SetUpFixture]
+    public class SetUpClass
+    {
+        [OneTimeSetUp]
+        public async Task RunBeforeAnyTests()
+        {
+            // Start test cluster.
+            await TestClusterBuilder.StartSilo();
+
+            // Start test client.
+            await TestClientBuilder.StartClient();
+        }
+
+        [OneTimeTearDown]
+        public void RunAfterAnyTests()
+        {
+        }
+    }
+}
