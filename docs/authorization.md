@@ -1,4 +1,4 @@
-# Microsoft Orleans Security system
+# Microsoft Orleans Security
 
 ## Authorization
 
