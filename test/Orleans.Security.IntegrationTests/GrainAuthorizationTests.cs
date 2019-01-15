@@ -7,7 +7,7 @@ namespace Orleans.Security.IntegrationTests
 {
     [Author("Karen Tazayan"), Category("IntegrationTest")]
     [SingleThreaded, TestFixture]
-    public class GrainCallAuthorizationTests
+    public class GrainAuthorizationTests
     {
         [Description(@"User or Client must have all the roles specified.")]
         [Test]
