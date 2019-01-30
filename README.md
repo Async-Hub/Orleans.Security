@@ -1,3 +1,3 @@
 # Authorization library for Microsoft Orleans 2.0
 
-Authorization functionality provided by this library for Microsoft Orleans is mainly the same ASP.NET Core 2.x authorization. Please [see documentation](http://orlsec.asynchub.org/) for additional info.
+The set of security packages for Microsoft Orleans 2.0 provide the ability to use the same authorization functionality which is used in ASP.NET Core 2.0. It allows sharing SSO (Single Sign-On) server like IdentityServer4 with Orleans grain and any ASP.NET Core 2.2 application. Please [see documentation](http://orlsec.asynchub.org/) for additional info.
