@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+
+<html lang="en-us">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge">
+
+  <title>Simple authorization - Microsoft Orleans Security</title>
+  <link rel="stylesheet" href="https://orlsec.asynchub.org/assets/css/just-the-docs.css">
+  
+  <script type="text/javascript" src="https://orlsec.asynchub.org/assets/js/vendor/lunr.min.js"></script>
+  
+  <script type="text/javascript" src="https://orlsec.asynchub.org/assets/js/just-the-docs.js"></script>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+
+
+  <div class="page-wrap">
+    <div class="side-bar">
+      <a href="https://orlsec.asynchub.org" class="site-title fs-6 lh-tight">Microsoft Orleans Security</a>
+      <span class="fs-3"><button class="js-main-nav-trigger navigation-list-toggle btn btn-outline" type="button" data-text-toggle="Hide">Menu</button></span>
+      <div class="navigation main-nav js-main-nav">
+        <nav>
+  <ul class="navigation-list">
+    
+    
+      
+        
+          <li class="navigation-list-item">
+            
+            <a href="https://orlsec.asynchub.org/" class="navigation-list-link">Home</a>
+            
+          </li>
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+      
+    
+      
+        
+          <li class="navigation-list-item active">
+            
+            <a href="https://orlsec.asynchub.org/docs/authorization" class="navigation-list-link">Authorization</a>
+            
+              
+              <ul class="navigation-list-child-list ">
+                
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://orlsec.asynchub.org/docs/authorization/overview" class="navigation-list-link">Overview</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item  active">
+                      
+                      <a href="https://orlsec.asynchub.org/docs/authorization/simple-authorization" class="navigation-list-link active">Simple authorization</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://orlsec.asynchub.org/docs/authorization/role-based-authorization" class="navigation-list-link">Role-based authorization</a>
+                      
+                    </li>
+                  
+                
+                  
+                    <li class="navigation-list-item ">
+                      
+                      <a href="https://orlsec.asynchub.org/docs/authorization/policy-based-authorization" class="navigation-list-link">Policy-based authorization</a>
+                      
+                    </li>
+                  
+                
+                  
+                
+              </ul>
+            
+          </li>
+        
+      
+    
+  </ul>
+</nav>
+
+      </div>
+      <footer role="contentinfo" class="site-footer">
+        <!--<p class="text-small text-grey-dk-000 mb-0">This site uses <a href="https://github.com/pmarsceill/just-the-docs">Just the Docs</a>, a documentation theme for Jekyll.</p>-->
+      </footer>
+    </div>
+    <div class="main-content-wrap">
+      <div class="page-header">
+        <div class="main-content">
+          
+          <div class="search js-search">
+            <div class="search-input-wrap">
+              <input type="text" class="js-search-input search-input" placeholder="Search Microsoft Orleans Security" aria-label="Search Microsoft Orleans Security" autocomplete="off">
+              <svg width="14" height="14" viewBox="0 0 28 28" xmlns="http://www.w3.org/2000/svg" class="search-icon"><title>Search</title><g fill-rule="nonzero"><path d="M17.332 20.735c-5.537 0-10-4.6-10-10.247 0-5.646 4.463-10.247 10-10.247 5.536 0 10 4.601 10 10.247s-4.464 10.247-10 10.247zm0-4c3.3 0 6-2.783 6-6.247 0-3.463-2.7-6.247-6-6.247s-6 2.784-6 6.247c0 3.464 2.7 6.247 6 6.247z"/><path d="M11.672 13.791L.192 25.271 3.02 28.1 14.5 16.62z"/></g></svg>
+            </div>
+            <div class="js-search-results search-results-wrap"></div>
+          </div>
+          
+          
+            <ul class="list-style-none text-small mt-md-1 mb-md-1 pb-4 pb-md-0 js-aux-nav aux-nav">
+              
+                <li class="d-inline-block my-0"><a href="//github.com/Async-Hub/Orleans.Security">Microsoft Orleans Security on GitHub</a></li>
+              
+            </ul>
+          
+        </div>
+      </div>
+      <div class="main-content">
+        
+          
+            <nav class="breadcrumb-nav">
+              <ol class="breadcrumb-nav-list">
+                
+                  <li class="breadcrumb-nav-list-item"><a href="https://orlsec.asynchub.org/docs/authorization">Authorization</a></li>
+                
+                <li class="breadcrumb-nav-list-item"><span>Simple authorization</span></li>
+              </ol>
+            </nav>
+          
+        
+        <div class="page-content">
+          <h1 id="simple-authorization-in-ms-orleans-cluster">Simple authorization in MS Orleans cluster</h1>
+
+<p>Authorization in Orleans is controlled through the <strong><code class="highlighter-rouge">AuthorizeAttribute</code></strong> attribute and its various parameters. At its simplest, applying the <strong><code class="highlighter-rouge">AuthorizeAttribute</code></strong> attribute to a <strong>Grain Interface</strong> or <strong>Grain Interface Method</strong> limits access to the grain or method to any authenticated user.</p>
+
+<p>For example, the following code limits access to the <strong><code class="highlighter-rouge">UserGrain</code></strong> to any authenticated user.</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">[Authorize]</span>
+<span class="k">public</span> <span class="k">interface</span> <span class="nc">IUserGrain</span> <span class="p">:</span> <span class="n">IGrainWithStringKey</span>
+<span class="p">{</span>
+    <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">DoSomething</span><span class="p">();</span>
+
+    <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">DoSomethingElse</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>If you want to apply authorization to a method rather than the grain, apply the <strong><code class="highlighter-rouge">AuthorizeAttribute</code></strong> attribute to the method itself:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">public</span> <span class="k">interface</span> <span class="nc">IUserGrain</span> <span class="p">:</span> <span class="n">IGrainWithStringKey</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">Authorize</span><span class="p">]</span>
+    <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">DoSomething</span><span class="p">();</span>
+
+    <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">DoSomethingElse</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>Now only authenticated users can access the <strong><code class="highlighter-rouge">DoSomething</code></strong> method and everyone can access <strong><code class="highlighter-rouge">DoSomethingElse</code></strong> method.</p>
+
+<p>You can also use the <strong><code class="highlighter-rouge">AllowAnonymous</code></strong> attribute to allow access by non-authenticated users to individual actions. For example:</p>
+
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="na">[Authorize]</span>
+<span class="k">public</span> <span class="k">interface</span> <span class="nc">IUserGrain</span> <span class="p">:</span> <span class="n">IGrainWithStringKey</span>
+<span class="p">{</span>
+    <span class="p">[</span><span class="n">AllowAnonymous</span><span class="p">]</span>
+    <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">DoSomething</span><span class="p">();</span>
+
+    <span class="n">Task</span><span class="p">&lt;</span><span class="kt">string</span><span class="p">&gt;</span> <span class="nf">DoSomethingElse</span><span class="p">();</span>
+<span class="p">}</span>
+</code></pre></div></div>
+
+<p>This would allow only authenticated users to the <strong><code class="highlighter-rouge">UserGrain</code></strong>, except for the <strong><code class="highlighter-rouge">DoSomething</code></strong> method, which is accessible by everyone, regardless of their authenticated or unauthenticated / anonymous status.</p>
+
+<h2 id="warning">Warning</h2>
+
+<p><strong><code class="highlighter-rouge">[AllowAnonymous]</code> bypasses all authorization statements. If you combine <code class="highlighter-rouge">[AllowAnonymous]</code> and any <code class="highlighter-rouge">[Authorize]</code> attribute, the <code class="highlighter-rouge">[Authorize]</code> attributes are ignored. For example if you apply <code class="highlighter-rouge">[AllowAnonymous]</code> at the grain level, any <code class="highlighter-rouge">[Authorize]</code> attributes on the same grain (or on any method within it) is ignored.</strong></p>
+
+
+          
+        </div>
+      </div>
+    </div>
+  </div>
+</html>
