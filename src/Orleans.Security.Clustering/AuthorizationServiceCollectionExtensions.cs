@@ -2,7 +2,7 @@
 using Microsoft.Extensions.DependencyInjection;
 using Orleans.Security.Authorization;
 
-namespace Orleans.Security.ClusterClient
+namespace Orleans.Security.Clustering
 {
     public static class OrleansClusterSecurityServiceCollectionExtensions
     {
@@ -24,7 +24,6 @@ namespace Orleans.Security.ClusterClient
             services.AddOrleansClusterSecurityServices(configureServices);
         }
 
-        // For the production usage.
         public static void AddOrleansClusterAuthorization(this IServiceCollection services,
             Action<AuthorizationOptions> configure)
         {
@@ -50,7 +49,7 @@ namespace Orleans.Security.ClusterClient
 
             services.AddAuthorization(configure);
             services.AddOrleansClusterSecurityServices();
-            services.AddSingleton<IOutgoingGrainCallFilter, OutgoingGrainCallAuthorizationFilter>();
+            services.AddSingleton<IIncomingGrainCallFilter, IncomingGrainCallAuthorizationFilter>();
         }
     }
 }

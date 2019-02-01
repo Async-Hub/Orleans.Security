@@ -1,7 +1,7 @@
 ﻿using System;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
-using Orleans.Security.ClusterClient;
+using Orleans.Security.Client;
 
 namespace Api.Orleans
 {

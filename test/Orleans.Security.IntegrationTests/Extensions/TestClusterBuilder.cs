@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Orleans.Configuration;
 using Orleans.Hosting;
-using Orleans.Security.Cluster;
+using Orleans.Security.Clustering;
 
 namespace Orleans.Security.IntegrationTests.Extensions
 {

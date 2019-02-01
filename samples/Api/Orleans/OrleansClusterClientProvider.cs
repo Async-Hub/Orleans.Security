@@ -8,7 +8,7 @@ using Orleans;
 using Orleans.Configuration;
 using Orleans.Runtime;
 using Orleans.Security;
-using Orleans.Security.ClusterClient;
+using Orleans.Security.Client;
 
 namespace Api.Orleans
 {

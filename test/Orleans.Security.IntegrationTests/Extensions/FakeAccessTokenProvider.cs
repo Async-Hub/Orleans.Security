@@ -1,4 +1,4 @@
-﻿using Orleans.Security.ClusterClient;
+﻿using Orleans.Security.Client;
 
 namespace Orleans.Security.IntegrationTests.Extensions
 {

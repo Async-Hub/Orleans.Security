@@ -4,7 +4,7 @@ using Orleans.Runtime;
 using Orleans.Security.AccessToken;
 using Orleans.Security.Authorization;
 
-namespace Orleans.Security.ClusterClient
+namespace Orleans.Security.Client
 {
     internal class OutgoingGrainCallAuthorizationFilter : GrainAuthorizationFilterBase, IOutgoingGrainCallFilter
     {

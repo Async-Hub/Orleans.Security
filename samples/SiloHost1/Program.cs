@@ -7,7 +7,7 @@ using Microsoft.Extensions.Logging;
 using Orleans;
 using Orleans.Configuration;
 using Orleans.Hosting;
-using Orleans.Security.Cluster;
+using Orleans.Security.Clustering;
 
 namespace SiloHost1
 {

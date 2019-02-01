@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Orleans.Security.Cluster\Orleans.Security.Cluster.csproj" />
+    <ProjectReference Include="..\..\src\Orleans.Security.Clustering\Orleans.Security.Clustering.csproj" />
     <ProjectReference Include="..\Grains\Grains.csproj" />
   </ItemGroup>
 

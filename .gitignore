@@ -26,10 +26,10 @@
 /samples/WebClient/obj
 /src/Orleans.Security.Authorization/bin
 /src/Orleans.Security.Authorization/obj
-/src/Orleans.Security.Cluster/bin
-/src/Orleans.Security.Cluster/obj
-/src/Orleans.Security.ClusterClient/bin
-/src/Orleans.Security.ClusterClient/obj
+/src/Orleans.Security.Clustering/bin
+/src/Orleans.Security.Clustering/obj
+/src/Orleans.Security.Client/bin
+/src/Orleans.Security.Client/obj
 /src/Orleans.Security.Core/bin
 /src/Orleans.Security.Core/obj
 /src/Orleans.Security/bin

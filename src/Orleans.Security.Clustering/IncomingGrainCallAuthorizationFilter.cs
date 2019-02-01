@@ -4,7 +4,7 @@ using Orleans.Runtime;
 using Orleans.Security.AccessToken;
 using Orleans.Security.Authorization;
 
-namespace Orleans.Security.Cluster
+namespace Orleans.Security.Clustering
 {
     // ReSharper disable once ClassNeverInstantiated.Global
     internal class IncomingGrainCallAuthorizationFilter : GrainAuthorizationFilterBase, IIncomingGrainCallFilter
