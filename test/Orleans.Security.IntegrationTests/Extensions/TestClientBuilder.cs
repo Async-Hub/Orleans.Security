@@ -11,13 +11,12 @@ namespace Orleans.Security.IntegrationTests.Extensions
 
         internal static async Task StartClient()
         {
-            var client = ClientBuilderExtensions.ConfigureServices(new ClientBuilder()
-                    .AddOutgoingGrainCallFilter<OutgoingGrainCallAuthorizationFilter>()
-                    .Configure<ClusterOptions>(options =>
-                    {
-                        options.ClusterId = TestClusterOptions.ClusterId;
-                        options.ServiceId = TestClusterOptions.ServiceId;
-                    }), services =>
+            var client = new ClientBuilder()
+                .Configure<ClusterOptions>(options =>
+                {
+                    options.ClusterId = TestClusterOptions.ClusterId;
+                    options.ServiceId = TestClusterOptions.ServiceId;
+                }).ConfigureServices(services =>
                 {
                     services.AddOrleansClusterAuthorization(AuthorizationTestConfig.ConfigureOptions,
                         AuthorizationTestConfig.ConfigureServices);

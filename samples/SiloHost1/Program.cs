@@ -2,6 +2,7 @@
 using System.Net;
 using System.Threading.Tasks;
 using Grains;
+using GrainsInterfaces;
 using Microsoft.Extensions.Logging;
 using Orleans;
 using Orleans.Configuration;
@@ -43,8 +44,12 @@ namespace SiloHost1
                 })
                 // Configure connectivity
                 .Configure<EndpointOptions>(options => options.AdvertisedIPAddress = IPAddress.Loopback)
-                .ConfigureApplicationParts(parts => parts.AddApplicationPart(typeof(UserGrain).Assembly).WithReferences())
-                .AddIncomingGrainCallFilter<IncomingGrainCallAuthorizationFilter>()
+                .ConfigureApplicationParts(parts =>
+                    parts.AddApplicationPart(typeof(UserGrain).Assembly).WithReferences())
+                .ConfigureServices(services =>
+                {
+                    services.AddOrleansClusterAuthorization(AuthorizationConfig.ConfigureOptions);
+                })
                 // Configure logging with any logging framework that supports Microsoft.Extensions.Logging.
                 // In this particular case it logs using the Microsoft.Extensions.Logging.Console package.
                 .ConfigureLogging(logging => logging.AddConsole());

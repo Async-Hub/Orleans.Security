@@ -7,17 +7,22 @@ using Orleans.Security.AccessToken.Jwt;
 
 namespace Orleans.Security.AccessToken
 {
-    // ReSharper disable once ClassNeverInstantiated.Global
-    public class AccessTokenValidator : IAccessTokenValidator
+    public class AccessTokenVerifierOptions
     {
-        private readonly ILogger<AccessTokenValidator> _logger;
+        public bool InMemoryCacheEnabled { get; set; }
+    }
 
-        public AccessTokenValidator(ILoggerFactory loggerFactory)
+    // ReSharper disable once ClassNeverInstantiated.Global
+    public class AccessTokenVerifier : IAccessTokenVerifier
+    {
+        private readonly ILogger<AccessTokenVerifier> _logger;
+
+        public AccessTokenVerifier(ILoggerFactory loggerFactory)
         {
-            _logger = loggerFactory.CreateLogger<AccessTokenValidator>();
+            _logger = loggerFactory.CreateLogger<AccessTokenVerifier>();
         }
 
-        public async Task<AccessTokenValidationResult> Validate(string accessToken, 
+        public async Task<AccessTokenVerificationResult> Verify(string accessToken, 
             OAuth2EndpointInfo oAuth2EndpointInfo)
         {
             //TODO: Implement caching functionality to improve performance.
@@ -69,7 +74,7 @@ namespace Orleans.Security.AccessToken
             // ReSharper disable once InvertIf
             if (!response.IsError)
             {
-                return AccessTokenValidationResult.CreateSuccess(accessTokenType, response.Claims);
+                return AccessTokenVerificationResult.CreateSuccess(accessTokenType, response.Claims);
             }
 
             var nameOfTokenType = accessTokenType == AccessTokenType.Jwt ? "JWT" : "Reference";
@@ -79,7 +84,7 @@ namespace Orleans.Security.AccessToken
                 $"Reason: {response.Error} " +
                 $"Token value: {accessToken}");
 
-            return AccessTokenValidationResult.CreateFailed(response.Error);
+            return AccessTokenVerificationResult.CreateFailed(response.Error);
         }
     }
 }

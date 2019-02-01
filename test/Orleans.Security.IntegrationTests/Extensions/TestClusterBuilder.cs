@@ -1,6 +1,5 @@
 ﻿using System.Net;
 using System.Threading.Tasks;
-using Microsoft.Extensions.DependencyInjection;
 using Orleans.Configuration;
 using Orleans.Hosting;
 using Orleans.Security.Cluster;
@@ -13,19 +12,10 @@ namespace Orleans.Security.IntegrationTests.Extensions
         {
             // Define the cluster configuration
             var builder = new SiloHostBuilder()
-                .AddIncomingGrainCallFilter<IncomingGrainCallAuthorizationFilter>()
                 .ConfigureServices(services =>
                 {
                     services.AddOrleansClusterAuthorization(AuthorizationTestConfig.ConfigureOptions,
                         AuthorizationTestConfig.ConfigureServices);
-
-                    //services.AddSingleton(new CertificateProviderSettings
-                    //{
-                    //    GrainCertificateDirectory = string.Empty,
-                    //    IdentityServerTokenEndpointUrl = string.Empty
-                    //});
-
-                    //services.AddTransient<IGrainAuthenticationService, GrainAuthenticationFakeService>();
 
                 })
                 .UseLocalhostClustering()

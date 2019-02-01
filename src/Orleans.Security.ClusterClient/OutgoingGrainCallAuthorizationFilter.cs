@@ -6,16 +6,16 @@ using Orleans.Security.Authorization;
 
 namespace Orleans.Security.ClusterClient
 {
-    public class OutgoingGrainCallAuthorizationFilter : GrainCallAuthorizationFilterBase, IOutgoingGrainCallFilter
+    internal class OutgoingGrainCallAuthorizationFilter : GrainAuthorizationFilterBase, IOutgoingGrainCallFilter
     {
         private readonly IAccessTokenProvider _accessTokenProvider;
 
         private readonly OAuth2EndpointInfo _oAuth2EndpointInfo;
 
         public OutgoingGrainCallAuthorizationFilter(IAccessTokenProvider accessTokenProvider,
-            IAccessTokenValidator accessTokenValidator,
+            IAccessTokenVerifier accessTokenVerifier,
             OAuth2EndpointInfo oAuth2EndpointInfo, IAuthorizeHandler authorizeHandler,
-            ILoggerFactory loggerFactory) : base(accessTokenValidator, authorizeHandler)
+            ILoggerFactory loggerFactory) : base(accessTokenVerifier, authorizeHandler)
         {
             _accessTokenProvider = accessTokenProvider;
             _oAuth2EndpointInfo = oAuth2EndpointInfo;

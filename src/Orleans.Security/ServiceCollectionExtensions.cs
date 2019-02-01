@@ -8,19 +8,8 @@ namespace Orleans.Security
 {
     internal static class ServiceCollectionExtensions
     {
-        internal static void AddOrleansClusterSecurityServices(this IServiceCollection services)
-        {
-            if (services == null)
-            {
-                throw new ArgumentNullException(nameof(services));
-            }
-
-            services.TryAdd(ServiceDescriptor.Singleton<IAuthorizeHandler, AuthorizeHandler>());
-            services.TryAdd(ServiceDescriptor.Singleton<IAccessTokenValidator, AccessTokenValidator>());
-        }
-
         internal static void AddOrleansClusterSecurityServices(this IServiceCollection services,
-            Action<IServiceCollection> configureServices)
+            Action<IServiceCollection> configureServices = null)
         {
             if (services == null)
             {
@@ -29,7 +18,9 @@ namespace Orleans.Security
 
             services.TryAdd(ServiceDescriptor.Singleton<IAuthorizeHandler, AuthorizeHandler>());
 
-            configureServices.Invoke(services);
+            configureServices?.Invoke(services);
+
+            services.TryAdd(ServiceDescriptor.Singleton<IAccessTokenVerifier, AccessTokenVerifier>());
         }
     }
 }

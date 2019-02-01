@@ -17,9 +17,10 @@ namespace Api.Orleans
     {
         private static IClusterClient _client;
 
-        private static int _initializeAttemptsBeforeFailing = 5;
+        private static readonly int _initializeAttemptsBeforeFailing = 5;
 
-        private static IClusterClient Build(IHttpContextAccessor contextAccessor, OAuth2EndpointInfo oAuth2EndpointInfo)
+        private static IClusterClient Build(IHttpContextAccessor contextAccessor, 
+            OAuth2EndpointInfo oAuth2EndpointInfo)
         {
             var builder = new ClientBuilder()
                 .UseLocalhostClustering()
@@ -32,13 +33,8 @@ namespace Api.Orleans
                 .ConfigureLogging(logging => logging.AddConsole())
                 .ConfigureServices(services =>
                 {
-                    services.AddOrleansClusterAuthorization(options =>
-                    {
-                        options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
-                        options.AddPolicy("ManagerPolicy", policy => policy.RequireRole("Manager"));
-                    });
+                    services.AddOrleansClusterAuthorization(AuthorizationConfig.ConfigureOptions);
 
-                    services.AddSingleton<IOutgoingGrainCallFilter, OutgoingGrainCallAuthorizationFilter>();
                     services.AddSingleton<Func<IHttpContextAccessor>>(serviceProvider => () => contextAccessor);
                     services.AddSingleton(oAuth2EndpointInfo);
                     services.AddScoped<IAccessTokenProvider, AspNetCoreAccessTokenProvider>();

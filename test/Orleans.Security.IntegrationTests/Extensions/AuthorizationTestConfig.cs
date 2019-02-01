@@ -69,7 +69,7 @@ namespace Orleans.Security.IntegrationTests.Extensions
 
         internal static void ConfigureServices(IServiceCollection services)
         {
-            services.AddTransient<IAccessTokenValidator, FakeAccessTokenValidator>();
+            services.AddTransient<IAccessTokenVerifier, FakeAccessTokenVerifier>();
             services.AddSingleton<IAuthorizationHandler, EmailVerifiedHandler>();
             services.AddSingleton<IAuthorizationHandler, RoleAndGenderCombinationHandler>();
         }

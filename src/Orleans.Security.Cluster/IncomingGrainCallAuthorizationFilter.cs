@@ -7,11 +7,11 @@ using Orleans.Security.Authorization;
 namespace Orleans.Security.Cluster
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class IncomingGrainCallAuthorizationFilter : GrainCallAuthorizationFilterBase, IIncomingGrainCallFilter
+    internal class IncomingGrainCallAuthorizationFilter : GrainAuthorizationFilterBase, IIncomingGrainCallFilter
     {
-        public IncomingGrainCallAuthorizationFilter(IAccessTokenValidator accessTokenValidator,
+        public IncomingGrainCallAuthorizationFilter(IAccessTokenVerifier accessTokenVerifier,
             IAuthorizeHandler authorizeHandler, ILoggerFactory loggerFactory)
-            : base(accessTokenValidator, authorizeHandler)
+            : base(accessTokenVerifier, authorizeHandler)
         {
             Logger = loggerFactory.CreateLogger<IncomingGrainCallAuthorizationFilter>();
         }

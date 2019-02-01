@@ -33,7 +33,7 @@ namespace WebClient.Controllers
 
             string result;
 
-            var response = await httpClient.GetAsync("https://localhost:5002/api/User");
+            var response = await httpClient.GetAsync("https://localhost:5002/api/User/Alice");
             if (response.IsSuccessStatusCode)
             {
                 result = await response.Content.ReadAsStringAsync();

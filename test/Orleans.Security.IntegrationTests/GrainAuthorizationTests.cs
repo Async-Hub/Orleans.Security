@@ -14,7 +14,7 @@ namespace Orleans.Security.IntegrationTests
         public async Task GrainCall_WithCombinedRolesWithRequiredClaims_ShouldPass()
         {
             // Arrange
-            FakeAccessTokenValidator.LoggedInUser = LoggedInUser.AliceSmith;
+            FakeAccessTokenVerifier.LoggedInUser = LoggedInUser.AliceSmith;
             var client = TestClientBuilder.Client;
             var grain = client.GetGrain<IAuthorizationTestGrain>("Test");
 
@@ -30,7 +30,7 @@ namespace Orleans.Security.IntegrationTests
         public void GrainCall_WithEmailVerifiedRequirementWhenFalse_ShouldThrowException()
         {
             // Arrange
-            FakeAccessTokenValidator.LoggedInUser = LoggedInUser.BobSmith;
+            FakeAccessTokenVerifier.LoggedInUser = LoggedInUser.BobSmith;
             var client = TestClientBuilder.Client;
             var grain = client.GetGrain<IAuthorizationTestGrain>("Test");
 
@@ -47,7 +47,7 @@ namespace Orleans.Security.IntegrationTests
         public async Task GrainCall_WithEmailVerifiedRequirementWhenTrue_ShouldPass()
         {
             // Arrange
-            FakeAccessTokenValidator.LoggedInUser = LoggedInUser.AliceSmith;
+            FakeAccessTokenVerifier.LoggedInUser = LoggedInUser.AliceSmith;
             var client = TestClientBuilder.Client;
             var grain = client.GetGrain<IAuthorizationTestGrain>("Test");
 
@@ -64,7 +64,7 @@ absent should fail.")]
         public void GrainCall_WithFemaleAdminPolicyWithoutRequiredCredentials_ShouldThrowException()
         {
             // Arrange
-            FakeAccessTokenValidator.LoggedInUser = LoggedInUser.BobSmith;
+            FakeAccessTokenVerifier.LoggedInUser = LoggedInUser.BobSmith;
             var client = TestClientBuilder.Client;
             var grain = client.GetGrain<IAuthorizationTestGrain>("Test");
 
@@ -82,7 +82,7 @@ should be success.")]
         public async Task GrainCall_WithFemaleAdminPolicyWithRequiredClaims_ShouldPass()
         {
             // Arrange
-            FakeAccessTokenValidator.LoggedInUser = LoggedInUser.AliceSmith;
+            FakeAccessTokenVerifier.LoggedInUser = LoggedInUser.AliceSmith;
             var client = TestClientBuilder.Client;
             var grain = client.GetGrain<IAuthorizationTestGrain>("Test");
 
@@ -99,7 +99,7 @@ should throw an OrleansClusterUnauthorizedAccessException.")]
         public void GrainCall_WithFemaleManagerPolicyWithoutRequiredClaims_ShouldThrowException()
         {
             // Arrange
-            FakeAccessTokenValidator.LoggedInUser = LoggedInUser.BobSmith;
+            FakeAccessTokenVerifier.LoggedInUser = LoggedInUser.BobSmith;
             var client = TestClientBuilder.Client;
             var grain = client.GetGrain<IAuthorizationTestGrain>("Test");
 
@@ -116,7 +116,7 @@ should throw an OrleansClusterUnauthorizedAccessException.")]
         public async Task GrainCall_WithFemaleManagerPolicyWithRequiredCredentials_ShouldPass()
         {
             // Arrange
-            FakeAccessTokenValidator.LoggedInUser = LoggedInUser.AliceSmith;
+            FakeAccessTokenVerifier.LoggedInUser = LoggedInUser.AliceSmith;
             var client = TestClientBuilder.Client;
             var grain = client.GetGrain<IAuthorizationTestGrain>("Test");
 
@@ -133,7 +133,7 @@ should throw an OrleansClusterUnauthorizedAccessException.")]
         public void GrainCall_WithoutRequiredCredentials_ShouldThrowException()
         {
             // Arrange
-            FakeAccessTokenValidator.LoggedInUser = LoggedInUser.BobSmith;
+            FakeAccessTokenVerifier.LoggedInUser = LoggedInUser.BobSmith;
             var client = TestClientBuilder.Client;
             var grain = client.GetGrain<IAuthorizationTestGrain>("Test");
 
@@ -150,7 +150,7 @@ should throw an OrleansClusterUnauthorizedAccessException.")]
         public async Task GrainCall_WithRequiredCredentials_ShouldPass()
         {
             // Arrange
-            FakeAccessTokenValidator.LoggedInUser = LoggedInUser.AliceSmith;
+            FakeAccessTokenVerifier.LoggedInUser = LoggedInUser.AliceSmith;
             var client = TestClientBuilder.Client;
             var grain = client.GetGrain<IAuthorizationTestGrain>("Test");
 
@@ -166,7 +166,7 @@ should throw an OrleansClusterUnauthorizedAccessException.")]
         public async Task GrainCallWhenAllowAnonymousApplied_WithAnyCredentials_ShouldPass()
         {
             // Arrange
-            FakeAccessTokenValidator.LoggedInUser = LoggedInUser.AliceSmith;
+            FakeAccessTokenVerifier.LoggedInUser = LoggedInUser.AliceSmith;
             var client = TestClientBuilder.Client;
             var grain = client.GetGrain<IAuthorizationTestGrain>("Test");
 
