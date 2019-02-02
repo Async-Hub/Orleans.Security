@@ -37,8 +37,8 @@ namespace Orleans.Security.Client
                     $"{LoggingEvents.OutgoingGrainCallAuthorizationPassed.Name} Type of Grain: {grainType.Name} " +
                     $"Method Name: {context.InterfaceMethod.Name} ");
 
-                RequestContext.Set(ConfigConstants.AccessTokenKey, accessToken);
-                RequestContext.Set(ConfigConstants.OAuth2EndpointInfoKey, _oAuth2EndpointInfo);
+                RequestContext.Set(ConfigurationKeys.AccessTokenKey, accessToken);
+                RequestContext.Set(ConfigurationKeys.OAuth2EndpointInfoKey, _oAuth2EndpointInfo);
             }
 
             await context.Invoke();

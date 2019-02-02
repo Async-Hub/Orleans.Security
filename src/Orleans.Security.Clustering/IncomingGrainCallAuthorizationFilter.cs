@@ -20,8 +20,8 @@ namespace Orleans.Security.Clustering
         {
             if (AuthenticationChallenge(context))
             {
-                var accessToken = RequestContext.Get(ConfigConstants.AccessTokenKey).ToString();
-                var oidcEndpointInfo = (OAuth2EndpointInfo) RequestContext.Get(ConfigConstants.OAuth2EndpointInfoKey);
+                var accessToken = RequestContext.Get(ConfigurationKeys.AccessTokenKey).ToString();
+                var oidcEndpointInfo = (OAuth2EndpointInfo) RequestContext.Get(ConfigurationKeys.OAuth2EndpointInfoKey);
 
                 await AuthorizeAsync(context, accessToken, oidcEndpointInfo);
             }

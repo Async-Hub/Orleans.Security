@@ -1,29 +1,32 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IdentityModel.Tokens.Jwt;
 using System.Linq;
 using System.Security.Claims;
 using JWT;
 using JWT.Serializers;
 
-// ReSharper disable UnusedMember.Global
-
-namespace Orleans.Security.AccessToken.Jwt
+namespace Orleans.Security.AccessToken
 {
-    public class JwtTokenParser
+    internal class AccessTokenAnalyzer
     {
+        internal static AccessTokenType GetType(string accessToken)
+        {
+            // ReSharper disable once ConvertIfStatementToReturnStatement
+            if (IsJwtToken(accessToken))
+            {
+                return AccessTokenType.Jwt;
+            }
+
+            return AccessTokenType.Reference;
+        }
+
         public string ExtractIssuer(string jwtToken)
         {
             var handler = new JwtSecurityTokenHandler();
             var jwtSecurityToken = handler.ReadJwtToken(jwtToken);
 
             return jwtSecurityToken.Claims.First().Value;
-        }
-
-        public bool IsAccessTokenJwt(string accessToken)
-        {
-            var handler = new JwtSecurityTokenHandler();
-
-            return handler.CanReadToken(accessToken);
         }
 
         public IEnumerable<Claim> ExtractClaims(string jwtToken)
@@ -43,6 +46,13 @@ namespace Orleans.Security.AccessToken.Jwt
             IJwtDecoder decoder = new JwtDecoder(serializer, validator, urlEncoder);
 
             return decoder.Decode(jwt);
+        }
+
+        private static bool IsJwtToken(string accessToken)
+        {
+            var handler = new JwtSecurityTokenHandler();
+
+            return handler.CanReadToken(accessToken);
         }
     }
 }

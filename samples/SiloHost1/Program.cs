@@ -48,7 +48,11 @@ namespace SiloHost1
                     parts.AddApplicationPart(typeof(UserGrain).Assembly).WithReferences())
                 .ConfigureServices(services =>
                 {
-                    services.AddOrleansClusterAuthorization(AuthorizationConfig.ConfigureOptions);
+                    services.AddOrleansClusteringAuthorization(config =>
+                        {
+                            config.ConfigureAuthorizationOptions = AuthorizationConfig.ConfigureOptions;
+                            config.TracingEnabled = true;
+                        });
                 })
                 // Configure logging with any logging framework that supports Microsoft.Extensions.Logging.
                 // In this particular case it logs using the Microsoft.Extensions.Logging.Console package.

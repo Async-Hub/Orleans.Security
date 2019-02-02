@@ -14,7 +14,15 @@ namespace Orleans.Security.IntegrationTests.Extensions
             var builder = new SiloHostBuilder()
                 .ConfigureServices(services =>
                 {
-                    services.AddOrleansClusterAuthorization(AuthorizationTestConfig.ConfigureOptions,
+                    services.AddOrleansClusteringAuthorization(
+                        config =>
+                        {
+                            config.ConfigureAuthorizationOptions = AuthorizationTestConfig.ConfigureOptions;
+                            config.ConfigureAccessTokenVerifierOptions = options =>
+                            {
+                                options.InMemoryCacheEnabled = true;
+                            };
+                        },
                         AuthorizationTestConfig.ConfigureServices);
 
                 })

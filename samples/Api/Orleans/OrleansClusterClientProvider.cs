@@ -33,7 +33,16 @@ namespace Api.Orleans
                 .ConfigureLogging(logging => logging.AddConsole())
                 .ConfigureServices(services =>
                 {
-                    services.AddOrleansClusterAuthorization(AuthorizationConfig.ConfigureOptions);
+                    services.AddOrleansClusteringAuthorization(config =>
+                    {
+                        config.ConfigureAuthorizationOptions = AuthorizationConfig.ConfigureOptions;
+                        config.ConfigureAccessTokenVerifierOptions = options =>
+                        {
+                            options.InMemoryCacheEnabled = true;
+                        };
+
+                        config.TracingEnabled = true;
+                    });
 
                     services.AddSingleton<Func<IHttpContextAccessor>>(serviceProvider => () => contextAccessor);
                     services.AddSingleton(oAuth2EndpointInfo);

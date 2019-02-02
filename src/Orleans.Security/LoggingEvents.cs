@@ -9,5 +9,8 @@ namespace Orleans.Security
 
         public static readonly EventId OutgoingGrainCallAuthorizationPassed =
             new EventId(1002, "Outgoing Grain Call Authorization Passed.");
+
+        public static readonly EventId AccessTokenVerified =
+            new EventId(1003, "Access Token Verified.");
     }
 }

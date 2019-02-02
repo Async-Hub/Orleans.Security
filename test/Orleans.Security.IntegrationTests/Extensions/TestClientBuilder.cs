@@ -18,11 +18,20 @@ namespace Orleans.Security.IntegrationTests.Extensions
                     options.ServiceId = TestClusterOptions.ServiceId;
                 }).ConfigureServices(services =>
                 {
-                    services.AddOrleansClusterAuthorization(AuthorizationTestConfig.ConfigureOptions,
+                    services.AddOrleansClusteringAuthorization(
+                        config =>
+                        {
+                            config.ConfigureAuthorizationOptions = AuthorizationTestConfig.ConfigureOptions;
+                            config.ConfigureAccessTokenVerifierOptions = options =>
+                            {
+                                options.InMemoryCacheEnabled = true;
+                            };
+                        },
                         AuthorizationTestConfig.ConfigureServices);
 
                     services.AddSingleton<IAccessTokenProvider, FakeAccessTokenProvider>();
-                    services.AddSingleton(new OAuth2EndpointInfo("authorityUrl", "clientScopeName", "clientSecret"));
+                    services.AddSingleton(new OAuth2EndpointInfo("authorityUrl",
+                        "clientScopeName", "clientSecret"));
                 })
                 .UseLocalhostClustering()
                 .Build();
