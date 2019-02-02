@@ -3,34 +3,34 @@ using System.Security.Claims;
 
 namespace Orleans.Security.AccessToken
 {
-    public class AccessTokenValidationResult
+    public class AccessTokenVerificationResult
     {
-        private AccessTokenValidationResult(bool isValid)
+        private AccessTokenVerificationResult(bool isVerified)
         {
-            IsValid = isValid;
+            IsVerified = isVerified;
         }
 
         public IEnumerable<Claim> Claims { get; private set; }
 
         public string InvalidValidationMessage { get; private set; }
 
-        public bool IsValid { get; }
+        public bool IsVerified { get; }
 
         // ReSharper disable once UnusedAutoPropertyAccessor.Local
         private AccessTokenType? TokenType { get; set; }
 
-        public static AccessTokenValidationResult CreateFailed(string message)
+        public static AccessTokenVerificationResult CreateFailed(string message)
         {
-            return new AccessTokenValidationResult(false)
+            return new AccessTokenVerificationResult(false)
             {
                 InvalidValidationMessage = message
             };
         }
 
-        public static AccessTokenValidationResult CreateSuccess(AccessTokenType accessTokenType,
+        public static AccessTokenVerificationResult CreateSuccess(AccessTokenType accessTokenType,
             IEnumerable<Claim> claims)
         {
-            return new AccessTokenValidationResult(true)
+            return new AccessTokenVerificationResult(true)
             {
                 Claims = claims,
                 TokenType = accessTokenType

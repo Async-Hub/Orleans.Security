@@ -1,4 +1,4 @@
-﻿namespace Orleans.Security.ClusterClient
+﻿namespace Orleans.Security.Client
 {
     public interface IAccessTokenProvider
     {

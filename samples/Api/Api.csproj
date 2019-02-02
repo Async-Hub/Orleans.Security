@@ -13,7 +13,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\src\Orleans.Security.ClusterClient\Orleans.Security.ClusterClient.csproj" />
+    <ProjectReference Include="..\..\src\Orleans.Security.Client\Orleans.Security.Client.csproj" />
     <ProjectReference Include="..\Interfaces\GrainsInterfaces.csproj" />
   </ItemGroup>
 

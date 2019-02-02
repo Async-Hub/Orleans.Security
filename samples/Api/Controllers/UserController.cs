@@ -18,9 +18,9 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<string> GetUser()
+        public async Task<string> GetUser(string id)
         {
-            var grain = _clusterClient.GetGrain<IUserGrain>("Alice");
+            var grain = _clusterClient.GetGrain<IUserGrain>(id);
             var result = await grain.TakePrivateData();
 
             return result;

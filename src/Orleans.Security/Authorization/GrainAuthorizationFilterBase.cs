@@ -8,19 +8,19 @@ using Orleans.Security.AccessToken;
 
 namespace Orleans.Security.Authorization
 {
-    public abstract class GrainCallAuthorizationFilterBase
+    public abstract class GrainAuthorizationFilterBase
     {
         private readonly IAuthorizeHandler _authorizeHandler;
 
-        private readonly IAccessTokenValidator _accessTokenValidator;
+        private readonly IAccessTokenVerifier _accessTokenVerifier;
 
         protected ILogger Logger;
 
-        protected GrainCallAuthorizationFilterBase(IAccessTokenValidator accessTokenValidator, 
+        protected GrainAuthorizationFilterBase(IAccessTokenVerifier accessTokenVerifier, 
             IAuthorizeHandler authorizeHandler)
         {
             _authorizeHandler = authorizeHandler;
-            _accessTokenValidator = accessTokenValidator;
+            _accessTokenVerifier = accessTokenVerifier;
         }
 
         public bool AuthenticationChallenge(IGrainCallContext grainCallContext)
@@ -66,9 +66,9 @@ namespace Orleans.Security.Authorization
                 throw new ArgumentNullException($"{nameof(oAuth2EndpointInfo)}");
             }
 
-            var accessTokenValidationResult = await _accessTokenValidator.Validate(accessToken, oAuth2EndpointInfo);
+            var accessTokenVerificationResult = await _accessTokenVerifier.Verify(accessToken, oAuth2EndpointInfo);
 
-            if (accessTokenValidationResult.IsValid)
+            if (accessTokenVerificationResult.IsVerified)
             {
                 IEnumerable<IAuthorizeData> grainAuthorizeData = null;
                 var grainMethodAuthorizeData = grainCallContext.InterfaceMethod.GetCustomAttributes<AuthorizeAttribute>();
@@ -79,13 +79,13 @@ namespace Orleans.Security.Authorization
                         grainCallContext.InterfaceMethod.ReflectedType.GetCustomAttributes<AuthorizeAttribute>();
                 }
 
-                await _authorizeHandler.AuthorizeAsync(accessTokenValidationResult.Claims,
+                await _authorizeHandler.AuthorizeAsync(accessTokenVerificationResult.Claims,
                     grainAuthorizeData, grainMethodAuthorizeData);
             }
             else
             {
-                throw new OrleansClusterUnauthorizedAccessException("Invalid Access Token.",
-                    new InvalidAccessTokenException(accessTokenValidationResult.InvalidValidationMessage));
+                throw new OrleansClusterUnauthorizedAccessException("Access token verification failed.",
+                    new InvalidAccessTokenException(accessTokenVerificationResult.InvalidValidationMessage));
             }
         }
     }

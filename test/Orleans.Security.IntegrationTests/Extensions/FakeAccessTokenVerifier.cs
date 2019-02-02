@@ -7,11 +7,11 @@ using Orleans.Security.AccessToken;
 
 namespace Orleans.Security.IntegrationTests.Extensions
 {
-    internal class FakeAccessTokenValidator : IAccessTokenValidator
+    internal class FakeAccessTokenVerifier : IAccessTokenVerifier
     {
         public static LoggedInUser LoggedInUser { private get; set; }
 
-        public Task<AccessTokenValidationResult> Validate(string accessToken,
+        public Task<AccessTokenVerificationResult> Verify(string accessToken,
             OAuth2EndpointInfo oAuth2EndpointInfo)
         {
             var userName = TestContext.CurrentContext.Test.FullName;
@@ -25,7 +25,7 @@ namespace Orleans.Security.IntegrationTests.Extensions
             // ReSharper disable once SuggestVarOrType_Elsewhere
             IEnumerable<Claim> claims = AuthorizationTestConfig.Claims[loggedInUser];
 
-            return Task.FromResult(AccessTokenValidationResult.CreateSuccess(AccessTokenType.Jwt,
+            return Task.FromResult(AccessTokenVerificationResult.CreateSuccess(AccessTokenType.Jwt,
                 claims));
         }
     }

@@ -4,14 +4,14 @@ using Orleans.Runtime;
 using Orleans.Security.AccessToken;
 using Orleans.Security.Authorization;
 
-namespace Orleans.Security.Cluster
+namespace Orleans.Security.Clustering
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class IncomingGrainCallAuthorizationFilter : GrainCallAuthorizationFilterBase, IIncomingGrainCallFilter
+    internal class IncomingGrainCallAuthorizationFilter : GrainAuthorizationFilterBase, IIncomingGrainCallFilter
     {
-        public IncomingGrainCallAuthorizationFilter(IAccessTokenValidator accessTokenValidator,
+        public IncomingGrainCallAuthorizationFilter(IAccessTokenVerifier accessTokenVerifier,
             IAuthorizeHandler authorizeHandler, ILoggerFactory loggerFactory)
-            : base(accessTokenValidator, authorizeHandler)
+            : base(accessTokenVerifier, authorizeHandler)
         {
             Logger = loggerFactory.CreateLogger<IncomingGrainCallAuthorizationFilter>();
         }
@@ -20,8 +20,8 @@ namespace Orleans.Security.Cluster
         {
             if (AuthenticationChallenge(context))
             {
-                var accessToken = RequestContext.Get(ConfigConstants.AccessTokenKey).ToString();
-                var oidcEndpointInfo = (OAuth2EndpointInfo) RequestContext.Get(ConfigConstants.OAuth2EndpointInfoKey);
+                var accessToken = RequestContext.Get(ConfigurationKeys.AccessTokenKey).ToString();
+                var oidcEndpointInfo = (OAuth2EndpointInfo) RequestContext.Get(ConfigurationKeys.OAuth2EndpointInfoKey);
 
                 await AuthorizeAsync(context, accessToken, oidcEndpointInfo);
             }

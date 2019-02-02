@@ -4,18 +4,18 @@ using Orleans.Runtime;
 using Orleans.Security.AccessToken;
 using Orleans.Security.Authorization;
 
-namespace Orleans.Security.ClusterClient
+namespace Orleans.Security.Client
 {
-    public class OutgoingGrainCallAuthorizationFilter : GrainCallAuthorizationFilterBase, IOutgoingGrainCallFilter
+    internal class OutgoingGrainCallAuthorizationFilter : GrainAuthorizationFilterBase, IOutgoingGrainCallFilter
     {
         private readonly IAccessTokenProvider _accessTokenProvider;
 
         private readonly OAuth2EndpointInfo _oAuth2EndpointInfo;
 
         public OutgoingGrainCallAuthorizationFilter(IAccessTokenProvider accessTokenProvider,
-            IAccessTokenValidator accessTokenValidator,
+            IAccessTokenVerifier accessTokenVerifier,
             OAuth2EndpointInfo oAuth2EndpointInfo, IAuthorizeHandler authorizeHandler,
-            ILoggerFactory loggerFactory) : base(accessTokenValidator, authorizeHandler)
+            ILoggerFactory loggerFactory) : base(accessTokenVerifier, authorizeHandler)
         {
             _accessTokenProvider = accessTokenProvider;
             _oAuth2EndpointInfo = oAuth2EndpointInfo;
@@ -37,8 +37,8 @@ namespace Orleans.Security.ClusterClient
                     $"{LoggingEvents.OutgoingGrainCallAuthorizationPassed.Name} Type of Grain: {grainType.Name} " +
                     $"Method Name: {context.InterfaceMethod.Name} ");
 
-                RequestContext.Set(ConfigConstants.AccessTokenKey, accessToken);
-                RequestContext.Set(ConfigConstants.OAuth2EndpointInfoKey, _oAuth2EndpointInfo);
+                RequestContext.Set(ConfigurationKeys.AccessTokenKey, accessToken);
+                RequestContext.Set(ConfigurationKeys.OAuth2EndpointInfoKey, _oAuth2EndpointInfo);
             }
 
             await context.Invoke();
