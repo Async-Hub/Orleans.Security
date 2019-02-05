@@ -20,7 +20,7 @@ namespace Api.Orleans
         private static readonly int _initializeAttemptsBeforeFailing = 5;
 
         private static IClusterClient Build(IHttpContextAccessor contextAccessor, 
-            OAuth2EndpointInfo oAuth2EndpointInfo)
+            IdentityServer4Info identityServer4Info)
         {
             var builder = new ClientBuilder()
                 .UseLocalhostClustering()
@@ -33,19 +33,19 @@ namespace Api.Orleans
                 .ConfigureLogging(logging => logging.AddConsole())
                 .ConfigureServices(services =>
                 {
-                    services.AddOrleansClusteringAuthorization(config =>
-                    {
-                        config.ConfigureAuthorizationOptions = AuthorizationConfig.ConfigureOptions;
-                        config.ConfigureAccessTokenVerifierOptions = options =>
+                    services.AddOrleansClusteringAuthorization(identityServer4Info,
+                        config =>
                         {
-                            options.InMemoryCacheEnabled = true;
-                        };
+                            config.ConfigureAuthorizationOptions = AuthorizationConfig.ConfigureOptions;
+                            config.ConfigureAccessTokenVerifierOptions = options =>
+                            {
+                                options.InMemoryCacheEnabled = true;
+                            };
 
-                        config.TracingEnabled = true;
-                    });
+                            config.TracingEnabled = true;
+                        });
 
                     services.AddSingleton<Func<IHttpContextAccessor>>(serviceProvider => () => contextAccessor);
-                    services.AddSingleton(oAuth2EndpointInfo);
                     services.AddScoped<IAccessTokenProvider, AspNetCoreAccessTokenProvider>();
                 });
 
@@ -53,7 +53,7 @@ namespace Api.Orleans
         }
 
         private static IClusterClient TryToConnect(IHttpContextAccessor httpContextAccessor, 
-            OAuth2EndpointInfo oAuth2EndpointInfo)
+            IdentityServer4Info identityServer4Info)
         {
             var attempt = 0;
             //var logger = loggerFactory.CreateLogger<OrleansClusterClientProvider>();
@@ -62,7 +62,7 @@ namespace Api.Orleans
             {
                 try
                 {
-                    var client = Build(httpContextAccessor, oAuth2EndpointInfo);
+                    var client = Build(httpContextAccessor, identityServer4Info);
                     client.Connect().Wait();
 
                     //logger.LogInformation("Client successfully connect to silo host");
@@ -90,13 +90,13 @@ namespace Api.Orleans
         }
 
         public static void StartClientWithRetries(out IClusterClient client, 
-            IHttpContextAccessor httpContextAccessor, OAuth2EndpointInfo oAuth2EndpointInfo)
+            IHttpContextAccessor httpContextAccessor, IdentityServer4Info identityServer4Info)
         {
             if (_client != null && _client.IsInitialized)
             {
                 client = _client;
             }
-            _client = TryToConnect(httpContextAccessor, oAuth2EndpointInfo);
+            _client = TryToConnect(httpContextAccessor, identityServer4Info);
             client = _client;
         }
     }

@@ -30,7 +30,7 @@ namespace Orleans.Security.IntegrationTests.Extensions
                         AuthorizationTestConfig.ConfigureServices);
 
                     services.AddSingleton<IAccessTokenProvider, FakeAccessTokenProvider>();
-                    services.AddSingleton(new OAuth2EndpointInfo("authorityUrl",
+                    services.AddSingleton(new IdentityServer4Info("authorityUrl",
                         "clientScopeName", "clientSecret"));
                 })
                 .UseLocalhostClustering()

@@ -10,15 +10,15 @@ namespace Orleans.Security.Client
     {
         private readonly IAccessTokenProvider _accessTokenProvider;
 
-        private readonly OAuth2EndpointInfo _oAuth2EndpointInfo;
+        private readonly IdentityServer4Info _identityServer4Info;
 
         public OutgoingGrainCallAuthorizationFilter(IAccessTokenProvider accessTokenProvider,
             IAccessTokenVerifier accessTokenVerifier,
-            OAuth2EndpointInfo oAuth2EndpointInfo, IAuthorizeHandler authorizeHandler,
+            IdentityServer4Info identityServer4Info, IAuthorizationExecutor authorizeHandler,
             ILoggerFactory loggerFactory) : base(accessTokenVerifier, authorizeHandler)
         {
             _accessTokenProvider = accessTokenProvider;
-            _oAuth2EndpointInfo = oAuth2EndpointInfo;
+            _identityServer4Info = identityServer4Info;
 
             Logger = loggerFactory.CreateLogger<OutgoingGrainCallAuthorizationFilter>();
         }
@@ -29,7 +29,7 @@ namespace Orleans.Security.Client
             {
                 var accessToken = _accessTokenProvider.RetrieveToken();
 
-                await AuthorizeAsync(context, accessToken, _oAuth2EndpointInfo);
+                await AuthorizeAsync(context, accessToken);
 
                 var grainType = context.Grain.GetType();
 
@@ -38,7 +38,7 @@ namespace Orleans.Security.Client
                     $"Method Name: {context.InterfaceMethod.Name} ");
 
                 RequestContext.Set(ConfigurationKeys.AccessTokenKey, accessToken);
-                RequestContext.Set(ConfigurationKeys.OAuth2EndpointInfoKey, _oAuth2EndpointInfo);
+                RequestContext.Set(ConfigurationKeys.OAuth2EndpointInfoKey, _identityServer4Info);
             }
 
             await context.Invoke();

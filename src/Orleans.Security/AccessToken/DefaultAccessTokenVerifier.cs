@@ -1,30 +1,33 @@
 ﻿using System;
-using System.Net.Http;
 using System.Threading.Tasks;
-using IdentityModel.Client;
 using Microsoft.Extensions.Logging;
 using Orleans.Security.Caching;
 
 namespace Orleans.Security.AccessToken
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    internal class AccessTokenVerifier : IAccessTokenVerifier
+    internal class DefaultAccessTokenVerifier : IAccessTokenVerifier
     {
         private readonly AccessTokenVerifierOptions _options;
-        private readonly IAccessTokenCache _accessTokenCache;
-        private readonly ILogger<AccessTokenVerifier> _logger;
 
-        public AccessTokenVerifier(AccessTokenVerifierOptions options,
+        private readonly IAccessTokenCache _accessTokenCache;
+
+        private readonly TokenIntrospectionClient _introspectionClient;
+
+        private readonly ILogger<DefaultAccessTokenVerifier> _logger;
+
+        public DefaultAccessTokenVerifier(AccessTokenVerifierOptions options,
             IAccessTokenCache accessTokenCache,
-            ILogger<AccessTokenVerifier> logger)
+            TokenIntrospectionClient introspectionClient,
+            ILogger<DefaultAccessTokenVerifier> logger)
         {
             _options = options;
             _accessTokenCache = accessTokenCache;
+            _introspectionClient = introspectionClient;
             _logger = logger;
         }
 
-        public async Task<AccessTokenVerificationResult> Verify(string accessToken, 
-            OAuth2EndpointInfo oAuth2EndpointInfo)
+        public async Task<AccessTokenVerificationResult> Verify(string accessToken)
         {
             if (string.IsNullOrWhiteSpace(accessToken))
             {
@@ -42,7 +45,7 @@ namespace Orleans.Security.AccessToken
                 }
             }
 
-            var response = await IntrospectTokenAsync(accessToken, oAuth2EndpointInfo);
+            var response = await _introspectionClient.IntrospectTokenAsync(accessToken);
 
             // ReSharper disable once InvertIf
             AccessTokenVerificationResult verificationResult;
@@ -74,39 +77,6 @@ namespace Orleans.Security.AccessToken
             cacheEntry.AbsoluteExpiration = DateTimeOffset.Now.AddSeconds(_options.CacheEntryExpirationTime);
 
             return verificationResult;
-        }
-
-        private async Task<IntrospectionResponse> IntrospectTokenAsync(string accessToken, 
-            OAuth2EndpointInfo oAuth2EndpointInfo)
-        {
-            var httpClientHandler = new HttpClientHandler();
-
-            if (_options.DisableCertificateValidation)
-            {
-                httpClientHandler.ServerCertificateCustomValidationCallback +=
-                    (sender, certificate, chain, sslPolicyErrors) =>
-                    {
-                        if (sslPolicyErrors != System.Net.Security.SslPolicyErrors.None)
-                        {
-                            _logger.LogWarning(
-                                "Remote certificate validation failed. It is explicitly disabled in code.");
-                        }
-
-                        return true;
-                    };
-            }
-
-            var httpClient = new HttpClient(httpClientHandler);
-
-            var response = await httpClient.IntrospectTokenAsync(new TokenIntrospectionRequest
-            {
-                Address = $"{oAuth2EndpointInfo.AuthorityUrl}/connect/introspect",
-                ClientId = oAuth2EndpointInfo.ClientScopeName,
-                Token = accessToken,
-                ClientSecret = oAuth2EndpointInfo.ClientSecret,
-            });
-
-            return response;
         }
     }
 }

@@ -4,6 +4,7 @@
     {
         public bool InMemoryCacheEnabled { get; set; }
 
+
         public bool DisableCertificateValidation { get; set; }
 
         /// <summary>

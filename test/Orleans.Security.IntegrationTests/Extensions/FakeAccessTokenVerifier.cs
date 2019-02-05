@@ -11,8 +11,7 @@ namespace Orleans.Security.IntegrationTests.Extensions
     {
         public static LoggedInUser LoggedInUser { private get; set; }
 
-        public Task<AccessTokenVerificationResult> Verify(string accessToken,
-            OAuth2EndpointInfo oAuth2EndpointInfo)
+        public Task<AccessTokenVerificationResult> Verify(string accessToken)
         {
             var userName = TestContext.CurrentContext.Test.FullName;
             var loggedInUser = (int) LoggedInUser;

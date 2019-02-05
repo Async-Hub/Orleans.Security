@@ -18,14 +18,14 @@ namespace Api
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            var oAuth2EndpointInfo = new OAuth2EndpointInfo("https://localhost:5001",
+            var oAuth2EndpointInfo = new IdentityServer4Info("https://localhost:5001",
                 "Api1", @"C%#4>#2x-kH(d9TuKqs?3Wt@NLT.\x$[");
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>
                 {
                     options.SupportedTokens = SupportedTokens.Both;
-                    options.Authority = oAuth2EndpointInfo.AuthorityUrl;
+                    options.Authority = oAuth2EndpointInfo.Url;
                     options.ApiName = oAuth2EndpointInfo.ClientScopeName;
                     options.ApiSecret = oAuth2EndpointInfo.ClientSecret;
                     options.SaveToken = true;

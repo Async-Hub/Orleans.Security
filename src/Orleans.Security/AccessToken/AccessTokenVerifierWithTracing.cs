@@ -9,27 +9,29 @@ namespace Orleans.Security.AccessToken
 {
     internal class AccessTokenVerifierWithTracing : IAccessTokenVerifier
     {
-        private readonly AccessTokenVerifier _accessTokenVerifier;
+        private readonly DefaultAccessTokenVerifier _defaultAccessTokenVerifier;
 
-        private readonly ILogger<AccessTokenVerifier> _logger;
+        private readonly ILogger<DefaultAccessTokenVerifier> _logger;
 
         private readonly bool _isCachingEnabled;
 
         public AccessTokenVerifierWithTracing(AccessTokenVerifierOptions options,
             IAccessTokenCache accessTokenCache,
-            ILogger<AccessTokenVerifier> logger)
+            TokenIntrospectionClient introspectionClient,
+            ILogger<DefaultAccessTokenVerifier> logger)
         {
             _logger = logger;
             _isCachingEnabled = options.InMemoryCacheEnabled;
-            _accessTokenVerifier = new AccessTokenVerifier(options, accessTokenCache, logger);
+            _defaultAccessTokenVerifier = new DefaultAccessTokenVerifier(options, 
+                accessTokenCache, introspectionClient, logger);
         }
 
-        public async Task<AccessTokenVerificationResult> Verify(string accessToken, OAuth2EndpointInfo oAuth2EndpointInfo)
+        public async Task<AccessTokenVerificationResult> Verify(string accessToken)
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var result = await _accessTokenVerifier.Verify(accessToken, oAuth2EndpointInfo);
+            var result = await _defaultAccessTokenVerifier.Verify(accessToken);
 
             stopwatch.Stop();
             _logger.LogInformation(LoggingEvents.AccessTokenVerified,$"Time: " +

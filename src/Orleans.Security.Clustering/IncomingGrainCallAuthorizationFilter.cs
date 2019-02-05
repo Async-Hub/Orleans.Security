@@ -10,7 +10,7 @@ namespace Orleans.Security.Clustering
     internal class IncomingGrainCallAuthorizationFilter : GrainAuthorizationFilterBase, IIncomingGrainCallFilter
     {
         public IncomingGrainCallAuthorizationFilter(IAccessTokenVerifier accessTokenVerifier,
-            IAuthorizeHandler authorizeHandler, ILoggerFactory loggerFactory)
+            IAuthorizationExecutor authorizeHandler, ILoggerFactory loggerFactory)
             : base(accessTokenVerifier, authorizeHandler)
         {
             Logger = loggerFactory.CreateLogger<IncomingGrainCallAuthorizationFilter>();
@@ -21,9 +21,8 @@ namespace Orleans.Security.Clustering
             if (AuthenticationChallenge(context))
             {
                 var accessToken = RequestContext.Get(ConfigurationKeys.AccessTokenKey).ToString();
-                var oidcEndpointInfo = (OAuth2EndpointInfo) RequestContext.Get(ConfigurationKeys.OAuth2EndpointInfoKey);
 
-                await AuthorizeAsync(context, accessToken, oidcEndpointInfo);
+                await AuthorizeAsync(context, accessToken);
             }
 
             await context.Invoke();

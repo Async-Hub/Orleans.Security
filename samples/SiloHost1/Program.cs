@@ -7,6 +7,7 @@ using Microsoft.Extensions.Logging;
 using Orleans;
 using Orleans.Configuration;
 using Orleans.Hosting;
+using Orleans.Security;
 using Orleans.Security.Clustering;
 
 namespace SiloHost1
@@ -33,6 +34,9 @@ namespace SiloHost1
 
         private static async Task<ISiloHost> StartSilo()
         {
+            var identityServer4Info = new IdentityServer4Info("https://localhost:5001",
+                "Api2", @"C%#4>#2x-kH(d9HaQqs?3Wt@NLT.\x$[");
+
             var builder = new SiloHostBuilder()
                 // Use localhost clustering for a single local silo
                 .UseLocalhostClustering()
@@ -48,7 +52,9 @@ namespace SiloHost1
                     parts.AddApplicationPart(typeof(UserGrain).Assembly).WithReferences())
                 .ConfigureServices(services =>
                 {
-                    services.AddOrleansClusteringAuthorization(config =>
+                    
+                    services.AddOrleansClusteringAuthorization(identityServer4Info,
+                        config =>
                         {
                             config.ConfigureAuthorizationOptions = AuthorizationConfig.ConfigureOptions;
                             config.TracingEnabled = true;

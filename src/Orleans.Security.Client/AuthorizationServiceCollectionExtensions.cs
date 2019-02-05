@@ -25,11 +25,16 @@ namespace Orleans.Security.Client
 
         // For the production usage.
         public static void AddOrleansClusteringAuthorization(this IServiceCollection services,
-            Action<Configuration> configure)
+            IdentityServer4Info identityServer4Info, Action<Configuration> configure)
         {
             if (services == null)
             {
                 throw new ArgumentNullException(nameof(services));
+            }
+
+            if (identityServer4Info == null)
+            {
+                throw new ArgumentNullException(nameof(identityServer4Info));
             }
 
             if (configure == null)
@@ -37,6 +42,7 @@ namespace Orleans.Security.Client
                 throw new ArgumentNullException(nameof(configure));
             }
 
+            services.AddSingleton(identityServer4Info);
             services.AddSingleton<IOutgoingGrainCallFilter, OutgoingGrainCallAuthorizationFilter>();
             services.AddOrleansClusterSecurityServices(configure);
         }
