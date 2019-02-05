@@ -147,11 +147,11 @@
         <div class="page-content">
           <h1 id="policy-based-authorization">Policy-based authorization</h1>
 
-<p>An authorization policy consists of one or more requirements. It’s registered as part of <strong><code class="highlighter-rouge">ClientBuilder.ConfigureServices</code></strong> and <strong><code class="highlighter-rouge">SiloHostBuilder.ConfigureServices</code></strong>, in the <strong><code class="highlighter-rouge">AddOrleansClusterAuthorization</code></strong> method:</p>
+<p>An authorization policy consists of one or more requirements. It’s registered as part of <strong><code class="highlighter-rouge">ClientBuilder.ConfigureServices</code></strong> and <strong><code class="highlighter-rouge">SiloHostBuilder.ConfigureServices</code></strong>, in the <strong><code class="highlighter-rouge">AddOrleansClusteringAuthorization</code></strong> method:</p>
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">.</span><span class="nf">ConfigureServices</span><span class="p">(</span><span class="n">services</span> <span class="p">=&gt;</span>
 <span class="p">{</span>
-    <span class="n">services</span><span class="p">.</span><span class="nf">AddOrleansClusterAuthorization</span><span class="p">(</span><span class="n">options</span> <span class="p">=&gt;</span>
+    <span class="n">services</span><span class="p">.</span><span class="nf">AddOrleansClusteringAuthorization</span><span class="p">(</span><span class="n">identityServer4Info</span><span class="p">,</span> <span class="n">options</span> <span class="p">=&gt;</span>
     <span class="p">{</span>
         <span class="n">options</span><span class="p">.</span><span class="nf">AddPolicy</span><span class="p">(</span><span class="s">"AdminPolicy"</span><span class="p">,</span> <span class="n">policy</span><span class="p">=&gt;</span> <span class="n">policy</span><span class="p">.</span><span class="nf">RequireRole</span><span class="p">(</span><span class="s">"Admin"</span><span class="p">));</span>
     <span class="p">});</span>
@@ -173,7 +173,7 @@
 
 <p>An authorization requirement is a collection of data parameters that a policy can use to evaluate the current user/client principal. In our “EmailVerified” policy, the requirement is a single parameter—the email verified. A requirement implements IAuthorizationRequirement, which is an empty marker interface. A parameterized email verified requirement could be implemented as follows:</p>
 
-<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">DomDaniel.InCloud.OrleansCluster.Security.Authorization</span><span class="p">;</span>
+<div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">using</span> <span class="nn">Orleans.Security.Clustering.Authorization</span><span class="p">;</span>
 
 <span class="k">public</span> <span class="k">class</span> <span class="nc">EmailVerifiedRequirement</span> <span class="p">:</span> <span class="n">IAuthorizationRequirement</span>
 <span class="p">{</span>
@@ -293,7 +293,7 @@
 
 <div class="language-csharp highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="p">.</span><span class="nf">ConfigureServices</span><span class="p">(</span><span class="n">services</span> <span class="p">=&gt;</span>
 <span class="p">{</span>
-    <span class="n">services</span><span class="p">.</span><span class="nf">AddOrleansClusterAuthorization</span><span class="p">(</span><span class="n">options</span> <span class="p">=&gt;</span>
+    <span class="n">services</span><span class="p">.</span><span class="nf">AddOrleansClusteringAuthorization</span><span class="p">(</span><span class="n">identityServer4Info</span><span class="p">,</span> <span class="n">options</span> <span class="p">=&gt;</span>
     <span class="p">{</span>
         <span class="n">options</span><span class="p">.</span><span class="nf">AddPolicy</span><span class="p">(</span><span class="s">"AdminPolicy"</span><span class="p">,</span> <span class="n">policy</span><span class="p">=&gt;</span> <span class="n">policy</span><span class="p">.</span><span class="nf">RequireRole</span><span class="p">(</span><span class="s">"Admin"</span><span class="p">));</span>
     <span class="p">});</span>

@@ -10,14 +10,14 @@ namespace Orleans.Security.Authorization
 {
     public abstract class GrainAuthorizationFilterBase
     {
-        private readonly IAuthorizeHandler _authorizeHandler;
+        private readonly IAuthorizationExecutor _authorizeHandler;
 
         private readonly IAccessTokenVerifier _accessTokenVerifier;
 
         protected ILogger Logger;
 
         protected GrainAuthorizationFilterBase(IAccessTokenVerifier accessTokenVerifier, 
-            IAuthorizeHandler authorizeHandler)
+            IAuthorizationExecutor authorizeHandler)
         {
             _authorizeHandler = authorizeHandler;
             _accessTokenVerifier = accessTokenVerifier;
@@ -53,20 +53,14 @@ namespace Orleans.Security.Authorization
             return true;
         }
 
-        protected async Task AuthorizeAsync(IGrainCallContext grainCallContext, 
-            string accessToken, OAuth2EndpointInfo oAuth2EndpointInfo)
+        protected async Task AuthorizeAsync(IGrainCallContext grainCallContext, string accessToken)
         {
             if (string.IsNullOrEmpty(accessToken))
             {
                 throw new ArgumentNullException($"{nameof(accessToken)}");
             }
 
-            if (oAuth2EndpointInfo == null)
-            {
-                throw new ArgumentNullException($"{nameof(oAuth2EndpointInfo)}");
-            }
-
-            var accessTokenVerificationResult = await _accessTokenVerifier.Verify(accessToken, oAuth2EndpointInfo);
+            var accessTokenVerificationResult = await _accessTokenVerifier.Verify(accessToken);
 
             if (accessTokenVerificationResult.IsVerified)
             {

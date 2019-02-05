@@ -7,20 +7,21 @@ using IdentityModel;
 namespace Orleans.Security.Authorization
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class AuthorizeHandler : IAuthorizeHandler
+    public class AuthorizationExecutor : IAuthorizationExecutor
     {
         private readonly IAuthorizationPolicyProvider _policyProvider;
 
         private readonly IAuthorizationService _authorizationService;
 
-        public AuthorizeHandler(IAuthorizationPolicyProvider policyProvider, 
+        public AuthorizationExecutor(IAuthorizationPolicyProvider policyProvider,
             IAuthorizationService authorizationService)
         {
             _policyProvider = policyProvider;
             _authorizationService = authorizationService;
         }
 
-        public async Task AuthorizeAsync(IEnumerable<Claim> claims, IEnumerable<IAuthorizeData> grainAuthorizeData,
+        public async Task AuthorizeAsync(IEnumerable<Claim> claims,
+            IEnumerable<IAuthorizeData> grainInterfaceAuthorizeData,
             IEnumerable<IAuthorizeData> grainMethodAuthorizeData)
         {
             var claimsIdentity = new ClaimsIdentity(claims, "AccessToken",
@@ -28,11 +29,12 @@ namespace Orleans.Security.Authorization
 
             var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
 
-            var authorizationPassed = true;
+            var authorizationSucceeded = true;
 
             if (grainMethodAuthorizeData != null)
             {
-                var authorizeData1 = grainMethodAuthorizeData as IAuthorizeData[] ?? grainMethodAuthorizeData.ToArray();
+                var authorizeData1 = grainMethodAuthorizeData as IAuthorizeData[] ??
+                                     grainMethodAuthorizeData.ToArray();
 
                 if (authorizeData1.Any())
                 {
@@ -40,27 +42,28 @@ namespace Orleans.Security.Authorization
                     var authorizationResult = await _authorizationService
                         .AuthorizeAsync(claimsPrincipal, policy);
 
-                    authorizationPassed = authorizationResult.Succeeded;
+                    authorizationSucceeded = authorizationResult.Succeeded;
                 }
             }
 
-            if (grainAuthorizeData != null)
+            if (grainInterfaceAuthorizeData != null)
             {
-                var authorizeData2 = grainAuthorizeData as IAuthorizeData[] ?? grainAuthorizeData.ToArray();
+                var authorizeData2 = grainInterfaceAuthorizeData as IAuthorizeData[] ??
+                                     grainInterfaceAuthorizeData.ToArray();
 
-                if (authorizationPassed && authorizeData2.Any())
+                if (authorizationSucceeded && authorizeData2.Any())
                 {
                     var policy = await AuthorizationPolicy.CombineAsync(_policyProvider, authorizeData2);
                     var authorizationResult = await _authorizationService
                         .AuthorizeAsync(claimsPrincipal, policy);
 
-                    authorizationPassed = authorizationResult.Succeeded;
+                    authorizationSucceeded = authorizationResult.Succeeded;
                 }
             }
 
-            if (!authorizationPassed)
+            if (!authorizationSucceeded)
             {
-                throw new OrleansClusterUnauthorizedAccessException("Access denied.");
+                throw new OrleansClusterUnauthorizedAccessException("Access to the requested grain denied.");
             }
         }
     }

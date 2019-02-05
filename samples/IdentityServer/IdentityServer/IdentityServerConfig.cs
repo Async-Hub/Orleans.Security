@@ -11,15 +11,17 @@ namespace IdentityServer4
     {
         public static IEnumerable<ApiResource> GetApiResources()
         {
-            return new List<ApiResource>
-            {
-                new ApiResource("Api1",
-                    "DomDaniel InCloud OrleansCluster Api",
-                    new[] {JwtClaimTypes.Email, JwtClaimTypes.Role})
-                {
-                    ApiSecrets = new List<Secret> {new Secret(@"C%#4>#2x-kH(d9TuKqs?3Wt@NLT.\x$[".Sha256())}
-                }
-            };
+            var resources = new List<ApiResource>();
+
+            var api1 = new ApiResource("Api1", new[] { JwtClaimTypes.Email, JwtClaimTypes.Role });
+            api1.ApiSecrets.Add(new Secret(@"C%#4>#2x-kH(d9TuKqs?3Wt@NLT.\x$[".Sha256()));
+            resources.Add(api1);
+
+            var api2 = new ApiResource("Api2");
+            api2.ApiSecrets.Add(new Secret(@"C%#4>#2x-kH(d9HaQqs?3Wt@NLT.\x$[".Sha256()));
+            resources.Add(api2);
+
+            return resources;
         }
 
         public static IEnumerable<Client> GetClients()
@@ -28,7 +30,7 @@ namespace IdentityServer4
             {
                 new Client
                 {
-                    ClientId = "ApiClient",
+                    ClientId = "AdminClient",
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     ClientSecrets =
                     {
@@ -37,7 +39,7 @@ namespace IdentityServer4
                     Claims = new List<Claim> {new Claim(JwtClaimTypes.Role, "Admin")},
                     AllowedScopes =
                     {
-                        "Api1",
+                        "Api1", "Api2",
                         JwtClaimTypes.Email,
                         JwtClaimTypes.Role
                     }
@@ -57,7 +59,7 @@ namespace IdentityServer4
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
-                        "Api1"
+                        "Api1", "Api2"
                     },
                     RedirectUris = {"https://localhost:5004/signin-oidc"}
                 }
