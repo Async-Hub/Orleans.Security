@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Orleans.Security.AccessToken;
 using Orleans.Security.Authorization;
 
-namespace Orleans.Security.IntegrationTests.Extensions
+namespace Orleans.Security.IntegrationTests.Configuration
 {
     internal static class AuthorizationTestConfig
     {

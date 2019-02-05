@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using NUnit.Framework;
 using Orleans.Security.AccessToken;
 
-namespace Orleans.Security.IntegrationTests.Extensions
+namespace Orleans.Security.IntegrationTests.Configuration
 {
     internal class FakeAccessTokenVerifier : IAccessTokenVerifier
     {

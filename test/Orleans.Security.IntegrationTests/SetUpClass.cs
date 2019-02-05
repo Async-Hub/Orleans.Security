@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 using NUnit.Framework;
-using Orleans.Security.IntegrationTests.Extensions;
+using Orleans.Security.IntegrationTests.Configuration;
 
 namespace Orleans.Security.IntegrationTests
 {

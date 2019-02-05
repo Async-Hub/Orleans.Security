@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Orleans.Configuration;
 using Orleans.Security.Client;
 
-namespace Orleans.Security.IntegrationTests.Extensions
+namespace Orleans.Security.IntegrationTests.Configuration
 {
     internal static class TestClientBuilder
     {

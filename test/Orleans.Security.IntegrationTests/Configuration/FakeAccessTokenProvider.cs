@@ -1,6 +1,6 @@
 ﻿using Orleans.Security.Client;
 
-namespace Orleans.Security.IntegrationTests.Extensions
+namespace Orleans.Security.IntegrationTests.Configuration
 {
     internal class FakeAccessTokenProvider : IAccessTokenProvider
     {

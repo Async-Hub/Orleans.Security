@@ -49,7 +49,7 @@ namespace Orleans.Security.AccessToken
 
             // ReSharper disable once InvertIf
             AccessTokenVerificationResult verificationResult;
-            var accessTokenType = AccessTokenAnalyzer.GetType(accessToken);
+            var accessTokenType = AccessTokenAnalyzer.GetTokenType(accessToken);
 
             if (!response.IsError)
             {

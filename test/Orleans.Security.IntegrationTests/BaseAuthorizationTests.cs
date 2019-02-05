@@ -1,13 +1,13 @@
 ﻿using System.Threading.Tasks;
 using NUnit.Framework;
-using Orleans.Security.IntegrationTests.Extensions;
-using Orleans.Security.IntegrationTests.TestGrains;
+using Orleans.Security.IntegrationTests.Configuration;
+using Orleans.Security.IntegrationTests.GrainsForTests;
 
 namespace Orleans.Security.IntegrationTests
 {
     [Author("Karen Tazayan"), Category("IntegrationTest")]
     [SingleThreaded, TestFixture]
-    public class GrainAuthorizationTests
+    public class BaseAuthorizationTests
     {
         [Description(@"User or Client must have all the roles specified.")]
         [Test]

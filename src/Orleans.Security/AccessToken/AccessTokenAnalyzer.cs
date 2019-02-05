@@ -10,10 +10,10 @@ namespace Orleans.Security.AccessToken
 {
     internal class AccessTokenAnalyzer
     {
-        internal static AccessTokenType GetType(string accessToken)
+        internal static AccessTokenType GetTokenType(string accessToken)
         {
             // ReSharper disable once ConvertIfStatementToReturnStatement
-            if (IsJwtToken(accessToken))
+            if (IsAccessTokenJwtToken(accessToken))
             {
                 return AccessTokenType.Jwt;
             }
@@ -48,7 +48,7 @@ namespace Orleans.Security.AccessToken
             return decoder.Decode(jwt);
         }
 
-        private static bool IsJwtToken(string accessToken)
+        private static bool IsAccessTokenJwtToken(string accessToken)
         {
             var handler = new JwtSecurityTokenHandler();
 

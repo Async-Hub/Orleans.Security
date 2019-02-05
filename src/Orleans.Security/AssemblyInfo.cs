@@ -3,3 +3,4 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Orleans.Security.Client")]
 [assembly: InternalsVisibleTo("Orleans.Security.Clustering")]
+[assembly: InternalsVisibleTo("Orleans.Security.TokenVerification.IntegrationTests")]
