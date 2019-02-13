@@ -1,3 +1,4 @@
+[![Build status](https://dev.azure.com/asynchub/Orleans.Security/_apis/build/status/Orleans.Security-CI)](https://dev.azure.com/asynchub/Orleans.Security/_build/latest?definitionId=2)
 [![Waffle.io - Columns and their card count](https://badge.waffle.io/Async-Hub/Orleans.Security.svg?columns=all)](https://waffle.io/Async-Hub/Orleans.Security)
 
 # Authorization library for Microsoft Orleans 2.0
