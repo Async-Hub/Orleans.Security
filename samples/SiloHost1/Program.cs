@@ -35,7 +35,7 @@ namespace SiloHost1
         private static async Task<ISiloHost> StartSilo()
         {
             var identityServer4Info = new IdentityServer4Info("https://localhost:5001",
-                "Api2", @"C%#4>#2x-kH(d9HaQqs?3Wt@NLT.\x$[");
+                "Orleans", "@3x3g*RLez$TNU!_7!QW", "Orleans");
 
             var builder = new SiloHostBuilder()
                 // Use localhost clustering for a single local silo

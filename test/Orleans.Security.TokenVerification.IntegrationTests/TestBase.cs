@@ -1,32 +1,31 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using IdentityModel.Client;
-using Microsoft.AspNetCore.TestHost;
 using Orleans.Security.TokenVerification.IntegrationTests.Configuration;
 
 namespace Orleans.Security.TokenVerification.IntegrationTests
 {
     public class TestBase
     {
-        private readonly TestServer _identityServer4;
-
         private readonly HttpClient _identityServer4Client;
+        
+        protected DiscoveryResponse DiscoveryResponse { get; }
 
-        public TestBase()
+        protected TestBase()
         {
-            _identityServer4 = TestIdentityServer4Builder.BuildNew();
-            _identityServer4Client = _identityServer4.CreateClient();
-        }
+            var identityServer4 = TestIdentityServer4Builder.BuildNew();
+            _identityServer4Client = identityServer4.CreateClient();
 
-        protected async Task<string> RequestJwtTokenAsync(string clientId, string clientSecret,
+            DiscoveryResponse = _identityServer4Client.GetDiscoveryDocumentAsync().Result;
+        }
+        
+        protected async Task<string> RequestClientCredentialsTokenAsync(string clientId, string clientSecret,
             string scope)
         {
-            var discoveryResponse = await _identityServer4Client.GetDiscoveryDocumentAsync();
-
             var response = await _identityServer4Client.RequestClientCredentialsTokenAsync(
                 new ClientCredentialsTokenRequest()
                 {
-                    Address = discoveryResponse.TokenEndpoint,
+                    Address = DiscoveryResponse.TokenEndpoint,
                     Scope = scope,
                     ClientId = clientId,
                     ClientSecret = clientSecret

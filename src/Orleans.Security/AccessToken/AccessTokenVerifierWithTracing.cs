@@ -1,12 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Orleans.Security.Caching;
 
 namespace Orleans.Security.AccessToken
 {
+    // ReSharper disable once ClassNeverInstantiated.Global
     internal class AccessTokenVerifierWithTracing : IAccessTokenVerifier
     {
         private readonly DefaultAccessTokenVerifier _defaultAccessTokenVerifier;
@@ -17,13 +16,13 @@ namespace Orleans.Security.AccessToken
 
         public AccessTokenVerifierWithTracing(AccessTokenVerifierOptions options,
             IAccessTokenCache accessTokenCache,
-            TokenIntrospectionClient introspectionClient,
+            IAccessTokenIntrospectionService introspectionService,
             ILogger<DefaultAccessTokenVerifier> logger)
         {
             _logger = logger;
             _isCachingEnabled = options.InMemoryCacheEnabled;
             _defaultAccessTokenVerifier = new DefaultAccessTokenVerifier(options, 
-                accessTokenCache, introspectionClient, logger);
+                accessTokenCache, introspectionService);
         }
 
         public async Task<AccessTokenVerificationResult> Verify(string accessToken)

@@ -5,9 +5,9 @@ using IdentityServer4.Test;
 
 namespace Orleans.Security.TokenVerification.IntegrationTests.Configuration
 {
-    public class TestUsers
+    public static class TestUsers
     {
-        public static List<TestUser> Users = new List<TestUser>
+        public static readonly List<TestUser> Users = new List<TestUser>
         {
             new TestUser
             {

@@ -3,21 +3,24 @@
     public class IdentityServer4Info
     {
         public IdentityServer4Info(string url,
-            string clientScopeName, string clientSecret,
-            string TokenIntrospectionEndpointPath = "connect/introspect")
+            string clientId, string clientSecret, string allowedScope,
+            string discoveryEndpointEndpointPath = ".well-known/openid-configuration")
         {
             Url = url;
-            ClientScopeName = clientScopeName;
+            ClientId = clientId;
             ClientSecret = clientSecret;
-            TokenIntrospectionEndpointUrl = Url + "/" + TokenIntrospectionEndpointPath;
+            AllowedScope = allowedScope;
+            DiscoveryEndpointUrl = Url + "/" + discoveryEndpointEndpointPath;
         }
 
         public string Url { get; }
 
-        public string ClientScopeName { get; }
+        public string ClientId { get; }
 
         public string ClientSecret { get; }
 
-        public string TokenIntrospectionEndpointUrl { get; }
+        public string AllowedScope { get; }
+
+        public string DiscoveryEndpointUrl { get; }
     }
 }

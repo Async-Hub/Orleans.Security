@@ -23,7 +23,7 @@ namespace Orleans.Security.Authorization
             _accessTokenVerifier = accessTokenVerifier;
         }
 
-        public bool AuthenticationChallenge(IGrainCallContext grainCallContext)
+        protected static bool AuthenticationChallenge(IGrainCallContext grainCallContext)
         {
             var allowAnonymousAttribute = 
                 grainCallContext.InterfaceMethod.GetCustomAttribute<AllowAnonymousAttribute>();

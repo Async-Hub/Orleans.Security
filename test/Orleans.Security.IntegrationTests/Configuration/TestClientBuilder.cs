@@ -31,7 +31,7 @@ namespace Orleans.Security.IntegrationTests.Configuration
 
                     services.AddSingleton<IAccessTokenProvider, FakeAccessTokenProvider>();
                     services.AddSingleton(new IdentityServer4Info("authorityUrl",
-                        "clientScopeName", "clientSecret"));
+                        "clientScopeName", "clientSecret", "Orleans"));
                 })
                 .UseLocalhostClustering()
                 .Build();

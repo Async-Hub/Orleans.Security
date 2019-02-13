@@ -14,12 +14,12 @@ namespace IdentityServer4
             var resources = new List<ApiResource>();
 
             var api1 = new ApiResource("Api1", new[] { JwtClaimTypes.Email, JwtClaimTypes.Role });
-            api1.ApiSecrets.Add(new Secret(@"C%#4>#2x-kH(d9TuKqs?3Wt@NLT.\x$[".Sha256()));
+            api1.ApiSecrets.Add(new Secret("TFGB=?Gf3UvH+Uqfu_5p".Sha256()));
             resources.Add(api1);
 
-            var api2 = new ApiResource("Api2");
-            api2.ApiSecrets.Add(new Secret(@"C%#4>#2x-kH(d9HaQqs?3Wt@NLT.\x$[".Sha256()));
-            resources.Add(api2);
+            var orleans = new ApiResource("Orleans");
+            orleans.ApiSecrets.Add(new Secret("@3x3g*RLez$TNU!_7!QW".Sha256()));
+            resources.Add(orleans);
 
             return resources;
         }
@@ -30,20 +30,33 @@ namespace IdentityServer4
             {
                 new Client
                 {
-                    ClientId = "AdminClient",
+                    ClientId = "ConsoleClient",
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
                     ClientSecrets =
                     {
-                        new Secret("ClientSuperSecret".Sha256())
+                        new Secret("KHG+TZ8htVx2h3^!vJ65".Sha256())
                     },
                     Claims = new List<Claim> {new Claim(JwtClaimTypes.Role, "Admin")},
                     AllowedScopes =
                     {
-                        "Api1", "Api2",
+                        "Api1", "Orleans",
                         JwtClaimTypes.Email,
                         JwtClaimTypes.Role
                     }
                 },
+                //new Client
+                //{
+                //    ClientId = "OrleansClient",
+                //    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                //    ClientSecrets =
+                //    {
+                //        new Secret("@3x3g*RLez$TNU!_7!QW".Sha256())
+                //    },
+                //    AllowedScopes =
+                //    {
+                //        "Orleans"
+                //    }
+                //},
                 new Client
                 {
                     ClientId = "WebClient",
@@ -52,14 +65,14 @@ namespace IdentityServer4
                     AllowOfflineAccess = true,
                     ClientSecrets =
                     {
-                        new Secret(@"~.M;H(CA,RDr6};A7F}#;Nfxg}A3m+kS".Sha256())
+                        new Secret(@"pckJ#MH-9f9K?+^Bzx&4".Sha256())
                     },
                     AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
-                        "Api1", "Api2"
+                        "Api1", "Orleans"
                     },
                     RedirectUris = {"https://localhost:5004/signin-oidc"}
                 }

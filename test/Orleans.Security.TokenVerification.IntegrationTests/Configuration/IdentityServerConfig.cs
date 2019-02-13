@@ -2,7 +2,6 @@
 using IdentityServer4.Models;
 using IdentityServer4.Test;
 using System.Collections.Generic;
-using IdentityServer4;
 
 namespace Orleans.Security.TokenVerification.IntegrationTests.Configuration
 {

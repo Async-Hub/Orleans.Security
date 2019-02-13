@@ -6,7 +6,7 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace Orleans.Security.TokenVerification.IntegrationTests.Configuration
 {
-    public class TestIdentityServer4Builder
+    public static class TestIdentityServer4Builder
     {
         public static TestServer BuildNew()
         {

@@ -2,14 +2,15 @@
 {
     public class AccessTokenVerifierOptions
     {
-        public bool InMemoryCacheEnabled { get; set; }
-
-
-        public bool DisableCertificateValidation { get; set; }
-
+        public bool AllowOfflineValidation { get; set; }
+        
         /// <summary>
-        /// Cache entry expiration time. The default value is 30 seccond.
+        /// Cache entry expiration time. The default value is 15 seccond.
         /// </summary>
-        public int CacheEntryExpirationTime { get; set; } = 30;
+        public int CacheEntryExpirationTime { get; set; } = 15;
+        
+        public bool DisableCertificateValidation { get; set; }
+        
+        public bool InMemoryCacheEnabled { get; set; }
     }
 }

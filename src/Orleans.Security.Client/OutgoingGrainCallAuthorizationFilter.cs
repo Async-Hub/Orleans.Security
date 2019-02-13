@@ -38,7 +38,6 @@ namespace Orleans.Security.Client
                     $"Method Name: {context.InterfaceMethod.Name} ");
 
                 RequestContext.Set(ConfigurationKeys.AccessTokenKey, accessToken);
-                RequestContext.Set(ConfigurationKeys.OAuth2EndpointInfoKey, _identityServer4Info);
             }
 
             await context.Invoke();

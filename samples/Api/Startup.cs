@@ -19,14 +19,14 @@ namespace Api
         public void ConfigureServices(IServiceCollection services)
         {
             var oAuth2EndpointInfo = new IdentityServer4Info("https://localhost:5001",
-                "Api1", @"C%#4>#2x-kH(d9TuKqs?3Wt@NLT.\x$[");
+                "Api1", @"TFGB=?Gf3UvH+Uqfu_5p", "Orleans");
 
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddIdentityServerAuthentication(options =>
                 {
                     options.SupportedTokens = SupportedTokens.Both;
                     options.Authority = oAuth2EndpointInfo.Url;
-                    options.ApiName = oAuth2EndpointInfo.ClientScopeName;
+                    options.ApiName = oAuth2EndpointInfo.ClientId;
                     options.ApiSecret = oAuth2EndpointInfo.ClientSecret;
                     options.SaveToken = true;
                 });

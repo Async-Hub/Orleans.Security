@@ -41,3 +41,4 @@
 /samples/Api/Api.csproj.user
 /test/Orleans.Security.TokenVerification.IntegrationTests/obj
 /test/Orleans.Security.TokenVerification.IntegrationTests/bin
+/.idea
