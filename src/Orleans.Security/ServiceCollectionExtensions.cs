@@ -41,8 +41,9 @@ namespace Orleans.Security
 
             var accessTokenVerifierOptions = new AccessTokenVerifierOptions();
 
-            //services.AddScoped<TokenIntrospectionClient>();
-            services.AddHttpClient<TokenIntrospectionClient>().ConfigureHttpMessageHandlerBuilder(builder =>
+            services.AddScoped<IAccessTokenIntrospectionService, DefaultAccessTokenIntrospectionService>();
+
+            services.AddHttpClient("IdS4").ConfigureHttpMessageHandlerBuilder(builder =>
             {
                 var httpClientHandler = new HttpClientHandler();
                 builder.PrimaryHandler = httpClientHandler;
@@ -66,6 +67,9 @@ namespace Orleans.Security
 
             var memoryCacheOptions = new MemoryCacheOptions();
             services.AddSingleton<IAccessTokenCache>(serviceProvider => new AccessTokenCache(memoryCacheOptions));
+            services.AddSingleton(provider => new
+                IdS4DiscoveryDocumentProvider(provider.GetRequiredService<IHttpClientFactory>(),
+                    provider.GetRequiredService<IdentityServer4Info>().DiscoveryEndpointUrl));
         }
     }
 }

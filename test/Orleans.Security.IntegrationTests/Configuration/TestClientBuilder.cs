@@ -3,7 +3,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Orleans.Configuration;
 using Orleans.Security.Client;
 
-namespace Orleans.Security.IntegrationTests.Extensions
+namespace Orleans.Security.IntegrationTests.Configuration
 {
     internal static class TestClientBuilder
     {
@@ -31,7 +31,7 @@ namespace Orleans.Security.IntegrationTests.Extensions
 
                     services.AddSingleton<IAccessTokenProvider, FakeAccessTokenProvider>();
                     services.AddSingleton(new IdentityServer4Info("authorityUrl",
-                        "clientScopeName", "clientSecret"));
+                        "clientScopeName", "clientSecret", "Orleans"));
                 })
                 .UseLocalhostClustering()
                 .Build();

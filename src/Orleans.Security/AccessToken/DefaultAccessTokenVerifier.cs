@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Logging;
 using Orleans.Security.Caching;
 
 namespace Orleans.Security.AccessToken
@@ -12,19 +11,15 @@ namespace Orleans.Security.AccessToken
 
         private readonly IAccessTokenCache _accessTokenCache;
 
-        private readonly TokenIntrospectionClient _introspectionClient;
-
-        private readonly ILogger<DefaultAccessTokenVerifier> _logger;
+        private readonly IAccessTokenIntrospectionService _introspectionService;
 
         public DefaultAccessTokenVerifier(AccessTokenVerifierOptions options,
             IAccessTokenCache accessTokenCache,
-            TokenIntrospectionClient introspectionClient,
-            ILogger<DefaultAccessTokenVerifier> logger)
+            IAccessTokenIntrospectionService introspectionService)
         {
             _options = options;
             _accessTokenCache = accessTokenCache;
-            _introspectionClient = introspectionClient;
-            _logger = logger;
+            _introspectionService = introspectionService;
         }
 
         public async Task<AccessTokenVerificationResult> Verify(string accessToken)
@@ -45,26 +40,19 @@ namespace Orleans.Security.AccessToken
                 }
             }
 
-            var response = await _introspectionClient.IntrospectTokenAsync(accessToken);
+            var introspectionResult = await _introspectionService.IntrospectTokenAsync(accessToken);
 
             // ReSharper disable once InvertIf
             AccessTokenVerificationResult verificationResult;
-            var accessTokenType = AccessTokenAnalyzer.GetType(accessToken);
 
-            if (!response.IsError)
+            if (introspectionResult.IsValid)
             {
-                verificationResult = AccessTokenVerificationResult.CreateSuccess(accessTokenType, response.Claims);
+                verificationResult = AccessTokenVerificationResult.CreateSuccess(introspectionResult.AccessTokenType, 
+                    introspectionResult.Claims);
             }
             else
             {
-                verificationResult = AccessTokenVerificationResult.CreateFailed(response.Error);
-
-                var nameOfTokenType = accessTokenType == AccessTokenType.Jwt ? "JWT" : "Reference";
-
-                _logger.LogTrace(LoggingEvents.AccessTokenValidationFailed,
-                    $"{LoggingEvents.AccessTokenValidationFailed.Name} Token type: {nameOfTokenType} " +
-                    $"Reason: {response.Error} " +
-                    $"Token value: {accessToken}");
+                verificationResult = AccessTokenVerificationResult.CreateFailed(introspectionResult.Message);
             }
 
             if (!_options.InMemoryCacheEnabled)

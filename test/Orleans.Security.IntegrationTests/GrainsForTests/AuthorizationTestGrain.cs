@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Orleans.Security.IntegrationTests.TestGrains
+namespace Orleans.Security.IntegrationTests.GrainsForTests
 {
     // ReSharper disable once UnusedMember.Global
     public class AuthorizationTestGrain : Grain, IAuthorizationTestGrain

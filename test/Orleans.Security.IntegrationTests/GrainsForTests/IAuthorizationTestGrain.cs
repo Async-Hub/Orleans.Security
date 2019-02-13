@@ -1,7 +1,7 @@
 ﻿using System.Threading.Tasks;
 using Orleans.Security.Authorization;
 
-namespace Orleans.Security.IntegrationTests.TestGrains
+namespace Orleans.Security.IntegrationTests.GrainsForTests
 {
     [Authorize(Policy = "ManagerPolicy")]
     public interface IAuthorizationTestGrain : IGrainWithStringKey

@@ -34,13 +34,13 @@ namespace WebClient
 
                     options.Authority = "https://localhost:5001";
                     options.ClientId = "WebClient";
-                    options.ClientSecret = @"~.M;H(CA,RDr6};A7F}#;Nfxg}A3m+kS";
+                    options.ClientSecret = "pckJ#MH-9f9K?+^Bzx&4";
 
                     options.ResponseType = "code id_token";
                     options.SaveTokens = true;
 
                     options.Scope.Add("Api1");
-                    options.Scope.Add("Api2");
+                    options.Scope.Add("Orleans");
 
                     options.Scope.Add("offline_access");
                 });

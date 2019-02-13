@@ -4,7 +4,7 @@ using Orleans.Configuration;
 using Orleans.Hosting;
 using Orleans.Security.Clustering;
 
-namespace Orleans.Security.IntegrationTests.Extensions
+namespace Orleans.Security.IntegrationTests.Configuration
 {
     internal static class TestClusterBuilder
     {

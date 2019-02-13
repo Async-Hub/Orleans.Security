@@ -1,4 +1,4 @@
-﻿namespace Orleans.Security.IntegrationTests.Extensions
+﻿namespace Orleans.Security.IntegrationTests.Configuration
 {
     internal static class TestClusterOptions
     {
