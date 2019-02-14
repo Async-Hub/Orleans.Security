@@ -38,6 +38,7 @@
 /test/Orleans.Security.IntegrationTests/obj
 /samples/IdentityServer/IdentityServer/IdentityServer.csproj.user
 /Orleans.Security.sln.DotSettings.user
+/Orleans.Security.Build.sln.DotSettings.user	
 /samples/Api/Api.csproj.user
 /test/Orleans.Security.TokenVerification.IntegrationTests/obj
 /test/Orleans.Security.TokenVerification.IntegrationTests/bin
