@@ -2,12 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Version>1.0.1-beta</Version>
     <Authors>AsyncHub</Authors>
     <Company>AsyncHub</Company>
     <PackageProjectUrl>https://orlsec.asynchub.org/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Async-Hub/Orleans.Security</RepositoryUrl>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>

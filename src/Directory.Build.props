@@ -1,0 +1,28 @@
+<Project>
+  <PropertyGroup>
+    <MsBuildAllProjects>$(MsBuildAllProjects);$(MsBuildThisFileFullPath)</MsBuildAllProjects>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+	<Build_Patch Condition=" '$(BUILD_PATCH)' == '' ">0</Build_Patch>
+  </PropertyGroup>
+  
+  <PropertyGroup>
+    <VersionPrefix>1.0</VersionPrefix>
+	<VersionPrefix Condition=" '$(BUILD_PATCH)' != '' ">$(VersionPrefix).$(BUILD_PATCH)</VersionPrefix>
+  </PropertyGroup>
+ 
+  <Choose>
+    <When Condition=" '$(BUILD_SUFFIX)' != '' ">
+      <PropertyGroup>
+        <VersionSuffix>$(BUILD_SUFFIX)-$([System.DateTime]::Now.ToString("yyyyMMddHHmmss"))</VersionSuffix>
+      </PropertyGroup>
+    </When>
+    <Otherwise>
+      <!-- Release RTM Pipline -->
+      <PropertyGroup>
+        <VersionPrefix>$(VersionPrefix).$(BUILD_PATCH)</VersionPrefix>
+      </PropertyGroup>
+    </Otherwise>
+  </Choose>
+</Project>
