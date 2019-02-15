@@ -4,7 +4,7 @@
   </PropertyGroup>
   
   <PropertyGroup>
-	<Build_Patch Condition=" '$(BUILD_PATCH)' == '' ">0</Build_Patch>
+	<Build_Patch Condition=" '$(BUILD_PATCH)' == '' ">1</Build_Patch>
   </PropertyGroup>
   
   <PropertyGroup>
@@ -15,7 +15,7 @@
   <Choose>
     <When Condition=" '$(BUILD_SUFFIX)' != '' ">
       <PropertyGroup>
-        <VersionSuffix>$(BUILD_SUFFIX).$([System.DateTime]::Now.ToString("yyyyMMdd")).$(rev:.r)</VersionSuffix>
+        <VersionSuffix>$(BUILD_SUFFIX).$([System.DateTime]::Now.ToString("yyyyMMdd"))$([System.DateTime]::Now.TimeOfDay.TotalMinutes.ToString("F0").PadLeft(4,'0'))</VersionSuffix>
       </PropertyGroup>
     </When>
     <Otherwise>
