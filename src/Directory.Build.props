@@ -15,7 +15,7 @@
   <Choose>
     <When Condition=" '$(BUILD_SUFFIX)' != '' ">
       <PropertyGroup>
-        <VersionSuffix>$(BUILD_SUFFIX)-$([System.DateTime]::Now.ToString("yyyyMMddHHmmss"))</VersionSuffix>
+        <VersionSuffix>$(BUILD_SUFFIX).$([System.DateTime]::Now.ToString("yyyyMMdd")).$(rev:.r)</VersionSuffix>
       </PropertyGroup>
     </When>
     <Otherwise>
