@@ -7,20 +7,21 @@ using Xunit;
 
 namespace Orleans.Security.TokenVerification.IntegrationTests
 {
-    public class BaseTests : TestBase
+    public class TokenVerificationTests : TestBase
     {
         [Theory]
         [InlineData("WebClient", "Secret", "Api1")]
-        public async Task RetrieveAccessToken_ShouldBeSuccessful(string clientId, string clientSecret, string scope)
+        public async Task VerifyAccessToken_WithCorrectScope_ShouldBeSuccessful(string clientId,
+            string clientSecret, string scope)
         {
             // Arrange
-            // Act
             var accessToken = await RequestClientCredentialsTokenAsync(clientId, clientSecret, scope);
-            var accessTokenType = AccessTokenAnalyzer.GetTokenType(accessToken);
-            var validateJwt = JwtVerifier.Verify(accessToken, scope, DiscoveryResponse);
-            
+
+            // Act
+            var claims = JwtVerifier.Verify(accessToken, scope, DiscoveryResponse);
+
             // Assert
-            Assert.Equal(expected: AccessTokenType.Jwt, actual: accessTokenType);
+            Assert.True(claims != null);
         }
     }
 }
