@@ -3,6 +3,7 @@ using System.Net.Http;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Logging;
 using Orleans.Security.AccessToken;
 using Orleans.Security.Authorization;
 using Orleans.Security.Caching;
@@ -29,19 +30,45 @@ namespace Orleans.Security
 
             configureServices?.Invoke(services);
 
-            // ReSharper disable once ConvertIfStatementToConditionalTernaryExpression
-            if (!configuration.TracingEnabled)
-            {
-                services.TryAdd(ServiceDescriptor.Singleton<IAccessTokenVerifier, DefaultAccessTokenVerifier>());
-            }
-            else
-            {
-                services.TryAdd(ServiceDescriptor.Singleton<IAccessTokenVerifier, AccessTokenVerifierWithTracing>());
-            }
-
+            // Acces Token verification section.
             var accessTokenVerifierOptions = new AccessTokenVerifierOptions();
+            configuration.ConfigureAccessTokenVerifierOptions?.Invoke(accessTokenVerifierOptions);
+            services.Add(ServiceDescriptor.Singleton(accessTokenVerifierOptions));
 
+            services.TryAddSingleton<DefaultAccessTokenVerifier>();
             services.AddScoped<IAccessTokenIntrospectionService, DefaultAccessTokenIntrospectionService>();
+
+            services.Add(
+                ServiceDescriptor.Describe(typeof(AccessTokenVerifierWithCaching), serviceProvider =>
+                {
+                    var defaultAccessTokenVerifier = serviceProvider.GetService<DefaultAccessTokenVerifier>();
+                    var accessTokenCache = serviceProvider.GetService<IAccessTokenCache>();
+
+                    return new AccessTokenVerifierWithCaching(defaultAccessTokenVerifier,
+                        accessTokenCache, accessTokenVerifierOptions.CacheEntryExpirationTime);
+
+                }, ServiceLifetime.Singleton));
+
+
+            services.Add(ServiceDescriptor.Describe(typeof(IAccessTokenVerifier), serviceProvider =>
+                {
+                    IAccessTokenVerifier service = serviceProvider.GetService<DefaultAccessTokenVerifier>();
+                    var isCacheEnabled = accessTokenVerifierOptions.InMemoryCacheEnabled;
+
+                    if (isCacheEnabled)
+                    {
+                        service = serviceProvider.GetService<AccessTokenVerifierWithCaching>();
+                    }
+
+                    if (!configuration.TracingEnabled)
+                    {
+                        return service;
+                    }
+
+                    var logger = serviceProvider.GetRequiredService<ILogger<IAccessTokenVerifier>>();
+                    return new AccessTokenVerifierWithTracing(isCacheEnabled, service, logger);
+                }
+                , ServiceLifetime.Singleton));
 
             services.AddHttpClient("IdS4").ConfigureHttpMessageHandlerBuilder(builder =>
             {
@@ -61,9 +88,6 @@ namespace Orleans.Security
                         };
                 }
             });
-
-            configuration.ConfigureAccessTokenVerifierOptions?.Invoke(accessTokenVerifierOptions);
-            services.Add(ServiceDescriptor.Singleton(accessTokenVerifierOptions));
 
             var memoryCacheOptions = new MemoryCacheOptions();
             services.AddSingleton<IAccessTokenCache>(serviceProvider => new AccessTokenCache(memoryCacheOptions));

@@ -1,9 +1,9 @@
-﻿using IdentityModel;
+﻿using System.Collections.Generic;
+using IdentityModel;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
-using System.Collections.Generic;
 
-namespace Orleans.Security.TokenVerification.IntegrationTests.Configuration
+namespace Orleans.Security.IntegrationTests.TokenVerification.Configuration
 {
     public static class IdentityServerConfig
     {

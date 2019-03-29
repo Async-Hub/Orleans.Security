@@ -40,6 +40,8 @@
 /Orleans.Security.sln.DotSettings.user
 /Orleans.Security.Build.sln.DotSettings.user	
 /samples/Api/Api.csproj.user
-/test/Orleans.Security.TokenVerification.IntegrationTests/obj
-/test/Orleans.Security.TokenVerification.IntegrationTests/bin
+/test/Orleans.Security.IntegrationTests.TokenVerification/obj
+/test/Orleans.Security.IntegrationTests.TokenVerification/bin
 /.idea
+/test/Orleans.Security.IntegrationTests.Functional/bin
+/test/Orleans.Security.IntegrationTests.Functional/obj

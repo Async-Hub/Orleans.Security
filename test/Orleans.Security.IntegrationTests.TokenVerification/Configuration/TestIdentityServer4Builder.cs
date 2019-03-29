@@ -4,7 +4,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.TestHost;
 using Microsoft.Extensions.DependencyInjection;
 
-namespace Orleans.Security.TokenVerification.IntegrationTests.Configuration
+namespace Orleans.Security.IntegrationTests.TokenVerification.Configuration
 {
     public static class TestIdentityServer4Builder
     {
