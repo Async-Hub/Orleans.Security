@@ -28,7 +28,7 @@ namespace Orleans.Security.AccessToken
                 throw new ArgumentException($"The value of {nameof(accessToken)} can't be null or empty.");
             }
 
-            // TODO: Need more deeper investigations, maybe this optimization is unnesesarry.
+            // TODO: Need deeper investigations, maybe this optimization is unnecessary.
             var key = TryToOptimize(accessToken);
 
             if (_accessTokenCache.Current.TryGetValue(key, out var result))
