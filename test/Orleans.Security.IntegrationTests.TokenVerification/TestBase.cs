@@ -1,9 +1,9 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using IdentityModel.Client;
-using Orleans.Security.TokenVerification.IntegrationTests.Configuration;
+using Orleans.Security.IntegrationTests.TokenVerification.Configuration;
 
-namespace Orleans.Security.TokenVerification.IntegrationTests
+namespace Orleans.Security.IntegrationTests.TokenVerification
 {
     public class TestBase
     {

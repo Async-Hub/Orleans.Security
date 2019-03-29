@@ -1,11 +1,8 @@
-using System;
-using System.Net.Http;
-using System.Runtime.InteropServices.ComTypes;
 using System.Threading.Tasks;
 using Orleans.Security.AccessToken;
 using Xunit;
 
-namespace Orleans.Security.TokenVerification.IntegrationTests
+namespace Orleans.Security.IntegrationTests.TokenVerification
 {
     public class TokenVerificationTests : TestBase
     {
@@ -18,7 +15,7 @@ namespace Orleans.Security.TokenVerification.IntegrationTests
             var accessToken = await RequestClientCredentialsTokenAsync(clientId, clientSecret, scope);
 
             // Act
-            var claims = JwtVerifier.Verify(accessToken, scope, DiscoveryResponse);
+            var claims = JwtSecurityTokenVerifier.Verify(accessToken, scope, DiscoveryResponse);
 
             // Assert
             Assert.True(claims != null);

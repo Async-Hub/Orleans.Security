@@ -9,7 +9,7 @@ using Microsoft.IdentityModel.Tokens;
 
 namespace Orleans.Security.AccessToken
 {
-    internal class JwtVerifier
+    internal class JwtSecurityTokenVerifier
     {
         internal static IEnumerable<Claim> Verify(string jwt, string audience, DiscoveryResponse discoveryDocument)
         {

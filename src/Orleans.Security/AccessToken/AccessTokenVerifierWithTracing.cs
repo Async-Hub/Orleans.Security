@@ -1,28 +1,25 @@
 ﻿using System.Diagnostics;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Orleans.Security.Caching;
 
 namespace Orleans.Security.AccessToken
 {
     // ReSharper disable once ClassNeverInstantiated.Global
     internal class AccessTokenVerifierWithTracing : IAccessTokenVerifier
     {
-        private readonly DefaultAccessTokenVerifier _defaultAccessTokenVerifier;
+        private readonly IAccessTokenVerifier _accessTokenVerifier;
 
-        private readonly ILogger<DefaultAccessTokenVerifier> _logger;
+        private readonly ILogger<IAccessTokenVerifier> _logger;
 
         private readonly bool _isCachingEnabled;
 
-        public AccessTokenVerifierWithTracing(AccessTokenVerifierOptions options,
-            IAccessTokenCache accessTokenCache,
-            IAccessTokenIntrospectionService introspectionService,
-            ILogger<DefaultAccessTokenVerifier> logger)
+        public AccessTokenVerifierWithTracing(bool isCachingEnabled,
+            IAccessTokenVerifier accessTokenVerifier,
+            ILogger<IAccessTokenVerifier> logger)
         {
             _logger = logger;
-            _isCachingEnabled = options.InMemoryCacheEnabled;
-            _defaultAccessTokenVerifier = new DefaultAccessTokenVerifier(options, 
-                accessTokenCache, introspectionService);
+            _isCachingEnabled = isCachingEnabled;
+            _accessTokenVerifier = accessTokenVerifier;
         }
 
         public async Task<AccessTokenVerificationResult> Verify(string accessToken)
@@ -30,7 +27,7 @@ namespace Orleans.Security.AccessToken
             var stopwatch = new Stopwatch();
             stopwatch.Start();
 
-            var result = await _defaultAccessTokenVerifier.Verify(accessToken);
+            var result = await _accessTokenVerifier.Verify(accessToken);
 
             stopwatch.Stop();
             _logger.LogInformation(LoggingEvents.AccessTokenVerified,$"Time: " +

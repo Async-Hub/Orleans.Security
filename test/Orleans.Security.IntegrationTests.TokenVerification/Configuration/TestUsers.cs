@@ -3,7 +3,7 @@ using System.Security.Claims;
 using IdentityModel;
 using IdentityServer4.Test;
 
-namespace Orleans.Security.TokenVerification.IntegrationTests.Configuration
+namespace Orleans.Security.IntegrationTests.TokenVerification.Configuration
 {
     public static class TestUsers
     {

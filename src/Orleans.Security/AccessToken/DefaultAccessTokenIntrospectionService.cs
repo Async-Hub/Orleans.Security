@@ -31,8 +31,10 @@ namespace Orleans.Security.AccessToken
 
             if (accessTokenType == AccessTokenType.Jwt && allowOfflineValidation)
             {
-                var claims = JwtVerifier.Verify(accessToken,
+                var claims = JwtSecurityTokenVerifier.Verify(accessToken,
                     _identityServer4Info.AllowedScope, discoveryResponse);
+
+                return new AccessTokenIntrospectionResult(accessTokenType, claims, true);
             }
 
             var introspectionResult = await
