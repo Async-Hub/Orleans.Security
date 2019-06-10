@@ -1,5 +1,5 @@
 [![Build status](https://dev.azure.com/asynchub/Orleans.Security/_apis/build/status/Orleans.Security-CI)](https://dev.azure.com/asynchub/Orleans.Security/_build/latest?definitionId=2)
-[![Waffle.io - Columns and their card count](https://badge.waffle.io/Async-Hub/Orleans.Security.svg?columns=all)](https://waffle.io/Async-Hub/Orleans.Security)
+[![Board Status](https://dev.azure.com/asynchub/5a6d822d-5d9b-4d9a-8ce4-23803c42a92f/9b9ae766-6544-4f15-af2d-657f28e5facd/_apis/work/boardbadge/6d266e64-b197-4d7b-93c5-6ba135b22a56?columnOptions=1)](https://dev.azure.com/asynchub/5a6d822d-5d9b-4d9a-8ce4-23803c42a92f/_boards/board/t/9b9ae766-6544-4f15-af2d-657f28e5facd/Microsoft.RequirementCategory)
 
 # Authorization library for Microsoft Orleans 2.0
 
