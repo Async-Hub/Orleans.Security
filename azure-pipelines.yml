@@ -1,5 +1,3 @@
-# Starter pipeline
-# Start with a minimal pipeline that you can customize to build and deploy your code.
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
@@ -7,13 +5,43 @@ trigger:
 - master
 
 pool:
-  vmImage: 'Ubuntu-16.04'
+  name: Hosted Windows 2019 with VS2019
+  demands:
+  - msbuild
+  - visualstudio
 
 steps:
-- script: echo Hello, world!
-  displayName: 'Run a one-line script'
-
-- script: |
-    echo Add other tasks to build, test, and deploy your project.
-    echo See https://aka.ms/yaml
-  displayName: 'Run a multi-line script'
+# ...
+# Use NuGet 5.0
+- task: NuGetToolInstaller@0
+  displayName: 'Use NuGet 5.0'
+  inputs:
+    versionSpec: 5.0.x
+# ...
+# Restore NuGet packages.
+- task: NuGetCommand@2
+  displayName: 'NuGet restore'
+  inputs:
+    feedsToUse: config
+# ...
+# Build Solution
+- task: VSBuild@1
+  displayName: 'Build solution **\*.sln'
+  inputs:
+    platform: 'any cpu'
+  condition: succeededOrFailed()
+# ...
+# Run Tests
+- task: DotNetCoreCLI@2
+  displayName: 'Run Tests'
+  inputs:
+    command: test
+    projects: 'test/**/*.csproj'
+    arguments: '--logger:trx'
+# ...
+# Publish Test Results
+- task: PublishTestResults@2
+  displayName: 'Publish Test Results'
+  inputs:
+    testResultsFormat: VSTest
+    testResultsFiles: 'test/**/*.trx'
