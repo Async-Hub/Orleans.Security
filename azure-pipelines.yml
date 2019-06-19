@@ -45,3 +45,17 @@ steps:
   inputs:
     testResultsFormat: VSTest
     testResultsFiles: 'test/**/*.trx'
+# ...
+# NuGet pack Orleans.Security Solution
+- task: DotNetCoreCLI@2
+  displayName: 'NuGet pack Orleans.Security Solution'
+  inputs:
+    command: pack
+    packagesToPack: Orleans.Security.Build.sln
+# ...
+# Push NuGet packs to feed
+- task: NuGetCommand@2
+  displayName: 'NuGet push'
+  inputs:
+    command: push
+    publishVstsFeed: 'ebb2809e-41ed-479a-9185-3bfe72acbe84'

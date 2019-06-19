@@ -30,7 +30,7 @@ namespace Orleans.Security
 
             configureServices?.Invoke(services);
 
-            // Acces Token verification section.
+            // Access Token verification section.
             var accessTokenVerifierOptions = new AccessTokenVerifierOptions();
             configuration.ConfigureAccessTokenVerifierOptions?.Invoke(accessTokenVerifierOptions);
             services.Add(ServiceDescriptor.Singleton(accessTokenVerifierOptions));
@@ -38,37 +38,41 @@ namespace Orleans.Security
             services.TryAddSingleton<DefaultAccessTokenVerifier>();
             services.AddScoped<IAccessTokenIntrospectionService, DefaultAccessTokenIntrospectionService>();
 
-            services.Add(
-                ServiceDescriptor.Describe(typeof(AccessTokenVerifierWithCaching), serviceProvider =>
-                {
-                    var defaultAccessTokenVerifier = serviceProvider.GetService<DefaultAccessTokenVerifier>();
-                    var accessTokenCache = serviceProvider.GetService<IAccessTokenCache>();
-
-                    return new AccessTokenVerifierWithCaching(defaultAccessTokenVerifier,
-                        accessTokenCache, accessTokenVerifierOptions.CacheEntryExpirationTime);
-
-                }, ServiceLifetime.Singleton));
-
-
-            services.Add(ServiceDescriptor.Describe(typeof(IAccessTokenVerifier), serviceProvider =>
-                {
-                    IAccessTokenVerifier service = serviceProvider.GetService<DefaultAccessTokenVerifier>();
-                    var isCacheEnabled = accessTokenVerifierOptions.InMemoryCacheEnabled;
-
-                    if (isCacheEnabled)
+            //TODO: Maybe there is a better solution to split configuration for testing purposes.
+            // If the environment is not in testing mode.
+            if (configureServices == null)
+            {
+                services.Add(
+                    ServiceDescriptor.Describe(typeof(AccessTokenVerifierWithCaching), serviceProvider =>
                     {
-                        service = serviceProvider.GetService<AccessTokenVerifierWithCaching>();
-                    }
+                        var defaultAccessTokenVerifier = serviceProvider.GetService<DefaultAccessTokenVerifier>();
+                        var accessTokenCache = serviceProvider.GetService<IAccessTokenCache>();
 
-                    if (!configuration.TracingEnabled)
+                        return new AccessTokenVerifierWithCaching(defaultAccessTokenVerifier,
+                            accessTokenCache, accessTokenVerifierOptions.CacheEntryExpirationTime);
+
+                    }, ServiceLifetime.Singleton));
+
+                services.Add(ServiceDescriptor.Describe(typeof(IAccessTokenVerifier), serviceProvider =>
                     {
-                        return service;
-                    }
+                        IAccessTokenVerifier service = serviceProvider.GetService<DefaultAccessTokenVerifier>();
+                        var isCacheEnabled = accessTokenVerifierOptions.InMemoryCacheEnabled;
 
-                    var logger = serviceProvider.GetRequiredService<ILogger<IAccessTokenVerifier>>();
-                    return new AccessTokenVerifierWithTracing(isCacheEnabled, service, logger);
-                }
-                , ServiceLifetime.Singleton));
+                        if (isCacheEnabled)
+                        {
+                            service = serviceProvider.GetService<AccessTokenVerifierWithCaching>();
+                        }
+
+                        if (!configuration.TracingEnabled)
+                        {
+                            return service;
+                        }
+
+                        var logger = serviceProvider.GetRequiredService<ILogger<IAccessTokenVerifier>>();
+                        return new AccessTokenVerifierWithTracing(isCacheEnabled, service, logger);
+                    }
+                    , ServiceLifetime.Singleton));
+            }
 
             services.AddHttpClient("IdS4").ConfigureHttpMessageHandlerBuilder(builder =>
             {
