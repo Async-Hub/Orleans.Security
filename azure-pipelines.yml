@@ -1,8 +1,7 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
-variables:
-    name: $(date:yyyyMMdd)$(rev:.r)
+name: $(date:yyyyMMdd)$(rev:.r)
 
 trigger:
 - master
@@ -29,10 +28,12 @@ steps:
 # ...
 # Build Solution
 - task: VSBuild@1
-  displayName: 'Build solution **\*.sln'
+  displayName: 'Build solution Orleans.Security.Build.sln'
   inputs:
+    solution: Orleans.Security.Build.sln
     platform: 'any cpu'
-  condition: succeededOrFailed()
+    configuration: release
+    clean: true
 # ...
 # Run Tests
 - task: DotNetCoreCLI@2
