@@ -1,6 +1,9 @@
 # Add steps that build, run tests, deploy, and more:
 # https://aka.ms/yaml
 
+variables:
+    name: $(date:yyyyMMdd)$(rev:.r)
+
 trigger:
 - master
 
@@ -12,11 +15,11 @@ pool:
 
 steps:
 # ...
-# Use NuGet 5.0
+# Use NuGet 5
 - task: NuGetToolInstaller@0
-  displayName: 'Use NuGet 5.0'
+  displayName: 'Use NuGet 5'
   inputs:
-    versionSpec: 5.0.x
+    versionSpec: 5.x
 # ...
 # Restore NuGet packages.
 - task: NuGetCommand@2
