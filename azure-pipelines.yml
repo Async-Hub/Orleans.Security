@@ -35,6 +35,13 @@ steps:
     configuration: release
     clean: true
 # ...
+# Version with GitVersion
+- task: gittools.gitversion.gitversion-task.GitVersion@4
+  displayName: GitVersion
+  inputs:
+    updateAssemblyInfo: true
+    preferBundledVersion: false
+# ...
 # Run Tests
 - task: DotNetCoreCLI@2
   displayName: 'Run Tests'
