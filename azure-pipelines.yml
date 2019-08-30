@@ -48,7 +48,7 @@ steps:
   inputs:
     command: test
     projects: 'test/**/*.csproj'
-    arguments: '--logger:trx'
+    #arguments: '--logger:trx'
 # ...
 # Publish Test Results
 - task: PublishTestResults@2
