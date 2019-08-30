@@ -6,6 +6,7 @@
     <Company>AsyncHub</Company>
     <PackageProjectUrl>https://orlsec.asynchub.org/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Async-Hub/Orleans.Security</RepositoryUrl>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
