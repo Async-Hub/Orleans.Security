@@ -26,6 +26,13 @@ steps:
   inputs:
     feedsToUse: config
 # ...
+# Version with GitVersion
+- task: gittools.gitversion.gitversion-task.GitVersion@4
+  displayName: GitVersion
+  inputs:
+    updateAssemblyInfo: true
+    preferBundledVersion: false
+# ...
 # Build Solution
 - task: VSBuild@1
   displayName: 'Build solution Orleans.Security.Build.sln'
@@ -55,6 +62,8 @@ steps:
   displayName: 'NuGet pack Orleans.Security.Build.sln'
   inputs:
     command: pack
+    versioningScheme: byEnvVar
+    versionEnvVar: GitVersion.SemVer
     packagesToPack: Orleans.Security.Build.sln
 # ...
 # Push NuGet packs to feed
@@ -63,4 +72,3 @@ steps:
   inputs:
     command: push
     publishVstsFeed: '/c98d9aaf-ce19-4121-8b3d-4209a8f3ee5e'
-    allowPackageConflicts: true

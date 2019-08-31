@@ -6,12 +6,13 @@
     <Company>AsyncHub</Company>
     <PackageProjectUrl>https://orlsec.asynchub.org/</PackageProjectUrl>
     <RepositoryUrl>https://github.com/Async-Hub/Orleans.Security</RepositoryUrl>
+    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JWT" Version="5.2.0" />
-    <PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="2.3.5" />
+    <PackageReference Include="JWT" Version="5.2.3" />
+    <PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="2.4.1" />
   </ItemGroup>
 
   <ItemGroup>
