@@ -26,6 +26,13 @@ steps:
   inputs:
     feedsToUse: config
 # ...
+# Version with GitVersion
+- task: gittools.gitversion.gitversion-task.GitVersion@4
+  displayName: GitVersion
+  inputs:
+    updateAssemblyInfo: true
+    preferBundledVersion: false
+# ...
 # Build Solution
 - task: VSBuild@1
   displayName: 'Build solution Orleans.Security.Build.sln'
@@ -41,7 +48,7 @@ steps:
   inputs:
     command: test
     projects: 'test/**/*.csproj'
-    #arguments: '--logger:trx'
+    arguments: '--logger:trx'
 # ...
 # Publish Test Results
 - task: PublishTestResults@2
@@ -49,13 +56,6 @@ steps:
   inputs:
     testResultsFormat: VSTest
     testResultsFiles: 'test/**/*.trx'
-# ...
-# Version with GitVersion
-- task: gittools.gitversion.gitversion-task.GitVersion@4
-  displayName: GitVersion
-  inputs:
-    updateAssemblyInfo: true
-    preferBundledVersion: false
 # ...
 # NuGet pack Orleans.Security.Build.sln
 - task: DotNetCoreCLI@2
