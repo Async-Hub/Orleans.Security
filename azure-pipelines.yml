@@ -62,7 +62,8 @@ steps:
   displayName: 'NuGet pack Orleans.Security.Build.sln'
   inputs:
     command: pack
-    arguments: '/p:Version=$(Build.BuildNumber)'
+    versioningScheme: byEnvVar
+    versionEnvVar: GitVersion.SemVer
     packagesToPack: Orleans.Security.Build.sln
 # ...
 # Push NuGet packs to feed
