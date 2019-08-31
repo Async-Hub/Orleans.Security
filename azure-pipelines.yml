@@ -71,4 +71,4 @@ steps:
   displayName: 'NuGet push'
   inputs:
     command: push
-    publishVstsFeed: '/c98d9aaf-ce19-4121-8b3d-4209a8f3ee5e'
+    publishVstsFeed: '5a6d822d-5d9b-4d9a-8ce4-23803c42a92f/d861be06-fd69-4794-9c74-dd8b05950c7e'
