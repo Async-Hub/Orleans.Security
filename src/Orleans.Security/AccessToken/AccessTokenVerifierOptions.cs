@@ -5,7 +5,7 @@
         public bool AllowOfflineValidation { get; set; }
         
         /// <summary>
-        /// Cache entry expiration time. The default value is 15 seccond.
+        /// Cache entry expiration time. The default value is 15 second.
         /// </summary>
         public int CacheEntryExpirationTime { get; set; } = 15;
         
