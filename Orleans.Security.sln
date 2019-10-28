@@ -21,7 +21,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{E01BBEE2-F
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orleans.Security.IntegrationTests", "test\Orleans.Security.IntegrationTests\Orleans.Security.IntegrationTests.csproj", "{41781993-78CB-4B43-B1B8-7B6C0E85AEF1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "samples\IdentityServer\IdentityServer\IdentityServer.csproj", "{508535DB-1D73-40C4-9EBF-214CC05284A7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "samples\IdentityServer\IdentityServer.csproj", "{508535DB-1D73-40C4-9EBF-214CC05284A7}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grains", "samples\Grains\Grains.csproj", "{8AA6C199-5FC1-4D49-A79F-1AC3C10CDEC2}"
 EndProject

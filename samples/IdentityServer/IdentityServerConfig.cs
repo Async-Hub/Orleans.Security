@@ -16,6 +16,8 @@ namespace IdentityServer4
             var api1 = new ApiResource("Api1", new[] { JwtClaimTypes.Email, JwtClaimTypes.Role });
             api1.ApiSecrets.Add(new Secret("TFGB=?Gf3UvH+Uqfu_5p".Sha256()));
             resources.Add(api1);
+            api1.Scopes.Add(new Scope("Api1.Read"));
+            api1.Scopes.Add(new Scope("Api1.Write"));
 
             var orleans = new ApiResource("Orleans");
             orleans.ApiSecrets.Add(new Secret("@3x3g*RLez$TNU!_7!QW".Sha256()));
@@ -31,7 +33,7 @@ namespace IdentityServer4
                 new Client
                 {
                     ClientId = "ConsoleClient",
-                    AllowedGrantTypes = GrantTypes.ClientCredentials,
+                    AllowedGrantTypes = GrantTypes.ResourceOwnerPasswordAndClientCredentials,
                     ClientSecrets =
                     {
                         new Secret("KHG+TZ8htVx2h3^!vJ65".Sha256())
@@ -44,19 +46,6 @@ namespace IdentityServer4
                         JwtClaimTypes.Role
                     }
                 },
-                //new Client
-                //{
-                //    ClientId = "OrleansClient",
-                //    AllowedGrantTypes = GrantTypes.ClientCredentials,
-                //    ClientSecrets =
-                //    {
-                //        new Secret("@3x3g*RLez$TNU!_7!QW".Sha256())
-                //    },
-                //    AllowedScopes =
-                //    {
-                //        "Orleans"
-                //    }
-                //},
                 new Client
                 {
                     ClientId = "WebClient",
@@ -72,7 +61,7 @@ namespace IdentityServer4
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
                         IdentityServerConstants.StandardScopes.Email,
-                        "Api1", "Orleans"
+                        "Api1", "Api1.Read", "Api1.Write"
                     },
                     RedirectUris = {"https://localhost:5004/signin-oidc"}
                 }
