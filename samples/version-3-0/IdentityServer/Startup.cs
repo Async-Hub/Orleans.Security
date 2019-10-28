@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Hosting;
 
 namespace IdentityServer4
 {
@@ -18,11 +19,11 @@ namespace IdentityServer4
                 .AddInMemoryClients(IdentityServerConfig.GetClients())
                 .AddTestUsers(IdentityServerConfig.GetUsers());
 
-            services.AddMvc();
+            services.AddControllersWithViews(); ;
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
@@ -31,7 +32,15 @@ namespace IdentityServer4
 
             app.UseStaticFiles();
             app.UseIdentityServer();
-            app.UseMvcWithDefaultRoute();
+            app.UseAuthorization();
+
+            app.UseRouting();
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllerRoute(
+                    name: "default",
+                    pattern: "{controller=Home}/{action=Index}/{id?}");
+            });
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
 using Orleans.Security.Client;
@@ -21,12 +22,12 @@ namespace Api.Orleans
             _httpContextAccessorResolver = httpContextAccessorResolver;
         }
 
-        public string RetrieveToken()
+        public async Task<string> RetrieveTokenAsync()
         {
             var httpContextAccessor = _httpContextAccessorResolver.Invoke();
 
             // The first approach
-            var token1 = httpContextAccessor.HttpContext.GetTokenAsync("access_token").Result;
+            var token1 = await httpContextAccessor.HttpContext.GetTokenAsync("access_token");
             
             // The second approach
             var token2 = httpContextAccessor.HttpContext.Request

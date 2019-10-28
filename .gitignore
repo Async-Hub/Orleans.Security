@@ -54,3 +54,9 @@
 /samples/version-3-0/SiloHost1/obj
 /samples/version-3-0/WebClient/bin/
 /samples/version-3-0/WebClient/obj
+/samples/version-2-2/Api/Api.csproj.user
+/samples/version-2-2/IdentityServer/IdentityServer.csproj.user
+/samples/version-2-2/WebClient/WebClient.csproj.user
+/samples/version-3-0/Api/Api.csproj.user
+/samples/version-3-0/IdentityServer/IdentityServer.csproj.user
+/samples/version-3-0/WebClient/WebClient.csproj.user

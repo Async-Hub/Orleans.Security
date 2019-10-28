@@ -27,7 +27,7 @@ namespace Orleans.Security.Client
         {
             if (AuthenticationChallenge(context))
             {
-                var accessToken = _accessTokenProvider.RetrieveToken();
+                var accessToken = await _accessTokenProvider.RetrieveTokenAsync();
 
                 await AuthorizeAsync(context, accessToken);
 

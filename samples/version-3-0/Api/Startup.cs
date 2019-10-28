@@ -7,6 +7,7 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.DependencyInjection.Extensions;
+using Microsoft.Extensions.Hosting;
 using Orleans;
 using Orleans.Security;
 
@@ -31,9 +32,8 @@ namespace Api
                     options.SaveToken = true;
                 });
 
-            services.AddMvcCore().AddAuthorization().AddJsonFormatters();
-
-            services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_2);
+            services.AddAuthorization();
+            services.AddControllers();
             services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
 
             // ReSharper disable once RedundantTypeArgumentsOfMethod
@@ -47,19 +47,23 @@ namespace Api
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env)
+        public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
-            else
-            {
-                app.UseHsts();
-            }
+
+            app.UseHttpsRedirection();
 
             app.UseAuthentication();
-            app.UseMvc();
+            app.UseRouting();
+            app.UseAuthorization();
+
+            app.UseEndpoints(endpoints =>
+            {
+                endpoints.MapControllers();
+            });
         }
     }
 }

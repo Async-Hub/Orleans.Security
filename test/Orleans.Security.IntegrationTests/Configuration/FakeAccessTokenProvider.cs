@@ -1,12 +1,13 @@
-﻿using Orleans.Security.Client;
+﻿using System.Threading.Tasks;
+using Orleans.Security.Client;
 
 namespace Orleans.Security.IntegrationTests.Configuration
 {
     internal class FakeAccessTokenProvider : IAccessTokenProvider
     {
-        public string RetrieveToken()
+        public Task<string> RetrieveTokenAsync()
         {
-            return "Fake Token";
+            return Task.FromResult("Fake Token");
         }
     }
 }

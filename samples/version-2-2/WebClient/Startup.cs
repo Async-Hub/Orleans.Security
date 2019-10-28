@@ -39,8 +39,8 @@ namespace WebClient
                     options.ResponseType = "code id_token";
                     options.SaveTokens = true;
 
-                    //options.Scope.Add("Api1");
-                    //options.Scope.Add("Orleans");
+                    options.Scope.Add("Api1");
+                    options.Scope.Add("Orleans");
                     options.Scope.Add("Api1.Read");
                     options.Scope.Add("Api1.Write");
 
