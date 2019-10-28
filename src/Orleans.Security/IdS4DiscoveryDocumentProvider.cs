@@ -2,6 +2,7 @@
 using System.Net.Http;
 using System.Threading.Tasks;
 using IdentityModel.Client;
+using Orleans.Security.AccessToken;
 
 namespace Orleans.Security
 {
@@ -11,7 +12,7 @@ namespace Orleans.Security
 
         private readonly string _discoveryEndpointUrl;
 
-        private DiscoveryResponse _discoveryResponse;
+        private DiscoveryDocumentShortInfo _discoveryDocument;
 
         internal IdS4DiscoveryDocumentProvider(IHttpClientFactory clientFactory, string discoveryEndpointUrl)
         {
@@ -19,21 +20,29 @@ namespace Orleans.Security
             _discoveryEndpointUrl = discoveryEndpointUrl;
         }
 
-        public async Task<DiscoveryResponse> GetDiscoveryDocumentAsync()
+        public async Task<DiscoveryDocumentShortInfo> GetDiscoveryDocumentAsync()
         {
-            if (_discoveryResponse != null)
+            if (_discoveryDocument != null)
             {
-                return _discoveryResponse;
+                return _discoveryDocument;
             }
 
-            _discoveryResponse = await _client.GetDiscoveryDocumentAsync(_discoveryEndpointUrl);
+            var discoveryResponse = await _client.GetDiscoveryDocumentAsync(_discoveryEndpointUrl);
 
-            if (_discoveryResponse.IsError)
+            if (discoveryResponse.IsError)
             {
-                throw new Exception(_discoveryResponse.Error);
+                throw new Exception(discoveryResponse.Error);
             }
 
-            return _discoveryResponse;
+            _discoveryDocument = new DiscoveryDocumentShortInfo
+            {
+                IntrospectionEndpoint = discoveryResponse.IntrospectionEndpoint,
+                Issuer = discoveryResponse.Issuer,
+                Keys = discoveryResponse.KeySet.Keys
+                
+            };
+
+            return _discoveryDocument;
         }
     }
 }

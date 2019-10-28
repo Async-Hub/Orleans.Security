@@ -5,17 +5,17 @@ using Microsoft.Extensions.Logging;
 
 namespace Orleans.Security.AccessToken
 {
-    internal class DefaultAccessTokenIntrospectionService : IAccessTokenIntrospectionService
+    internal class AccessTokenIntrospectionServiceDefault : IAccessTokenIntrospectionService
     {
         private readonly HttpClient _httpClient;
         private readonly IdentityServer4Info _identityServer4Info;
         private readonly IdS4DiscoveryDocumentProvider _discoveryDocumentProvider;
-        private readonly ILogger<DefaultAccessTokenIntrospectionService> _logger;
+        private readonly ILogger<AccessTokenIntrospectionServiceDefault> _logger;
 
-        public DefaultAccessTokenIntrospectionService(IHttpClientFactory clientFactory,
+        public AccessTokenIntrospectionServiceDefault(IHttpClientFactory clientFactory,
             IdentityServer4Info identityServer4Info,
             IdS4DiscoveryDocumentProvider discoveryDocumentProvider,
-            ILogger<DefaultAccessTokenIntrospectionService> logger)
+            ILogger<AccessTokenIntrospectionServiceDefault> logger)
         {
             _httpClient = clientFactory.CreateClient("IdS4");
             _identityServer4Info = identityServer4Info;
@@ -44,7 +44,7 @@ namespace Orleans.Security.AccessToken
         }
         
         private async Task<AccessTokenIntrospectionResult> IntrospectTokenOnlineAsync(string accessToken, 
-            AccessTokenType accessTokenType, DiscoveryResponse discoveryDocument)
+            AccessTokenType accessTokenType, DiscoveryDocumentShortInfo discoveryDocument)
         {
             var introspectionResponse = await _httpClient.IntrospectTokenAsync(new TokenIntrospectionRequest
             {

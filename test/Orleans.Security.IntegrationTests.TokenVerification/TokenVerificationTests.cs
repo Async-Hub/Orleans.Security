@@ -15,7 +15,7 @@ namespace Orleans.Security.IntegrationTests.TokenVerification
             var accessToken = await RequestClientCredentialsTokenAsync(clientId, clientSecret, scope);
 
             // Act
-            var claims = JwtSecurityTokenVerifier.Verify(accessToken, scope, DiscoveryResponse);
+            var claims = JwtSecurityTokenVerifier.Verify(accessToken, scope, DiscoveryDocument);
 
             // Assert
             Assert.True(claims != null);
