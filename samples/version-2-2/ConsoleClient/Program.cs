@@ -15,7 +15,7 @@ namespace ConsoleClient
             {
                 var discoveryClient = new HttpClient
                 {
-                    BaseAddress = new Uri("http://localhost:5000")
+                    BaseAddress = new Uri("https://localhost:5001")
                 };
 
                 var discoveryResponse = await discoveryClient.GetDiscoveryDocumentAsync();
@@ -36,7 +36,7 @@ namespace ConsoleClient
                     Address = discoveryResponse.TokenEndpoint,
                     UserName = "Alice",
                     Password = "Pass123$",
-                    Scope = "Api1"
+                    Scope = "Api1 Api1.Read Api1.Write Orleans"
                 };
 
                 var tokenResponse = await client.RequestPasswordTokenAsync(passwordTokenRequest);

@@ -41,7 +41,7 @@ namespace IdentityServer4
                     Claims = new List<Claim> {new Claim(JwtClaimTypes.Role, "Admin")},
                     AllowedScopes =
                     {
-                        "Api1", "Orleans",
+                        "Api1", "Api1.Read", "Api1.Write", "Orleans",
                         JwtClaimTypes.Email,
                         JwtClaimTypes.Role
                     }
