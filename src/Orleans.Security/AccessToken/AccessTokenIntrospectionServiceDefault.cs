@@ -1,4 +1,6 @@
+using System;
 using System.Net.Http;
+using System.Threading;
 using System.Threading.Tasks;
 using IdentityModel.Client;
 using Microsoft.Extensions.Logging;
@@ -46,13 +48,45 @@ namespace Orleans.Security.AccessToken
         private async Task<AccessTokenIntrospectionResult> IntrospectTokenOnlineAsync(string accessToken, 
             AccessTokenType accessTokenType, DiscoveryDocumentShortInfo discoveryDocument)
         {
-            var introspectionResponse = await _httpClient.IntrospectTokenAsync(new TokenIntrospectionRequest
+
+            // TODO: This approach should be reconsidered in future.
+            /*
+            The solution below allows use "Orleans.Security" with IdentityServer4 v2.x and IdentityServer4 v3.x.
+            At the same time, DLR with Reflection in is a bad idea.
+            */
+
+            const string fullyQualifiedNameOfType =
+                "IdentityModel.Client.HttpClientTokenIntrospectionExtensions, IdentityModel";
+
+            dynamic request = 
+                Activator.CreateInstance(Type.GetType("IdentityModel.Client.TokenIntrospectionRequest, IdentityModel", 
+                    true));
+
+            request.Address = discoveryDocument.IntrospectionEndpoint;
+            request.ClientId = _identityServer4Info.ClientId;
+            request.Token = accessToken;
+            request.ClientSecret = _identityServer4Info.ClientSecret;
+
+            var cancellationToken = default(CancellationToken);
+            var param = new object[] { _httpClient,request, cancellationToken };
+
+            var introspectionResponse =
+                await RuntimeMethodBinder.InvokeAsync(fullyQualifiedNameOfType,
+                    "IntrospectTokenAsync", param, 3);
+
+            // TODO: This should be used normally.
+
+            /*
+            var request = new TokenIntrospectionRequest
             {
                 Address = discoveryDocument.IntrospectionEndpoint,
                 ClientId = _identityServer4Info.ClientId,
                 Token = accessToken,
                 ClientSecret = _identityServer4Info.ClientSecret,
-            });
+            };
+            
+            var introspectionResponse = await _httpClient.IntrospectTokenAsync(request);
+            */
 
             var nameOfTokenType = accessTokenType == AccessTokenType.Jwt ? "JWT" : "Reference";
             
