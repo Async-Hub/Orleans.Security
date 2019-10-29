@@ -36,7 +36,7 @@ namespace Orleans.Security
             services.Add(ServiceDescriptor.Singleton(accessTokenVerifierOptions));
 
             services.TryAddSingleton<DefaultAccessTokenVerifier>();
-            services.AddScoped<IAccessTokenIntrospectionService, DefaultAccessTokenIntrospectionService>();
+            services.AddScoped<IAccessTokenIntrospectionService, AccessTokenIntrospectionServiceDefault>();
 
             //TODO: Maybe there is a better solution to split configuration for testing purposes.
             // If the environment is not in testing mode.

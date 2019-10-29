@@ -1,7 +1,9 @@
-﻿namespace Orleans.Security.Client
+﻿using System.Threading.Tasks;
+
+namespace Orleans.Security.Client
 {
     public interface IAccessTokenProvider
     {
-        string RetrieveToken();
+        Task<string> RetrieveTokenAsync();
     }
 }

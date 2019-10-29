@@ -115,7 +115,14 @@ open Microsoft.Extensions.DependencyInjection
 
         let private getDiscoveryDocument (client : HttpClient) = async {
                 let! discoveryResponse = client.GetDiscoveryDocumentAsync() |> Async.AwaitTask
-                return discoveryResponse
+                
+                let discoveryDocument = new Orleans.Security.AccessToken.DiscoveryDocumentShortInfo()
+                discoveryDocument.IntrospectionEndpoint <- discoveryResponse.IntrospectionEndpoint
+                discoveryDocument.Issuer <- discoveryResponse.Issuer
+                discoveryDocument.Keys <- discoveryResponse.KeySet.Keys
+                discoveryDocument.TokenEndpoint <- discoveryResponse.TokenEndpoint
+
+                return discoveryDocument
             }
 
         let private identityServer4 = buildTestServer()
