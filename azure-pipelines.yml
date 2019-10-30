@@ -28,7 +28,7 @@ steps:
     feedsToUse: config
 # ...
 # Version with GitVersion
-- task: gittools.gitversion.gitversion-task.GitVersion@4
+- task: gittools.gitversion.gitversion-task.GitVersion@5
   displayName: GitVersion
   inputs:
     updateAssemblyInfo: true
@@ -77,7 +77,7 @@ steps:
   inputs:
     command: pack
     versioningScheme: byEnvVar
-    versionEnvVar: GitVersion.SemVer
+    versionEnvVar: GitVersion.NuGetVersion
     packagesToPack: Orleans.Security.Build.sln
 # ...
 # Push NuGet packs to feed
