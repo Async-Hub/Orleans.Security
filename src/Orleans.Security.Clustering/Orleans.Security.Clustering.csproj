@@ -12,7 +12,7 @@
 
   <ItemGroup>
     <PackageReference Include="JWT" Version="5.2.3" />
-    <PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="2.4.2" />
+    <PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="[2.4,3.0]" />
   </ItemGroup>
 
   <ItemGroup>

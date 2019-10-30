@@ -4,18 +4,18 @@ using System.IdentityModel.Tokens.Jwt;
 using System.Security.Claims;
 using System.Security.Cryptography;
 using IdentityModel;
-using IdentityModel.Client;
 using Microsoft.IdentityModel.Tokens;
 
 namespace Orleans.Security.AccessToken
 {
     internal class JwtSecurityTokenVerifier
     {
-        internal static IEnumerable<Claim> Verify(string jwt, string audience, DiscoveryResponse discoveryDocument)
+        internal static IEnumerable<Claim> Verify(string jwt, string audience, 
+            DiscoveryDocumentShortInfo discoveryDocument)
         {
             var keys = new List<SecurityKey>();
 
-            foreach (var webKey in discoveryDocument.KeySet.Keys)
+            foreach (var webKey in discoveryDocument.Keys)
             {
                 var e = Base64Url.Decode(webKey.E);
                 var n = Base64Url.Decode(webKey.N);
