@@ -45,7 +45,8 @@ namespace IdentityServer4.Quickstart
                     new Claim(JwtClaimTypes.Email, "BobSmith@email.com"),
                     new Claim(JwtClaimTypes.EmailVerified, "true", ClaimValueTypes.Boolean),
                     new Claim(JwtClaimTypes.WebSite, "http://bob.com"),
-                    new Claim(JwtClaimTypes.Role, "Developer")
+                    new Claim(JwtClaimTypes.Role, "Developer"),
+                    new Claim(JwtClaimTypes.Role, "Manager")
                 }
             }
         };

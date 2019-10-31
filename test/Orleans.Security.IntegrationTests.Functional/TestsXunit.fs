@@ -1,7 +1,6 @@
 ﻿module TestsXunit
 
 open Xunit
-open Configuration
 open Orleans.Security.AccessToken
 
 [<Theory>]

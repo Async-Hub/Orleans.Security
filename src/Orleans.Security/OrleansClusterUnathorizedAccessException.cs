@@ -2,6 +2,7 @@
 
 namespace Orleans.Security
 {
+    [Serializable]
     public class OrleansClusterUnauthorizedAccessException : Exception
     {
         // ReSharper disable once UnusedMember.Global
