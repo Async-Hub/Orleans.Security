@@ -73,8 +73,10 @@ jobs:
       testResultsFormat: VSTest
       testResultsFiles: 'test/**/*.trx'
 
-- job: Deploy_To_NuGet
+- job: Deploy_Packages
   dependsOn: General_Build
+  variables:
+    GitVersion.NuGetVersion: $[ dependencies.General_Build.outputs['GitVersion.NuGetVersion'] ] 
   #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   steps:
   # ...
