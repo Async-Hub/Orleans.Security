@@ -72,7 +72,7 @@ jobs:
     inputs:
       testResultsFormat: VSTest
       testResultsFiles: 'test/**/*.trx'
-  - powershell: echo "##vso[task.setvariable variable=GitVersionNuGetVersion;isOutput=true]$(GitVersion.NuGetVersion)"
+  - powershell: echo "##vso[task.setvariable variable=GitVersionNuGetVersion;isOutput=true]$env:GITVERSION_NUGETVERSION"
   - script: echo $(GitVersionNuGetVersion)
   - script: echo $(GitVersion.NuGetVersion)
 
