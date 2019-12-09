@@ -95,7 +95,21 @@ jobs:
   # ...
   # Push NuGet packs to feed
   - task: NuGetCommand@2
-    displayName: 'NuGet push'
+    displayName: 'NuGet push to Azure Artifacts'
     inputs:
       command: push
       publishVstsFeed: '5a6d822d-5d9b-4d9a-8ce4-23803c42a92f/d861be06-fd69-4794-9c74-dd8b05950c7e'
+      allowPackageConflicts: true
+  
+  # ...
+  # Push NuGet packs to www.nuget.org
+  - task: NuGetAuthenticate@0
+    inputs:
+      nuGetServiceConnections: 'AsyncHub NuGet'
+  - task: NuGetCommand@2
+    displayName: 'NuGet push to https://www.nuget.org/'
+    inputs:
+      command: push
+      nuGetFeedType: external
+      versioningScheme: byEnvVar
+      versionEnvVar: <VersionVariableName>
