@@ -105,7 +105,7 @@ jobs:
   # Push NuGet packs to www.nuget.org
   - task: NuGetAuthenticate@0
     inputs:
-      nuGetServiceConnections: 'AsyncHub NuGet'
+      nuGetServiceConnections: AsyncHub_NuGet
   - task: NuGetCommand@2
     displayName: 'NuGet push to https://www.nuget.org/'
     inputs:
