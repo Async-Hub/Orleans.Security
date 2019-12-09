@@ -6,7 +6,7 @@ namespace GrainsInterfaces
 {
     public interface IUserGrain : IGrainWithStringKey
     {
-        [Authorize(Roles = "Admin")]
-        Task<string> TakePrivateData();
+        [Authorize(Policy = "ManagerPolicy")]
+        Task<string> TakeSecret();
     }
 }

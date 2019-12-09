@@ -1,4 +1,5 @@
-﻿using GrainsInterfaces;
+﻿using System;
+using GrainsInterfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Orleans;
@@ -18,12 +19,18 @@ namespace Api.Controllers
         }
 
         [HttpGet]
-        public async Task<string> GetUser(string id)
+        public async Task<ActionResult<string>> GetUser(string id)
         {
             var grain = _clusterClient.GetGrain<IUserGrain>(id);
-            var result = await grain.TakePrivateData();
 
-            return result;
+            try
+            {
+                return await grain.TakeSecret();
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Unauthorized("Access to the requested resource denied.");
+            }
         }
     }
 }
