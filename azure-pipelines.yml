@@ -83,13 +83,14 @@ jobs:
       versionEnvVar: GitVersion.NuGetVersion
       packagesToPack: Orleans.Security.Build.sln
   # ...
-  # Push NuGet packs to feed
+  # Push NuGet packs to Azure Artifacts feed
   - task: NuGetCommand@2
     displayName: 'NuGet push to Azure Artifacts'
     inputs:
       command: push
-      publishVstsFeed: '5a6d822d-5d9b-4d9a-8ce4-23803c42a92f/d861be06-fd69-4794-9c74-dd8b05950c7e'
+      publishVstsFeed: 'AsyncHub.Orleans.Security'
       allowPackageConflicts: true
+    continueOnError: true
   # Pass $(GitVersion.NuGetVersion) to the next job
   - powershell: echo "##vso[task.setvariable variable=GitVersionNuGetVersion;isOutput=true]$env:GITVERSION_NUGETVERSION"
     name: gitVersionNumber
