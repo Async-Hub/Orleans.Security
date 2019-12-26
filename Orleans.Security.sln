@@ -21,7 +21,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orleans.Security.Clustering
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orleans.Security.IntegrationTests.TokenVerification", "test\Orleans.Security.IntegrationTests.TokenVerification\Orleans.Security.IntegrationTests.TokenVerification.csproj", "{A9D2B42B-DCCD-491C-A3D9-24F12979950A}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Orleans.Security.IntegrationTests.Functional", "test\Orleans.Security.IntegrationTests.Functional\Orleans.Security.IntegrationTests.Functional.fsproj", "{6F91437D-1694-4B21-830F-720FD00D44B2}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Orleans.Security.IntegrationTests.FSharp", "test\Orleans.Security.IntegrationTests.Functional\Orleans.Security.IntegrationTests.FSharp.fsproj", "{6F91437D-1694-4B21-830F-720FD00D44B2}"
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotnetcore-2-2", "dotnetcore-2-2", "{4B45AD5C-EF8F-4178-AD47-6E613C89DD69}"
 EndProject

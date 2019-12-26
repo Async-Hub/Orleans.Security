@@ -3,7 +3,7 @@ using System.Runtime.CompilerServices;
 
 [assembly: InternalsVisibleTo("Orleans.Security.Client")]
 [assembly: InternalsVisibleTo("Orleans.Security.Clustering")]
-[assembly: InternalsVisibleTo("Orleans.Security.IntegrationTests.Functional")]
+[assembly: InternalsVisibleTo("Orleans.Security.IntegrationTests.FSharp")]
 [assembly: InternalsVisibleTo("Orleans.Security.IntegrationTests.TokenVerification")]
 
 [assembly: AssemblyVersion("2.4.1.0")]
