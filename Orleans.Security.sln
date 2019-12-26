@@ -21,44 +21,39 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orleans.Security.Clustering
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orleans.Security.IntegrationTests.TokenVerification", "test\Orleans.Security.IntegrationTests.TokenVerification\Orleans.Security.IntegrationTests.TokenVerification.csproj", "{A9D2B42B-DCCD-491C-A3D9-24F12979950A}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Orleans.Security.IntegrationTests.Functional", "test\Orleans.Security.IntegrationTests.Functional\Orleans.Security.IntegrationTests.Functional.fsproj", "{6F91437D-1694-4B21-830F-720FD00D44B2}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Orleans.Security.IntegrationTests.FSharp", "test\Orleans.Security.IntegrationTests.Functional\Orleans.Security.IntegrationTests.FSharp.fsproj", "{6F91437D-1694-4B21-830F-720FD00D44B2}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "version-2-2", "version-2-2", "{4B45AD5C-EF8F-4178-AD47-6E613C89DD69}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotnetcore-2-2", "dotnetcore-2-2", "{4B45AD5C-EF8F-4178-AD47-6E613C89DD69}"
 EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "version-3-0", "version-3-0", "{1D04D0C8-EC9A-414B-B6B6-B1B4F59A5598}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "dotnetcore-3-1", "dotnetcore-3-1", "{1D04D0C8-EC9A-414B-B6B6-B1B4F59A5598}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "samples\version-2-2\Api\Api.csproj", "{0934FBC0-C0F8-4E7A-AB1A-9656C9C12478}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "samples\dotnetcore-2-2\Api\Api.csproj", "{0934FBC0-C0F8-4E7A-AB1A-9656C9C12478}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleClient", "samples\version-2-2\ConsoleClient\ConsoleClient.csproj", "{446F2BE4-5BD6-4A7E-9871-E15D3527AD0C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleClient", "samples\dotnetcore-2-2\ConsoleClient\ConsoleClient.csproj", "{446F2BE4-5BD6-4A7E-9871-E15D3527AD0C}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grains", "samples\version-2-2\Grains\Grains.csproj", "{0B4E4712-26A0-4016-AB85-F28518F654D1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grains", "samples\dotnetcore-2-2\Grains\Grains.csproj", "{0B4E4712-26A0-4016-AB85-F28518F654D1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "samples\version-2-2\IdentityServer\IdentityServer.csproj", "{D6C1F9EE-D63D-480E-89BE-03844710D84F}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "samples\dotnetcore-2-2\IdentityServer\IdentityServer.csproj", "{D6C1F9EE-D63D-480E-89BE-03844710D84F}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrainsInterfaces", "samples\version-2-2\Interfaces\GrainsInterfaces.csproj", "{B145FB27-32D1-487F-9E9E-ECBD253878B1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrainsInterfaces", "samples\dotnetcore-2-2\Interfaces\GrainsInterfaces.csproj", "{B145FB27-32D1-487F-9E9E-ECBD253878B1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiloHost1", "samples\version-2-2\SiloHost1\SiloHost1.csproj", "{4A342757-5CAB-4BE8-97E9-5CECA7E673DD}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiloHost1", "samples\dotnetcore-2-2\SiloHost1\SiloHost1.csproj", "{4A342757-5CAB-4BE8-97E9-5CECA7E673DD}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebClient", "samples\version-2-2\WebClient\WebClient.csproj", "{3DB6E088-E3B9-4D54-A300-C23B83309F5D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebClient", "samples\dotnetcore-2-2\WebClient\WebClient.csproj", "{3DB6E088-E3B9-4D54-A300-C23B83309F5D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "samples\version-3-0\Api\Api.csproj", "{1727B65F-17A4-43FA-B1BB-98FCC84AF9BE}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Api", "samples\dotnetcore-3-1\Api\Api.csproj", "{1727B65F-17A4-43FA-B1BB-98FCC84AF9BE}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleClient", "samples\version-3-0\ConsoleClient\ConsoleClient.csproj", "{AC7C8CB3-8C9E-4849-8474-CFB2BCD55CC6}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ConsoleClient", "samples\dotnetcore-3-1\ConsoleClient\ConsoleClient.csproj", "{AC7C8CB3-8C9E-4849-8474-CFB2BCD55CC6}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grains", "samples\version-3-0\Grains\Grains.csproj", "{992815F7-A629-404D-AA39-08C7A4463A8D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grains", "samples\dotnetcore-3-1\Grains\Grains.csproj", "{992815F7-A629-404D-AA39-08C7A4463A8D}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "samples\version-3-0\IdentityServer\IdentityServer.csproj", "{A6AEFAE1-F4A3-4F6D-8766-80ADD71F257A}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "samples\dotnetcore-3-1\IdentityServer\IdentityServer.csproj", "{A6AEFAE1-F4A3-4F6D-8766-80ADD71F257A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrainsInterfaces", "samples\version-3-0\Interfaces\GrainsInterfaces.csproj", "{B0FD1280-7699-435E-9B7F-95AE3932BBF1}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "GrainsInterfaces", "samples\dotnetcore-3-1\Interfaces\GrainsInterfaces.csproj", "{B0FD1280-7699-435E-9B7F-95AE3932BBF1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiloHost1", "samples\version-3-0\SiloHost1\SiloHost1.csproj", "{C6864209-EC40-4B12-878C-4E7690DD54A8}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SiloHost1", "samples\dotnetcore-3-1\SiloHost1\SiloHost1.csproj", "{C6864209-EC40-4B12-878C-4E7690DD54A8}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebClient", "samples\version-3-0\WebClient\WebClient.csproj", "{9E3BE3B5-5BB6-4213-84C9-364F1525F4DC}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{4910F704-DE22-45BE-8AC1-0B0B6EC30679}"
-	ProjectSection(SolutionItems) = preProject
-		.editorconfig = .editorconfig
-	EndProjectSection
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebClient", "samples\dotnetcore-3-1\WebClient\WebClient.csproj", "{9E3BE3B5-5BB6-4213-84C9-364F1525F4DC}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

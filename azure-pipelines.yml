@@ -6,6 +6,7 @@ name: $(date:yyyyMMdd)$(rev:.r)
 trigger:
 - master
 - develop
+- release/*
 
 pool:
   name: Hosted Windows 2019 with VS2019
@@ -72,17 +73,6 @@ jobs:
     inputs:
       testResultsFormat: VSTest
       testResultsFiles: 'test/**/*.trx'
-    # Pass $(GitVersion.NuGetVersion) to the next job
-  - powershell: echo "##vso[task.setvariable variable=GitVersionNuGetVersion;isOutput=true]$env:GITVERSION_NUGETVERSION"
-    name: gitVersionNumber
-  - script: echo $(gitVersionNumber.GitVersionNuGetVersion)
-
-- job: Deploy_Packages
-  dependsOn: General_Build
-  variables:
-    GitVersion.NuGetVersion: $[ dependencies.General_Build.outputs['gitVersionNumber.GitVersionNuGetVersion'] ] 
-  #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
-  steps:
   # ...
   # NuGet pack Orleans.Security.Build.sln
   - task: DotNetCoreCLI@2
@@ -93,9 +83,43 @@ jobs:
       versionEnvVar: GitVersion.NuGetVersion
       packagesToPack: Orleans.Security.Build.sln
   # ...
-  # Push NuGet packs to feed
+  # Push NuGet packs to Azure Artifacts feed
   - task: NuGetCommand@2
-    displayName: 'NuGet push'
+    displayName: 'NuGet push to Azure Artifacts'
     inputs:
       command: push
-      publishVstsFeed: '5a6d822d-5d9b-4d9a-8ce4-23803c42a92f/d861be06-fd69-4794-9c74-dd8b05950c7e'
+      publishVstsFeed: '5a6d822d-5d9b-4d9a-8ce4-23803c42a92f/225dde7f-9969-4654-bcaf-9be5de5a4985'
+      allowPackageConflicts: true
+    continueOnError: true
+  # Pass $(GitVersion.NuGetVersion) to the next job
+  - powershell: echo "##vso[task.setvariable variable=GitVersionNuGetVersion;isOutput=true]$env:GITVERSION_NUGETVERSION"
+    name: gitVersionNumber
+  - script: echo $(gitVersionNumber.GitVersionNuGetVersion)
+
+# - job: Deploy_Packages
+#   dependsOn: General_Build
+#   variables:
+#   - group: Default
+#   - name: GitVersion.NuGetVersion
+#     value: $[ dependencies.General_Build.outputs['gitVersionNumber.GitVersionNuGetVersion'] ] 
+#   #condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'),contains(variables['Build.SourceBranch'], 'refs/heads/release')))
+#   condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'),true))
+#   steps:
+#   # ...
+#   # NuGet pack Orleans.Security.Build.sln
+#   - task: DotNetCoreCLI@2
+#     displayName: 'NuGet pack Orleans.Security.Build.sln'
+#     inputs:
+#       command: pack
+#       versioningScheme: byEnvVar
+#       versionEnvVar: GitVersion.NuGetVersion
+#       packagesToPack: Orleans.Security.Build.sln
+#   # ...
+#   # Push NuGet packs to www.nuget.org
+#   - task: NuGetCommand@2
+#     displayName: 'NuGet push'
+#     inputs:
+#       command: push
+#       nuGetFeedType: external
+#       publishFeedCredentials: 'AsyncHub_NuGet'
+#       versionEnvVar: <VersionVariableName>
