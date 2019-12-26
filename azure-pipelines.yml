@@ -6,6 +6,7 @@ name: $(date:yyyyMMdd)$(rev:.r)
 trigger:
 - master
 - develop
+- release/*
 
 pool:
   name: Hosted Windows 2019 with VS2019
@@ -13,76 +14,112 @@ pool:
   - msbuild
   - visualstudio
 
-steps:
-# ...
-# Use NuGet 5
-- task: NuGetToolInstaller@0
-  displayName: 'Use NuGet 5'
-  inputs:
-    versionSpec: 5.x
-# ...
-# Restore NuGet packages.
-- task: NuGetCommand@2
-  displayName: 'NuGet restore'
-  inputs:
-    feedsToUse: config
-# ...
-# Version with GitVersion
-- task: gittools.gitversion.gitversion-task.GitVersion@5
-  displayName: GitVersion
-  inputs:
-    updateAssemblyInfo: true
-    preferBundledVersion: false
-# ...
-# Prepare analysis on SonarCloud
-- task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
-  displayName: 'Prepare analysis on SonarCloud'
-  inputs:
-    SonarCloud: AsyncHubCloud
-    organization: 'async-hub'
-    projectKey: 'Async-Hub_Orleans.Security'
-    projectName: AsyncHub
-# ...
-# Build Solution
-- task: VSBuild@1
-  displayName: 'Build solution Orleans.Security.Build.sln'
-  inputs:
-    solution: Orleans.Security.Build.sln
-    platform: 'any cpu'
-    configuration: release
-    clean: true
-# ...
-# Run Code Analysis
-- task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
-  displayName: 'Run Code Analysis'
-# ...
-# Run Tests
-- task: DotNetCoreCLI@2
-  displayName: 'Run Tests'
-  inputs:
-    command: test
-    projects: 'test/**/*.csproj'
-    arguments: '--logger:trx'
-# ...
-# Publish Test Results
-- task: PublishTestResults@2
-  displayName: 'Publish Test Results'
-  inputs:
-    testResultsFormat: VSTest
-    testResultsFiles: 'test/**/*.trx'
-# ...
-# NuGet pack Orleans.Security.Build.sln
-- task: DotNetCoreCLI@2
-  displayName: 'NuGet pack Orleans.Security.Build.sln'
-  inputs:
-    command: pack
-    versioningScheme: byEnvVar
-    versionEnvVar: GitVersion.NuGetVersion
-    packagesToPack: Orleans.Security.Build.sln
-# ...
-# Push NuGet packs to feed
-- task: NuGetCommand@2
-  displayName: 'NuGet push'
-  inputs:
-    command: push
-    publishVstsFeed: '5a6d822d-5d9b-4d9a-8ce4-23803c42a92f/d861be06-fd69-4794-9c74-dd8b05950c7e'
+jobs:
+- job: General_Build
+  steps:
+  # ...
+  # Use NuGet 5.x
+  - task: NuGetToolInstaller@0
+    displayName: 'Use NuGet 5'
+    inputs:
+      versionSpec: 5.x
+  # ...
+  # Restore NuGet packages.
+  - task: NuGetCommand@2
+    displayName: 'NuGet restore'
+    inputs:
+      feedsToUse: config
+  # ...
+  # Version with GitVersion
+  - task: gittools.gitversion.gitversion-task.GitVersion@5
+    displayName: GitVersion
+    inputs:
+      updateAssemblyInfo: true
+      preferBundledVersion: false
+  # ...
+  # Prepare analysis on SonarCloud
+  - task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
+    displayName: 'Prepare analysis on SonarCloud'
+    inputs:
+      SonarCloud: AsyncHubCloud
+      organization: 'async-hub'
+      projectKey: 'Async-Hub_Orleans.Security'
+      projectName: AsyncHub
+  # ...
+  # Build Solution
+  - task: VSBuild@1
+    displayName: 'Build solution Orleans.Security.Build.sln'
+    inputs:
+      solution: Orleans.Security.Build.sln
+      platform: 'any cpu'
+      configuration: release
+      clean: true
+  # ...
+  # Run Code Analysis
+  - task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
+    displayName: 'Run Code Analysis'
+  # ...
+  # Run Tests
+  - task: DotNetCoreCLI@2
+    displayName: 'Run Tests'
+    inputs:
+      command: test
+      projects: 'test/**/*.csproj'
+      arguments: '--logger:trx'
+  # ...
+  # Publish Test Results
+  - task: PublishTestResults@2
+    displayName: 'Publish Test Results'
+    inputs:
+      testResultsFormat: VSTest
+      testResultsFiles: 'test/**/*.trx'
+  # ...
+  # NuGet pack Orleans.Security.Build.sln
+  - task: DotNetCoreCLI@2
+    displayName: 'NuGet pack Orleans.Security.Build.sln'
+    inputs:
+      command: pack
+      versioningScheme: byEnvVar
+      versionEnvVar: GitVersion.NuGetVersion
+      packagesToPack: Orleans.Security.Build.sln
+  # ...
+  # Push NuGet packs to Azure Artifacts feed
+  - task: NuGetCommand@2
+    displayName: 'NuGet push to Azure Artifacts'
+    inputs:
+      command: push
+      publishVstsFeed: '5a6d822d-5d9b-4d9a-8ce4-23803c42a92f/225dde7f-9969-4654-bcaf-9be5de5a4985'
+      allowPackageConflicts: true
+    continueOnError: true
+  # Pass $(GitVersion.NuGetVersion) to the next job
+  - powershell: echo "##vso[task.setvariable variable=GitVersionNuGetVersion;isOutput=true]$env:GITVERSION_NUGETVERSION"
+    name: gitVersionNumber
+  - script: echo $(gitVersionNumber.GitVersionNuGetVersion)
+
+# - job: Deploy_Packages
+#   dependsOn: General_Build
+#   variables:
+#   - group: Default
+#   - name: GitVersion.NuGetVersion
+#     value: $[ dependencies.General_Build.outputs['gitVersionNumber.GitVersionNuGetVersion'] ] 
+#   #condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'),contains(variables['Build.SourceBranch'], 'refs/heads/release')))
+#   condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'),true))
+#   steps:
+#   # ...
+#   # NuGet pack Orleans.Security.Build.sln
+#   - task: DotNetCoreCLI@2
+#     displayName: 'NuGet pack Orleans.Security.Build.sln'
+#     inputs:
+#       command: pack
+#       versioningScheme: byEnvVar
+#       versionEnvVar: GitVersion.NuGetVersion
+#       packagesToPack: Orleans.Security.Build.sln
+#   # ...
+#   # Push NuGet packs to www.nuget.org
+#   - task: NuGetCommand@2
+#     displayName: 'NuGet push'
+#     inputs:
+#       command: push
+#       nuGetFeedType: external
+#       publishFeedCredentials: 'AsyncHub_NuGet'
+#       versionEnvVar: <VersionVariableName>

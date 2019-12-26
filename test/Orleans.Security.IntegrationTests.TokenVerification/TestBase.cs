@@ -1,6 +1,7 @@
 ﻿using System.Net.Http;
 using System.Threading.Tasks;
 using IdentityModel.Client;
+using Microsoft.AspNetCore.TestHost;
 using Orleans.Security.AccessToken;
 using Orleans.Security.IntegrationTests.TokenVerification.Configuration;
 
@@ -14,7 +15,7 @@ namespace Orleans.Security.IntegrationTests.TokenVerification
 
         protected TestBase()
         {
-            var identityServer4 = TestIdentityServer4Builder.BuildNew();
+            var identityServer4 = TestIdentityServer4Builder.StartNew();
             _identityServer4Client = identityServer4.CreateClient();
 
             var discoveryResponse = _identityServer4Client.GetDiscoveryDocumentAsync().Result;
