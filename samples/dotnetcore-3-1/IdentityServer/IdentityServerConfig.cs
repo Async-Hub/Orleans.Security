@@ -2,7 +2,7 @@
 using System.Security.Claims;
 using IdentityModel;
 using IdentityServer4.Models;
-using IdentityServer4.Quickstart;
+using IdentityServer4.Quickstart.UI;
 using IdentityServer4.Test;
 
 namespace IdentityServer4

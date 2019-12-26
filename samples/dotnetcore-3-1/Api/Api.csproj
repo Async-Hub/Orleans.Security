@@ -5,9 +5,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="IdentityModel" Version="4.0.0" />
+    <PackageReference Include="IdentityModel" Version="4.1.1" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
-    <PackageReference Include="Microsoft.Orleans.Client" Version="3.0.0" />
+    <PackageReference Include="Microsoft.Orleans.Client" Version="3.0.2" />
   </ItemGroup>
 
   <ItemGroup>

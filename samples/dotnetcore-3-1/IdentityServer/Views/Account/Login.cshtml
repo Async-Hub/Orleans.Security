@@ -1,4 +1,4 @@
-@model IdentityServer4.Quickstart.Account.LoginViewModel
+@model LoginViewModel
 
 <div class="login-page">
     <div class="page-header">
@@ -24,12 +24,11 @@
                             <fieldset>
                                 <div class="form-group">
                                     <label asp-for="Username"></label>
-                                    <input class="form-control" placeholder="Username" asp-for="Username" value="alice" autofocus>
+                                    <input class="form-control" placeholder="Username" asp-for="Username" autofocus>
                                 </div>
                                 <div class="form-group">
                                     <label asp-for="Password"></label>
-                                    <input type="password" class="form-control" placeholder="Password" value="Pass123$"
-                                           asp-for="Password" autocomplete="off">
+                                    <input type="password" class="form-control" placeholder="Password" asp-for="Password" autocomplete="off">
                                 </div>
                                 @if (Model.AllowRememberLogin)
                                 {
