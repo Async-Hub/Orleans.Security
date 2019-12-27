@@ -1,4 +1,4 @@
-﻿module TestsXunit
+﻿module AccessTokenVerificationTests
 
 open Xunit
 open Orleans.Security.AccessToken
@@ -8,12 +8,12 @@ open Orleans.Security.AccessToken
 let ``Access token verification with valid scope should be passed`` 
     (clientId:string) (clientSecret:string) (scope:string) = async {
         // Arrange
-        let! accessTokenResponse = IdentityServer4Builder.requestClientCredentialsTokenAsync 
+        let! accessTokenResponse = IdentityServer4.requestClientCredentialsTokenAsync 
                                     clientId clientSecret scope |> Async.AwaitTask
 
         // Act
         let claims = JwtSecurityTokenVerifier.Verify(accessTokenResponse.AccessToken, 
-                        scope, IdentityServer4Builder.discoveryDocument)
+                        scope, IdentityServer4.discoveryDocument)
     
         // Assert
         Assert.True(claims <> null)

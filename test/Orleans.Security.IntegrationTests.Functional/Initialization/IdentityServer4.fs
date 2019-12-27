@@ -1,4 +1,4 @@
-﻿module IdentityServer4Builder
+﻿module IdentityServer4
 
 open System
 open System.Net.Http
@@ -7,18 +7,19 @@ open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.AspNetCore.TestHost
 open Microsoft.Extensions.DependencyInjection
+open Orleans.Security.AccessToken
 
-let private buildTestServer () =
+let private run () =
     let builder = 
         WebHostBuilder()
             .UseUrls("http://localhost:5001")
             .ConfigureServices(fun services -> 
                 services.AddIdentityServer()
                         .AddDeveloperSigningCredential()
-                        .AddInMemoryApiResources(IdentityServer4Config.getApiResources())
-                        .AddInMemoryIdentityResources(IdentityServer4Config.getIdentityResources())
-                        .AddInMemoryClients(IdentityServer4Config.getClients())
-                        .AddTestUsers(IdentityServer4Config.getUsers()) |> ignore
+                        .AddInMemoryApiResources(IdentityServer4Resources.getApiResources())
+                        .AddInMemoryIdentityResources(IdentityServer4Resources.getIdentityResources())
+                        .AddInMemoryClients(Clients.getClients())
+                        .AddTestUsers(Users.getUsers()) |> ignore
 
                 services.AddMvcCore() |> ignore)
             .Configure(fun app ->
@@ -32,10 +33,10 @@ let private buildTestServer () =
 
     identityServer4
 
-let private getDiscoveryDocument (client : HttpClient) = async {
+let private getDiscoveryDocumentAsync (client : HttpClient) = async {
         let! discoveryResponse = client.GetDiscoveryDocumentAsync() |> Async.AwaitTask
         
-        let discoveryDocument = new Orleans.Security.AccessToken.DiscoveryDocumentShortInfo()
+        let discoveryDocument = DiscoveryDocumentShortInfo()
         discoveryDocument.IntrospectionEndpoint <- discoveryResponse.IntrospectionEndpoint
         discoveryDocument.Issuer <- discoveryResponse.Issuer
         discoveryDocument.Keys <- discoveryResponse.KeySet.Keys
@@ -44,16 +45,17 @@ let private getDiscoveryDocument (client : HttpClient) = async {
         return discoveryDocument
     }
 
-let private identityServer4 = buildTestServer()
-let private identityServer4Client = identityServer4.CreateClient()
+let private identityServer4Client = run().CreateClient()
 
-let public discoveryDocument = identityServer4Client |>  getDiscoveryDocument |> Async.RunSynchronously
+let public discoveryDocument = identityServer4Client
+                               |>  getDiscoveryDocumentAsync
+                               |> Async.RunSynchronously
 
 let requestClientCredentialsTokenAsync (clientId:string) (clientSecret:string) (scope:string) =
-    let tokenRequest = new ClientCredentialsTokenRequest(Address = discoveryDocument.TokenEndpoint, Scope = scope,
+    let tokenRequest = new ClientCredentialsTokenRequest(
+                        Address = discoveryDocument.TokenEndpoint, Scope = scope,
                         ClientId = clientId, ClientSecret = clientSecret)
     
-    let tokenResponse = identityServer4Client.RequestClientCredentialsTokenAsync(tokenRequest)
-    tokenResponse
+    identityServer4Client.RequestClientCredentialsTokenAsync(tokenRequest)
             
 
