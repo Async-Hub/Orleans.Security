@@ -8,14 +8,14 @@ permalink: docs/authorization/policy-based-authorization
 
 # Policy-based authorization
 
-An authorization policy consists of one or more requirements. It's registered as part of **`ClientBuilder.ConfigureServices`** and **`SiloHostBuilder.ConfigureServices`**, in the **`AddOrleansClusterAuthorization`** method:
+An authorization policy consists of one or more requirements. It’s registered as part of **`ClientBuilder.ConfigureServices`** and **`SiloHostBuilder.ConfigureServices`**, in the **`AddOrleansClusteringAuthorization`** method:
 
 ```csharp
 .ConfigureServices(services =>
 {
-    services.AddOrleansClusterAuthorization(options =>
+    services.AddOrleansClusteringAuthorization(identityServer4Info, options =>
     {
-        options.AddPolicy("AdminPolicy", policy=> policy.RequireRole("Admin"));
+        options.AddPolicy("AdminPolicy", poliScy=> policy.RequireRole("Admin"));
     });
 })
 ```
@@ -37,7 +37,7 @@ public interface IUserGrain : IGrainWithStringKey
 An authorization requirement is a collection of data parameters that a policy can use to evaluate the current user/client principal. In our "EmailVerified" policy, the requirement is a single parameter—the email verified. A requirement implements IAuthorizationRequirement, which is an empty marker interface. A parameterized email verified requirement could be implemented as follows:
 
 ```csharp
-using DomDaniel.InCloud.OrleansCluster.Security.Authorization;
+using Orleans.Security.Clustering.Authorization;
 
 public class EmailVerifiedRequirement : IAuthorizationRequirement
 {
@@ -160,7 +160,7 @@ Handlers are registered in the services collection during configuration. For exa
 ```csharp
 .ConfigureServices(services =>
 {
-    services.AddOrleansClusterAuthorization(options =>
+    services.AddOrleansClusteringAuthorization(identityServer4Info, options =>
     {
         options.AddPolicy("AdminPolicy", policy=> policy.RequireRole("Admin"));
     });
