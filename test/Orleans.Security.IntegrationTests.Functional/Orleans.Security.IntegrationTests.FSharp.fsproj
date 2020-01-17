@@ -5,6 +5,7 @@
 
     <IsPackable>false</IsPackable>
     <GenerateProgramFile>false</GenerateProgramFile>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -22,9 +23,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="IdentityServer4Config.fs" />
-    <Compile Include="IdentityServer4Builder.fs" />
-    <Compile Include="TestsXUnit.fs" />
+    <Compile Include="Initialization\Users.fs" />
+    <Compile Include="Initialization\Clients.fs" />
+    <Compile Include="Initialization\IdentityServer4Resources.fs" />
+    <Compile Include="Initialization\IdentityServer4.fs" />
+    <Compile Include="AccessTokenVerificationTests.fs" />
     <Compile Include="TestsNUnit.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>

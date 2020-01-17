@@ -4,6 +4,12 @@
 
 /.vs
 /_ReSharper.Caches
+*.gem
+.bundle
+.sass-cache
+_site
+Gemfile.lock
+node_modules
 
 /src/Orleans.Security.Authorization/bin
 /src/Orleans.Security.Authorization/obj
