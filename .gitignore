@@ -67,3 +67,5 @@ node_modules
 /samples/dotnetcore-3-1/IdentityServer/IdentityServer.csproj.user
 /samples/dotnetcore-3-1/WebClient/WebClient.csproj.user
 /samples/dotnetcore-3-1/SiloHost1/SiloHost1.csproj.user
+/test/Orleans.Security.IntegrationTests.Grains/obj
+/test/Orleans.Security.IntegrationTests.Grains/bin
