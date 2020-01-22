@@ -3,9 +3,12 @@ using Orleans.Security.Authorization;
 
 namespace Orleans.Security.IntegrationTests.Grains
 {
+    [Authorize]
     public interface IUserGrain : IGrainWithStringKey
     {
-        [Authorize(Policy = "ManagerPolicy")]
-        Task<string> TakeSecret();
+        Task<string> GetWithAuthenticatedUser(string secret);
+        
+        [AllowAnonymous]
+        Task<string> GetWithAnonymousUser(string secret);
     }
 }

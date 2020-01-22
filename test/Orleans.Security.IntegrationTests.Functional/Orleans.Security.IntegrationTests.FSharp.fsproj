@@ -9,6 +9,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.10.0" />
     <PackageReference Include="IdentityServer4" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.0" />
@@ -38,7 +39,9 @@
     <Compile Include="Initialization\SiloHost.fs" />
     <Compile Include="Initialization\SiloClient.fs" />
     <Compile Include="AccessTokenVerificationTests.fs" />
-    <Compile Include="GrainCommunicationTests.fs" />
+    <Compile Include="AuthorizationTests\SimpleAuthorizationTests.fs" />
+    <Compile Include="AuthorizationTests\RoleBasedAuthorizationTests.fs" />
+    <Compile Include="AuthorizationTests\PolicyBasedAuthorizationTests.fs" />
     <Compile Include="TestsNUnit.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>

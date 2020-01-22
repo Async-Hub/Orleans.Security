@@ -3,7 +3,6 @@ module TestsNUnit
 open NUnit.Framework
 open Orleans.Security.AccessToken
 
-
 [<SetUp>]
 let Setup () =
     ()

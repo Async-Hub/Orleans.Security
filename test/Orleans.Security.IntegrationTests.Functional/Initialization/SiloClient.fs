@@ -10,18 +10,21 @@ open Orleans;
 open System
 open System.Threading.Tasks
 
-type AccessTokenProvider(accessTokenResolver: unit -> string) =
+type AccessTokenProvider() =
+    let mutable accessToken = String.Empty
+    member this.AccessToken
+            with set (value) = accessToken <- value
+    
     interface IAccessTokenProvider with
         member this.RetrieveTokenAsync() =
-            let accessToken = accessTokenResolver()
             Task.FromResult(accessToken);
 
-let getClusterClient (accessTokenResolver: unit -> string) =
+let private globalAccessToken = AccessTokenProvider()
+let accessTokenProvider = globalAccessToken :> IAccessTokenProvider
+
+let private clusterClient =
     SiloHost.startSilo() |> ignore
-    
-    let accessTokenProvider =
-        AccessTokenProvider(accessTokenResolver) :> IAccessTokenProvider
-                                      
+                         
     let builder = ClientBuilder()
                     .UseLocalhostClustering()
                     .Configure<ClusterOptions>(fun (options: ClusterOptions) ->
@@ -41,4 +44,8 @@ let getClusterClient (accessTokenResolver: unit -> string) =
 
     let clusterClient = builder.Build()
     clusterClient.Connect().Wait()
+    clusterClient
+    
+let getClusterClient (accessToken: string) =
+    globalAccessToken.AccessToken <- accessToken
     clusterClient

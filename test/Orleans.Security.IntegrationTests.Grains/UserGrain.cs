@@ -13,14 +13,19 @@ namespace Orleans.Security.IntegrationTests.Grains
             _logger = logger;
         }
 
-        public async Task<string> TakeSecret()
+        public Task<string> GetWithAuthenticatedUser(string secret)
         {
-            var grain = GrainFactory.GetGrain<IGlobalSecretStorageGrain>(nameof(IGlobalSecretStorageGrain));
-            var userId = this.GetPrimaryKeyString();
+            // var grain = GrainFactory.GetGrain<IGlobalSecretStorageGrain>(nameof(IGlobalSecretStorageGrain));
+            // var userId = this.GetPrimaryKeyString();
+            //
+            // var secret = await grain.TakeUserSecret(userId);
 
-            var secret = await grain.TakeUserSecret(userId);
+            return Task.FromResult(secret);
+        }
 
-            return secret;
+        public Task<string> GetWithAnonymousUser(string secret)
+        {
+            return Task.FromResult(secret);
         }
     }
 }

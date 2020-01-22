@@ -3,6 +3,7 @@
 open Xunit
 open Microsoft.IdentityModel.Tokens
 open Orleans.Security.AccessToken
+open FluentAssertions;
 
 [<Theory>]
 [<InlineData("WebClient", "Secret", "Api1")>]

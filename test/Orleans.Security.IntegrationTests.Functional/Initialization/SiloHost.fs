@@ -1,5 +1,6 @@
 ﻿module SiloHost
 
+open Microsoft.Extensions.Hosting               
 open Orleans.Configuration;
 open Orleans.Hosting;
 open Orleans.Security.Authorization
@@ -9,7 +10,6 @@ open Orleans.Security;
 open Orleans;
 open System
 open System.Net
-open Microsoft.Extensions.Hosting               
 
 let startSilo () =
     let builder = 
