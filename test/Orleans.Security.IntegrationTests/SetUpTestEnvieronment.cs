@@ -5,7 +5,7 @@ using Orleans.Security.IntegrationTests.Configuration;
 namespace Orleans.Security.IntegrationTests
 {
     [SetUpFixture]
-    public class SetUpClass
+    public class SetUpTestEnvironment
     {
         [OneTimeSetUp]
         public async Task RunBeforeAnyTests()

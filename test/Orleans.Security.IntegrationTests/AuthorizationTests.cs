@@ -1,4 +1,7 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
+using FluentAssertions;
+using NSubstitute.ExceptionExtensions;
 using NUnit.Framework;
 using Orleans.Security.IntegrationTests.Configuration;
 using Orleans.Security.IntegrationTests.GrainsForTests;
@@ -7,7 +10,7 @@ namespace Orleans.Security.IntegrationTests
 {
     [Author("Karen Tazayan"), Category("IntegrationTest")]
     [SingleThreaded, TestFixture]
-    public class BaseAuthorizationTests
+    public class AuthorizationTests
     {
         [Description(@"User or Client must have all the roles specified.")]
         [Test]
@@ -22,7 +25,7 @@ namespace Orleans.Security.IntegrationTests
             var privateData = await grain.TakeForCombinedRoles("Some private data.");
 
             // Assert
-            Assert.AreEqual("Some private data.", privateData);
+            privateData.Should().Be("Some private data.");
         }
 
         [Description(@"Authorization must fail if email not verified.")]
@@ -35,11 +38,13 @@ namespace Orleans.Security.IntegrationTests
             var grain = client.GetGrain<IAuthorizationTestGrain>("Test");
 
             // Act
-            // Assert
-            Assert.ThrowsAsync<OrleansClusterUnauthorizedAccessException>(async () =>
+            async Task<string> Action()
             {
-                await grain.TakeForEmailVerifiedPolicy("Some private data.");
-            });
+                return await grain.TakeForEmailVerifiedPolicy("Some private data.");
+            }
+
+            // Assert
+            Assert.ThrowsAsync<OrleansClusterUnauthorizedAccessException>(Action);
         }
 
         [Description(@"Authorization must be a success if the email successfully verified.")]
@@ -55,7 +60,7 @@ namespace Orleans.Security.IntegrationTests
             var privateData = await grain.TakeForEmailVerifiedPolicy("Some private data.");
 
             // Assert
-            Assert.AreEqual("Some private data.", privateData);
+            privateData.Should().Be("Some private data.");
         }
 
         [Description(@"Any call to a grain method protected by FemaleAdminPolicy when required credentials 

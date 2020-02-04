@@ -4,6 +4,12 @@
 
 /.vs
 /_ReSharper.Caches
+*.gem
+.bundle
+.sass-cache
+_site
+Gemfile.lock
+node_modules
 
 /src/Orleans.Security.Authorization/bin
 /src/Orleans.Security.Authorization/obj
@@ -61,3 +67,5 @@
 /samples/dotnetcore-3-1/IdentityServer/IdentityServer.csproj.user
 /samples/dotnetcore-3-1/WebClient/WebClient.csproj.user
 /samples/dotnetcore-3-1/SiloHost1/SiloHost1.csproj.user
+/test/Orleans.Security.IntegrationTests.Grains/obj
+/test/Orleans.Security.IntegrationTests.Grains/bin

@@ -5,9 +5,11 @@
 
     <IsPackable>false</IsPackable>
     <GenerateProgramFile>false</GenerateProgramFile>
+    <OutputType>Library</OutputType>
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="FluentAssertions" Version="5.10.0" />
     <PackageReference Include="IdentityServer4" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" Version="3.1.0" />
     <PackageReference Include="Microsoft.AspNetCore.TestHost" Version="3.1.0" />
@@ -15,6 +17,11 @@
     <PackageReference Include="NUnit3TestAdapter" Version="3.15.1" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.4.0" />
     <PackageReference Include="xunit" Version="2.4.1" />
+    <PackageReference Include="IdentityModel" Version="4.1.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Console" Version="3.1.0" />
+    <PackageReference Include="Microsoft.Orleans.OrleansRuntime" Version="3.0.2" />
+    <PackageReference Include="Microsoft.Orleans.Client" Version="3.0.2" />
     <PackageReference Include="xunit.runner.visualstudio" Version="2.4.1">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers</IncludeAssets>
@@ -22,15 +29,28 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Include="IdentityServer4Config.fs" />
-    <Compile Include="IdentityServer4Builder.fs" />
-    <Compile Include="TestsXUnit.fs" />
+    <Compile Include="Assembly.fs" />
+    <Compile Include="Initialization\GlobalConfig.fs" />
+    <Compile Include="Initialization\Users.fs" />
+    <Compile Include="Initialization\Clients.fs" />
+    <Compile Include="Initialization\IdentityServer4Resources.fs" />
+    <Compile Include="Initialization\IdentityServer4.fs" />
+    <Compile Include="Initialization\IdentityServer4Client.fs" />
+    <Compile Include="Initialization\SiloHost.fs" />
+    <Compile Include="Initialization\SiloClient.fs" />
+    <Compile Include="AccessTokenVerificationTests.fs" />
+    <Compile Include="AuthorizationTests\SimpleAuthorizationTests.fs" />
+    <Compile Include="AuthorizationTests\RoleBasedAuthorizationTests.fs" />
+    <Compile Include="AuthorizationTests\PolicyBasedAuthorizationTests.fs" />
     <Compile Include="TestsNUnit.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\..\src\Orleans.Security.Client\Orleans.Security.Client.csproj" />
+    <ProjectReference Include="..\..\src\Orleans.Security.Clustering\Orleans.Security.Clustering.csproj" />
     <ProjectReference Include="..\..\src\Orleans.Security\Orleans.Security.csproj" />
+    <ProjectReference Include="..\Orleans.Security.IntegrationTests.Grains\Orleans.Security.IntegrationTests.Grains.csproj" />
   </ItemGroup>
 
 </Project>
