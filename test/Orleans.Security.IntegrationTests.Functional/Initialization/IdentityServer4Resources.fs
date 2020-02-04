@@ -10,8 +10,11 @@ let getApiResources() =
     api1.UserClaims.Add JwtClaimTypes.Role
 
     Secret(HashExtensions.Sha256 "Secret") |> api1.ApiSecrets.Add
+    
+    let orleans = ApiResource("Orleans");
+    Secret(HashExtensions.Sha256 "@3x3g*RLez$TNU!_7!QW") |> orleans.ApiSecrets.Add
 
-    [api1] |> ResizeArray<ApiResource>
+    [api1; orleans] |> ResizeArray<ApiResource>
 
 let getIdentityResources() =
     let resources = List<IdentityResource>()

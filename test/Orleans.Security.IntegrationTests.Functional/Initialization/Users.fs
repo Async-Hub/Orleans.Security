@@ -32,4 +32,19 @@ let getUsers() =
     let bob = TestUser(SubjectId = "2", Username = "bob",
                        Password = "Pass123$", Claims = bobClaims)
 
-    [ alice; bob ] |> ResizeArray<TestUser>
+    // Carol user definition
+
+    let carolClaims =
+        [| Claim(JwtClaimTypes.Name, "Carol Smith")
+           Claim(JwtClaimTypes.GivenName, "Carol")
+           Claim(JwtClaimTypes.FamilyName, "Smith")
+           Claim(JwtClaimTypes.Email, "CarolSmith@email.com")
+           Claim(JwtClaimTypes.EmailVerified, "false", ClaimValueTypes.Boolean)
+           Claim(JwtClaimTypes.WebSite, "http://carol.com")
+           Claim(JwtClaimTypes.Role, "Developer")
+           Claim(JwtClaimTypes.Role, "Manager") |]
+
+    let carol = TestUser(SubjectId = "3", Username = "carol",
+                         Password = "Pass123$", Claims = carolClaims)
+
+    [ alice; bob; carol ] |> ResizeArray<TestUser>

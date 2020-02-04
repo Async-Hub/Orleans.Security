@@ -3,6 +3,7 @@
 open Xunit
 open Microsoft.IdentityModel.Tokens
 open Orleans.Security.AccessToken
+open FluentAssertions;
 
 [<Theory>]
 [<InlineData("WebClient", "Secret", "Api1")>]
@@ -10,12 +11,12 @@ let ``Access token verification with valid scope should be passed``
     (clientId: string) (clientSecret: string) (scope: string) =
     async {
         // Arrange
-        let! accessTokenResponse = IdentityServer4.requestClientCredentialsTokenAsync clientId clientSecret scope
+        let! accessTokenResponse = IdentityServer4Client.getAccessTokenAsync clientId clientSecret scope
                                    |> Async.AwaitTask
 
         // Act
         let claims =
-            JwtSecurityTokenVerifier.Verify(accessTokenResponse.AccessToken, scope, IdentityServer4.discoveryDocument)
+            JwtSecurityTokenVerifier.Verify(accessTokenResponse.AccessToken, scope, IdentityServer4Client.discoveryDocument)
 
         // Assert
         Assert.True(claims |> Seq.exists (fun c -> c.Type = "aud" && c.Value = scope))
@@ -27,14 +28,14 @@ let ``Access token verification with invalid scope should be failed``
     (clientId: string) (clientSecret: string) (scope: string) =
     async {
         // Arrange
-        let! accessTokenResponse = IdentityServer4.requestClientCredentialsTokenAsync clientId clientSecret "Api1"
+        let! accessTokenResponse = IdentityServer4Client.getAccessTokenAsync clientId clientSecret "Api1"
                                    |> Async.AwaitTask
 
         // Act
         let verify =
             fun () ->
                 JwtSecurityTokenVerifier.Verify
-                    (accessTokenResponse.AccessToken, scope, IdentityServer4.discoveryDocument) |> ignore
+                    (accessTokenResponse.AccessToken, scope, IdentityServer4Client.discoveryDocument) |> ignore
 
         // Assert
         Assert.Throws<SecurityTokenInvalidAudienceException>(verify) |> ignore
