@@ -4,7 +4,6 @@
 name: $(date:yyyyMMdd)$(rev:.r)
 
 trigger:
-- master
 - develop
 - release/*
 
