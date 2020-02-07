@@ -63,7 +63,9 @@ jobs:
     displayName: 'Run Tests'
     inputs:
       command: test
-      projects: 'test/**/*.csproj'
+      projects: |
+        'test/**/*.csproj'
+         test/Orleans.Security.IntegrationTests.Functional/Orleans.Security.IntegrationTests.FSharp.fsproj
       arguments: '--logger:trx'
   # ...
   # Publish Test Results
