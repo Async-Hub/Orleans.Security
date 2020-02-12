@@ -67,8 +67,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grains", "samples\aspnetcor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "samples\aspnetcore-co-hosting\IdentityServer\IdentityServer.csproj", "{E8E428A7-EECD-4291-B1F3-8066EA226647}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orleans.Security.CoHosting", "src\Orleans.Security.CoHosting\Orleans.Security.CoHosting.csproj", "{E2F75215-78C4-44FD-8D7C-6A38191004FA}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -179,10 +177,6 @@ Global
 		{E8E428A7-EECD-4291-B1F3-8066EA226647}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E8E428A7-EECD-4291-B1F3-8066EA226647}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E8E428A7-EECD-4291-B1F3-8066EA226647}.Release|Any CPU.Build.0 = Release|Any CPU
-		{E2F75215-78C4-44FD-8D7C-6A38191004FA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E2F75215-78C4-44FD-8D7C-6A38191004FA}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E2F75215-78C4-44FD-8D7C-6A38191004FA}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E2F75215-78C4-44FD-8D7C-6A38191004FA}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -217,7 +211,6 @@ Global
 		{EDBA75E1-B8A8-4821-ACF2-02C21EE5AF2E} = {5B25CCAC-F571-47A5-AB5F-CA7B877A74D7}
 		{9A31A455-7779-4050-B4A2-C88C6C6BCBDC} = {5B25CCAC-F571-47A5-AB5F-CA7B877A74D7}
 		{E8E428A7-EECD-4291-B1F3-8066EA226647} = {5B25CCAC-F571-47A5-AB5F-CA7B877A74D7}
-		{E2F75215-78C4-44FD-8D7C-6A38191004FA} = {B8259074-F610-4834-AAFB-A86316ADB663}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A230B4DE-036D-4400-ABD6-F39E51AA3F36}

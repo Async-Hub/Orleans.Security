@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using GrainsInterfaces;
 using Microsoft.Extensions.Logging;
 using Orleans;
 using Orleans.Security;

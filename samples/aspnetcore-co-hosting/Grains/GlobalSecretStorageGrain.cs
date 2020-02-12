@@ -1,6 +1,5 @@
 ﻿using System.Collections.Generic;
 using System.Threading.Tasks;
-using GrainsInterfaces;
 using Orleans;
 
 namespace Grains

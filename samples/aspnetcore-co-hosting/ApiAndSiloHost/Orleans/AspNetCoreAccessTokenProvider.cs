@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
-using Orleans.Security.CoHosting;
+using Orleans.Security;
 
 namespace ApiAndSiloHost.Orleans
 {

@@ -1,28 +1,29 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
-using Orleans.Runtime;
 using Orleans.Security.AccessToken;
-using Orleans.Security.Authorization;
 
-namespace Orleans.Security.CoHosting
+namespace Orleans.Security.Authorization
 {
     // ReSharper disable once ClassNeverInstantiated.Global
     internal class IncomingGrainCallAuthorizationFilter : GrainAuthorizationFilterBase, IIncomingGrainCallFilter
     {
         public IncomingGrainCallAuthorizationFilter(IAccessTokenVerifier accessTokenVerifier,
-            IAuthorizationExecutor authorizeHandler, ILoggerFactory loggerFactory)
+            // ReSharper disable once SuggestBaseTypeForParameter
+            IAuthorizationExecutor authorizeHandler, ILogger<IncomingGrainCallAuthorizationFilter> logger)
             : base(accessTokenVerifier, authorizeHandler)
         {
-            Logger = loggerFactory.CreateLogger<IncomingGrainCallAuthorizationFilter>();
+            Logger = logger;
         }
 
         public async Task Invoke(IIncomingGrainCallContext context)
         {
-            if (AuthenticationChallenge(context))
+            if (AuthorizationAdmission.IsRequired(context))
             {
-                var accessToken = RequestContext.Get(ConfigurationKeys.AccessTokenKey).ToString();
-
-                await AuthorizeAsync(context, accessToken);
+                await AuthorizeAsync(context);
+                
+                var grainType = context.Grain.GetType();
+                Log(LoggingEvents.IncomingGrainCallAuthorizationPassed,
+                    grainType.Name, context.InterfaceMethod.Name);
             }
 
             await context.Invoke();

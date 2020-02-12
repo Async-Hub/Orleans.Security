@@ -1,6 +1,6 @@
 ﻿using Orleans.Security.Authorization;
 
-namespace GrainsInterfaces
+namespace Grains
 {
     public static class AuthorizationConfig
     {

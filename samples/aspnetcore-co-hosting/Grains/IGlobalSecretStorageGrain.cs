@@ -2,7 +2,7 @@
 using Orleans;
 using Orleans.Security.Authorization;
 
-namespace GrainsInterfaces
+namespace Grains
 {
     public interface IGlobalSecretStorageGrain : IGrainWithStringKey
     {

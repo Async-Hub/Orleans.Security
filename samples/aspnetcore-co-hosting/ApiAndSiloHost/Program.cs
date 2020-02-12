@@ -1,14 +1,10 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
-using System.Threading.Tasks;
 using ApiAndSiloHost.Orleans;
 using Grains;
 using GrainsInterfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
@@ -16,7 +12,7 @@ using Orleans;
 using Orleans.Configuration;
 using Orleans.Hosting;
 using Orleans.Security;
-using Orleans.Security.CoHosting;
+using Orleans.Security.Clustering;
 
 namespace ApiAndSiloHost
 {
@@ -53,7 +49,7 @@ namespace ApiAndSiloHost
                             parts.AddApplicationPart(typeof(UserGrain).Assembly).WithReferences())
                         .ConfigureServices(services =>
                         {
-                            services.AddOrleansClusteringAuthorization(_identityServer4Info,
+                            services.AddOrleansCoHostedClusterAuthorization(_identityServer4Info,
                                 config =>
                                 {
                                     config.ConfigureAuthorizationOptions = AuthorizationConfig.ConfigureOptions;
@@ -64,10 +60,11 @@ namespace ApiAndSiloHost
 
                                     config.TracingEnabled = true;
                                 });
+                            
+                            services.AddHttpContextAccessor();
                             services.AddSingleton<Func<IHttpContextAccessor>>(serviceProvider => 
                                 serviceProvider.GetService<IHttpContextAccessor>);
-
-                            services.AddSingleton<IAccessTokenProvider, AspNetCoreAccessTokenProvider>();
+                            services.AddTransient<IAccessTokenProvider, AspNetCoreAccessTokenProvider>();
                         })
                         // Configure connectivity
                         .Configure<EndpointOptions>(

@@ -1,6 +1,6 @@
 ﻿using System.Threading.Tasks;
 
-namespace Orleans.Security.Client
+namespace Orleans.Security
 {
     public interface IAccessTokenProvider
     {
