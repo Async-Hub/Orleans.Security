@@ -24,7 +24,7 @@ namespace Orleans.Security
             var configuration = new Configuration();
             configure.Invoke(configuration);
 
-            services.AddAuthorization(configuration.ConfigureAuthorizationOptions);
+            services.AddAuthorizationCore(configuration.ConfigureAuthorizationOptions);
 
             services.TryAdd(ServiceDescriptor.Singleton<IAuthorizationExecutor, AuthorizationExecutor>());
 

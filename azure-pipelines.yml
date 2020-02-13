@@ -68,13 +68,6 @@ jobs:
          test/Orleans.Security.IntegrationTests.Functional/Orleans.Security.IntegrationTests.FSharp.fsproj
          test/Orleans.Security.IntegrationTests.TokenVerification/Orleans.Security.IntegrationTests.TokenVerification.csproj
          publishTestResults: true
-  # # ...
-  # # Publish Test Results
-  # - task: PublishTestResults@2
-  #   displayName: 'Publish Test Results'
-  #   inputs:
-  #     testResultsFormat: VSTest
-  #     testResultsFiles: 'test/**/*.trx'
   # ...
   # NuGet pack Orleans.Security.Build.sln
   - task: DotNetCoreCLI@2
