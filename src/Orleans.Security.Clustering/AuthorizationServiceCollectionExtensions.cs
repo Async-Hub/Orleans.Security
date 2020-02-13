@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
+using Orleans.Security.Authorization;
 
 namespace Orleans.Security.Clustering
 {
@@ -43,6 +44,30 @@ namespace Orleans.Security.Clustering
             }
 
             services.AddSingleton(identityServer4Info);
+            services.AddSingleton<IIncomingGrainCallFilter, IncomingGrainCallAuthorizationFilter>();
+            services.AddOrleansClusterSecurityServices(configure);
+        }
+        
+        public static void AddOrleansCoHostedClusterAuthorization(this IServiceCollection services,
+            IdentityServer4Info identityServer4Info, Action<Configuration> configure)
+        {
+            if (services == null)
+            {
+                throw new ArgumentNullException(nameof(services));
+            }
+
+            if (identityServer4Info == null)
+            {
+                throw new ArgumentNullException(nameof(identityServer4Info));
+            }
+
+            if (configure == null)
+            {
+                throw new ArgumentNullException(nameof(configure));
+            }
+
+            services.AddSingleton(identityServer4Info);
+            services.AddSingleton<IOutgoingGrainCallFilter, AccessTokenSetterFilter>();
             services.AddSingleton<IIncomingGrainCallFilter, IncomingGrainCallAuthorizationFilter>();
             services.AddOrleansClusterSecurityServices(configure);
         }

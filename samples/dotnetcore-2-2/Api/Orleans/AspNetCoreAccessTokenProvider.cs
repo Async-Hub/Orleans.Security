@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Http;
-using Orleans.Security.Client;
+using Orleans.Security;
 
 namespace Api.Orleans
 {

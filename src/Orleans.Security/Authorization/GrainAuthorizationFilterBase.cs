@@ -1,14 +1,14 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
 using System.Reflection;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Orleans.Runtime;
 using Orleans.Security.AccessToken;
 
 namespace Orleans.Security.Authorization
 {
-    public abstract class GrainAuthorizationFilterBase
+    internal abstract class GrainAuthorizationFilterBase
     {
         private readonly IAuthorizationExecutor _authorizeHandler;
 
@@ -23,41 +23,13 @@ namespace Orleans.Security.Authorization
             _accessTokenVerifier = accessTokenVerifier;
         }
 
-        protected static bool AuthenticationChallenge(IGrainCallContext grainCallContext)
+        protected async Task AuthorizeAsync(IGrainCallContext grainCallContext)
         {
-            var allowAnonymousAttribute = 
-                grainCallContext.InterfaceMethod.GetCustomAttribute<AllowAnonymousAttribute>();
+            var accessToken = RequestContext.Get(ConfigurationKeys.AccessTokenKey).ToString();
             
-            // No authorization required.
-            if (allowAnonymousAttribute != null)
-            { 
-                return false;
-            }
-
-            IEnumerable<IAuthorizeData> grainAuthorizeData = null;
-            var grainMethodAuthorizeData = grainCallContext.InterfaceMethod.GetCustomAttributes<AuthorizeAttribute>();
-
-            if (grainCallContext.InterfaceMethod.ReflectedType != null)
+            if (string.IsNullOrWhiteSpace(accessToken))
             {
-                grainAuthorizeData =
-                    grainCallContext.InterfaceMethod.ReflectedType.GetCustomAttributes<AuthorizeAttribute>();
-            }
-
-            // No authorization required.
-            // ReSharper disable once ConvertIfStatementToReturnStatement
-            if (grainAuthorizeData != null && !grainAuthorizeData.Any() && !grainMethodAuthorizeData.Any())
-            {
-                return false;
-            }
-
-            return true;
-        }
-
-        protected async Task AuthorizeAsync(IGrainCallContext grainCallContext, string accessToken)
-        {
-            if (string.IsNullOrEmpty(accessToken))
-            {
-                throw new ArgumentNullException($"{nameof(accessToken)}");
+                throw new InvalidOperationException("AccessToken can not be null or empty.");
             }
 
             var accessTokenVerificationResult = await _accessTokenVerifier.Verify(accessToken);
@@ -81,6 +53,12 @@ namespace Orleans.Security.Authorization
                 throw new OrleansClusterUnauthorizedAccessException("Access token verification failed.",
                     new InvalidAccessTokenException(accessTokenVerificationResult.InvalidValidationMessage));
             }
+        }
+
+        protected void Log(EventId eventId, string grainTypeName, string interfaceMethodName)
+        {
+            Logger.LogTrace(eventId, $"{eventId.Name} Type of Grain: {grainTypeName} " +
+                                     $"Method Name: {interfaceMethodName} ");
         }
     }
 }

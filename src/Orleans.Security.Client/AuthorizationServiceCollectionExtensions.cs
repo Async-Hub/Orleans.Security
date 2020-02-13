@@ -1,5 +1,6 @@
 ﻿using System;
 using Microsoft.Extensions.DependencyInjection;
+using Orleans.Security.Authorization;
 
 namespace Orleans.Security.Client
 {
@@ -19,6 +20,7 @@ namespace Orleans.Security.Client
                 throw new ArgumentNullException(nameof(configure));
             }
 
+            services.AddSingleton<IOutgoingGrainCallFilter, AccessTokenSetterFilter>();
             services.AddSingleton<IOutgoingGrainCallFilter, OutgoingGrainCallAuthorizationFilter>();
             services.AddOrleansClusterSecurityServices(configure, configureServices);
         }
@@ -43,6 +45,7 @@ namespace Orleans.Security.Client
             }
 
             services.AddSingleton(identityServer4Info);
+            services.AddSingleton<IOutgoingGrainCallFilter, AccessTokenSetterFilter>();
             services.AddSingleton<IOutgoingGrainCallFilter, OutgoingGrainCallAuthorizationFilter>();
             services.AddOrleansClusterSecurityServices(configure);
         }
