@@ -4,22 +4,45 @@ open System
 open FluentAssertions
 open Orleans.Security
 open Orleans.Security.IntegrationTests.Grains
+open Orleans.Security.IntegrationTests.Grains.SimpleAuthorization
 open System.Threading.Tasks
 open Xunit
 
 [<Theory>]
 [<InlineData("Bob", "Pass123$", "Api1 Orleans")>]
-let ``An authenticated user can invoke the grain method`` (userName: string) (password: string)
-    (scope: string) =
+let ``An authenticated user can invoke the grain method``
+    (userName: string) (password: string) (scope: string) =
     async {
         // Arrange
-        let! accessTokenResponse = IdentityServer4Client.getAccessTokenWAsync userName password scope |> Async.AwaitTask
+        let! accessTokenResponse = TokenFactory.getAccessTokenForUserOnWebClient1Async
+                                       userName password scope |> Async.AwaitTask
 
         let clusterClient = SiloClient.getClusterClient accessTokenResponse.AccessToken
         let userGrain = clusterClient.GetGrain<IUserGrain>(userName)
         let! value = userGrain.GetWithAuthenticatedUser("Secret") |> Async.AwaitTask
 
         Assert.True(value.Equals "Secret")
+    }
+    
+[<Theory>]
+[<InlineData("Alice", "Pass123$", "Api1")>]
+let ``An authenticated user on an unauthenticated client can't invoke the grain method``
+    (userName: string) (password: string) (scope: string) =
+    async {
+        // Arrange
+        let! accessTokenResponse = TokenFactory.getAccessTokenForUserOnWebClient2Async
+                                       userName password scope |> Async.AwaitTask
+
+        let clusterClient = SiloClient.getClusterClient accessTokenResponse.AccessToken
+        let simpleGrain = clusterClient.GetGrain<ISimpleGrain>(Guid.NewGuid())
+        
+        // Act
+        let action =
+            async{
+                let! value = simpleGrain.GetValue() |> Async.AwaitTask
+            return value } |> Async.StartAsTask :> Task
+
+        Assert.ThrowsAsync<OrleansClusterUnauthorizedAccessException>(fun () -> action) |> ignore
     }
     
 [<Fact>]

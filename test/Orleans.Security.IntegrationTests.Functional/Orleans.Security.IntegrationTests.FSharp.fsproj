@@ -35,7 +35,8 @@
     <Compile Include="Initialization\Clients.fs" />
     <Compile Include="Initialization\IdentityServer4Resources.fs" />
     <Compile Include="Initialization\IdentityServer4.fs" />
-    <Compile Include="Initialization\IdentityServer4Client.fs" />
+    <Compile Include="Initialization\Initializer.fs" />
+    <Compile Include="Initialization\TokenFactory.fs" />
     <Compile Include="Initialization\SiloHost.fs" />
     <Compile Include="Initialization\SiloClient.fs" />
     <Compile Include="AccessTokenVerificationTests.fs" />

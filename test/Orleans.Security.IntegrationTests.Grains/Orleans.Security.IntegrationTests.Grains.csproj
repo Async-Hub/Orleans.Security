@@ -16,4 +16,9 @@
     <ProjectReference Include="..\..\src\Orleans.Security.Authorization\Orleans.Security.Authorization.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="ClaimsBasedAuthorization" />
+    <Folder Include="ResourceBasedAuthorization" />
+  </ItemGroup>
+
 </Project>
