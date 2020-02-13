@@ -19,7 +19,7 @@ jobs:
   # ...
   # Use NuGet 5.x
   - task: NuGetToolInstaller@0
-    displayName: 'Use NuGet 5'
+    displayName: 'Use NuGet 5.x'
     inputs:
       versionSpec: 5.x
   # ...
@@ -64,16 +64,17 @@ jobs:
     inputs:
       command: test
       projects: |
-        'test/**/*.csproj'
+         test/Orleans.Security.IntegrationTests/Orleans.Security.IntegrationTests.csproj
          test/Orleans.Security.IntegrationTests.Functional/Orleans.Security.IntegrationTests.FSharp.fsproj
-      arguments: '--logger:trx'
-  # ...
-  # Publish Test Results
-  - task: PublishTestResults@2
-    displayName: 'Publish Test Results'
-    inputs:
-      testResultsFormat: VSTest
-      testResultsFiles: 'test/**/*.trx'
+         test/Orleans.Security.IntegrationTests.TokenVerification/Orleans.Security.IntegrationTests.TokenVerification.csproj
+         publishTestResults: true
+  # # ...
+  # # Publish Test Results
+  # - task: PublishTestResults@2
+  #   displayName: 'Publish Test Results'
+  #   inputs:
+  #     testResultsFormat: VSTest
+  #     testResultsFiles: 'test/**/*.trx'
   # ...
   # NuGet pack Orleans.Security.Build.sln
   - task: DotNetCoreCLI@2
