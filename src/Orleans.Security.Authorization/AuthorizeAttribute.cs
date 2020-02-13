@@ -8,7 +8,7 @@ namespace Orleans.Security.Authorization
     /// <summary>
     /// Specifies that the class or method that this attribute is applied to requires the specified authorization.
     /// </summary>
-    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Method,
+    [AttributeUsage(AttributeTargets.Class | AttributeTargets.Interface | AttributeTargets.Method, 
         AllowMultiple = true, Inherited = true)]
     public class AuthorizeAttribute : Attribute, IAuthorizeData
     {
@@ -40,15 +40,5 @@ namespace Orleans.Security.Authorization
         /// Gets or sets a comma delimited list of schemes from which user information is constructed.
         /// </summary>
         public string AuthenticationSchemes { get; set; }
-
-        /// <summary>
-        /// Gets or sets a comma delimited list of schemes from which user information is constructed.
-        /// </summary>
-        [Obsolete("Use AuthenticationSchemes instead.", error: false)]
-        public string ActiveAuthenticationSchemes
-        {
-            get => AuthenticationSchemes;
-            set => AuthenticationSchemes = value;
-        }
     }
 }
