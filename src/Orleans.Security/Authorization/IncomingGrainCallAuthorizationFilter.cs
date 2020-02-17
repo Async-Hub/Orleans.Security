@@ -1,5 +1,8 @@
-﻿using System.Threading.Tasks;
+﻿using System.Security.Claims;
+using System.Threading.Tasks;
+using IdentityModel;
 using Microsoft.Extensions.Logging;
+using Orleans.Runtime;
 using Orleans.Security.AccessToken;
 
 namespace Orleans.Security.Authorization
@@ -19,9 +22,19 @@ namespace Orleans.Security.Authorization
         {
             if (AuthorizationAdmission.IsRequired(context))
             {
-                await AuthorizeAsync(context);
+                var claims = await AuthorizeAsync(context);
                 
                 var grainType = context.Grain.GetType();
+
+                if (grainType.BaseType == typeof(GrainWithClaimsPrincipal))
+                {
+                    var claimsIdentity = new ClaimsIdentity(claims, 
+                        "", JwtClaimTypes.Subject, JwtClaimTypes.Role);
+                    
+                    var claimsPrincipal = new ClaimsPrincipal(claimsIdentity);
+                    RequestContext.Set(ConfigurationKeys.ClaimsPrincipalKey, claimsPrincipal);
+                }
+                
                 Log(LoggingEvents.IncomingGrainCallAuthorizationPassed,
                     grainType.Name, context.InterfaceMethod.Name);
             }

@@ -6,11 +6,10 @@ namespace Orleans.Security.IntegrationTests.Grains.ResourceBasedAuthorization
     [Authorize(Policy = "DocRegistryAccess")]
     public interface IDocumentsRegistryGrain : IGrainWithStringKey
     {
-        //Task Add(string name, string content, string author)
-        Task Add(Document document);
+        Task Add(Document doc);
         
-        Task<string> Modify(string content);
+        Task<string> Modify(string docName, string newContent);
 
-        Task<Document> Take(string name);
+        Task<Document> Take(string docName);
     }
 }

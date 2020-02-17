@@ -1,10 +1,6 @@
 module IdSClients
 
-open IdentityModel
 open IdentityServer4.Models
-open Orleans.Security.IntegrationTests.Grains.ResourceBasedAuthorization
-open System.Collections.Generic
-open System.Security.Claims
 
 let getClients() =
     let webClient1 = Client()
@@ -14,9 +10,6 @@ let getClients() =
     webClient1.AllowOfflineAccess <- true
     webClient1.AllowedScopes.Add("Api1")
     webClient1.AllowedScopes.Add("Orleans")
-    webClient1.AllowedScopes.Add(JwtClaimTypes.Role)
-    webClient1.Claims <- [ Claim(JwtClaimTypes.Role, "")
-                           Claim(DocRegistryAccessClaim.Name, "")] |> ResizeArray<Claim>
     
     let webClient2 = Client()
     webClient2.ClientId <- GlobalConfig.WebClient2
@@ -24,8 +17,6 @@ let getClients() =
     webClient2.AllowedGrantTypes <- GrantTypes.ResourceOwnerPasswordAndClientCredentials
     webClient2.AllowOfflineAccess <- true
     webClient2.AllowedScopes.Add("Api1")
-    webClient2.AllowedScopes.Add(JwtClaimTypes.Role)
-    webClient2.Claims <- List<Claim> [ Claim(JwtClaimTypes.Role, "Admin") ]
 
     Secret(HashExtensions.Sha256 "Secret1") |> webClient1.ClientSecrets.Add
     Secret(HashExtensions.Sha256 "Secret2") |> webClient2.ClientSecrets.Add

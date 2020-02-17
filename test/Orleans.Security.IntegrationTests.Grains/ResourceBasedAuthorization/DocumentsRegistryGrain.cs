@@ -2,39 +2,54 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Orleans.Runtime;
+using Orleans.Security.Authorization;
 
 namespace Orleans.Security.IntegrationTests.Grains.ResourceBasedAuthorization
 {
     // ReSharper disable once ClassNeverInstantiated.Global
-    public class DocumentsRegistryGrain : Grain, IDocumentsRegistryGrain
+    public class DocumentsRegistryGrain : GrainWithClaimsPrincipal, IDocumentsRegistryGrain
     {
         private readonly IPersistentState<List<Document>> _state;
+        private readonly IAuthorizationService _authorizationService;
 
         public DocumentsRegistryGrain([PersistentState("state", 
-            "MemoryGrainStorage")]IPersistentState<List<Document>> state)
+            "MemoryGrainStorage")]IPersistentState<List<Document>> state,
+            IAuthorizationService authorizationService)
         {
             _state = state;
+            _authorizationService = authorizationService;
         }
-
-        //public async Task Add(string name, string content, string author)
-        public async Task Add(Document document)
+        
+        public async Task Add(Document doc)
         {
-            //var doc = new Document(){Name = name, Author = author, Content = content};
-            _state.State.Add(document);
+            _state.State.Add(doc);
 
             await _state.WriteStateAsync();
         }
 
-        public Task<string> Modify(string content)
+        public async Task<string> Modify(string docName, string newContent)
         {
-            throw new System.NotImplementedException();
+            var document = _state.State.Single(doc => doc.Name == docName);
+            
+            var authorizationResult = await _authorizationService
+                .AuthorizeAsync(User, document, AuthorizationConfig.DocumentModifyAccessPolicy);
+
+            // ReSharper disable once InvertIf
+            if (authorizationResult.Succeeded)
+            {
+                document.Content = newContent;
+                await _state.WriteStateAsync();
+                return document.Content;
+            }
+
+            return null;
         }
 
-        public Task<Document> Take(string name)
+        public Task<Document> Take(string docName)
         {
-            var doc = _state.State.Single(d => d.Name == name);
+            var document = _state.State.Single(doc => doc.Name == docName);
 
-            return Task.FromResult(doc);
+            return Task.FromResult(document);
         }
     }
 }

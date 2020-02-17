@@ -18,8 +18,8 @@ let ``An authenticated user can invoke the grain method``
                                        userName password scope |> Async.AwaitTask
 
         let clusterClient = SiloClient.getClusterClient accessTokenResponse.AccessToken
-        let userGrain = clusterClient.GetGrain<IUserGrain>(userName)
-        let! value = userGrain.GetWithAuthenticatedUser("Secret") |> Async.AwaitTask
+        let simpleGrain = clusterClient.GetGrain<ISimpleGrain>(Guid.NewGuid())
+        let! value = simpleGrain.GetWithAuthenticatedUser("Secret") |> Async.AwaitTask
 
         Assert.True(value.Equals "Secret")
     }
@@ -53,12 +53,12 @@ let ``An anonymous user can't invoke the grain method`` () =
         let userName = "Empty"
         
         let clusterClient = SiloClient.getClusterClient accessToken
-        let userGrain = clusterClient.GetGrain<IUserGrain>(userName)
+        let simpleGrain = clusterClient.GetGrain<ISimpleGrain>(Guid.NewGuid())
         
         // Act
         let action =
             async {
-                let! value = userGrain.GetWithAuthenticatedUser(String.Empty) |> Async.AwaitTask
+                let! value = simpleGrain.GetWithAuthenticatedUser(String.Empty) |> Async.AwaitTask
                 return value } |> Async.StartAsTask :> Task
 
         Assert.ThrowsAsync<OrleansClusterUnauthorizedAccessException>(fun () -> action) |> ignore
@@ -69,12 +69,11 @@ let ``An anonymous user can invoke a grain method with [AllowAnonymous] attribyt
     async {
         // Arrange
         let accessToken = String.Empty
-        let userName = "Empty"
-        
-        let clusterClient = SiloClient.getClusterClient accessToken
-        let userGrain = clusterClient.GetGrain<IUserGrain>(userName)
 
-        let! value = userGrain.GetWithAnonymousUser("Secret") |> Async.AwaitTask
+        let clusterClient = SiloClient.getClusterClient accessToken
+        let simpleGrain = clusterClient.GetGrain<ISimpleGrain>(Guid.Empty)
+
+        let! value = simpleGrain.GetWithAnonymousUser("Secret") |> Async.AwaitTask
 
         Assert.True(value.Equals "Secret")
     }

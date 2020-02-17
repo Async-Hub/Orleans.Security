@@ -9,5 +9,3 @@ let identityServer4Info = IdentityServer4Info(identityServer4Url,
 let WebClient1 = "WebClient1"
 [<Literal>]
 let WebClient2 = "WebClient2"
-
-let defaultDocRegistryName = "DocRegistryDefault"

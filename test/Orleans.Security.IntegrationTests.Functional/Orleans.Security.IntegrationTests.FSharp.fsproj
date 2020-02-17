@@ -39,8 +39,8 @@
     <Compile Include="Initialization\IdSInstance.fs" />
     <Compile Include="Initialization\IdSTokenFactory.fs" />
     <Compile Include="Initialization\SiloHost.fs" />
-    <Compile Include="Initialization\SiloClient.fs" />
     <Compile Include="Initialization\ClusterSetup.fs" />
+    <Compile Include="Initialization\SiloClient.fs" />
     <Compile Include="AccessTokenTests\AccessTokenVerificationTests.fs" />
     <Compile Include="AuthorizationTests\SimpleAuthorizationTests.fs" />
     <Compile Include="AuthorizationTests\RoleBasedAuthorizationTests.fs" />

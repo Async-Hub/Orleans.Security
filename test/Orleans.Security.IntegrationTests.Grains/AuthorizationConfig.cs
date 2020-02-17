@@ -7,6 +7,8 @@ namespace Orleans.Security.IntegrationTests.Grains
     // ReSharper disable once UnusedType.Global
     public static class AuthorizationConfig
     {
+        internal const string DocumentModifyAccessPolicy = "DocumentModifyAccess";
+        
         // ReSharper disable once UnusedMember.Global
         public static void ConfigureOptions(AuthorizationOptions options)
         {
@@ -15,10 +17,14 @@ namespace Orleans.Security.IntegrationTests.Grains
             
             options.AddPolicy("DocRegistryAccess", 
                 policy => policy.AddRequirements(new DocRegistryAccessRequirement()));
+            
+            options.AddPolicy(DocumentModifyAccessPolicy, 
+                policy => policy.AddRequirements(new SameAuthorRequirement()));
         }
         
         public static void ConfigureServices(IServiceCollection services)
         {
+            services.AddSingleton<IAuthorizationHandler, DocModifyAuthorizationHandler>();
             services.AddSingleton<IAuthorizationHandler, DocRegistryAccessHandler>();
         }
     }

@@ -1,7 +1,9 @@
 namespace Orleans.Security.IntegrationTests.FSharp
 
+open IdentityModel
 open IdentityServer4.Models
 open IdentityServer4.Services
+open Orleans.Security.IntegrationTests.Grains.ResourceBasedAuthorization
 open System.Threading.Tasks
 open System.Linq
 
@@ -9,12 +11,19 @@ type ProfileService() =
     interface IProfileService with
         member this.GetProfileDataAsync(context: ProfileDataRequestContext) =
             async {
-                let claim =
-                    context.Subject.Claims.SingleOrDefault(fun c -> c.Type = GlobalConfig.defaultDocRegistryName)
+                let docRegistryAccessClaim =
+                    context.Subject.Claims.SingleOrDefault(fun c -> c.Type = DocRegistryAccessClaim.Name)
 
-                match claim with
+                match docRegistryAccessClaim with
                 | null -> ()
                 | value -> context.IssuedClaims.Add value
+                
+                let roleClaims =
+                    context.Subject.Claims.Where(fun c -> c.Type = JwtClaimTypes.Role)
+                    
+                match roleClaims with
+                | null -> ()
+                | value -> context.IssuedClaims.AddRange value
             }
             |> Async.StartAsTask :> Task
 
