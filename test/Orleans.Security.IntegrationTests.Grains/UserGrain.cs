@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Orleans.Security.IntegrationTests.Grains.ResourceBasedAuthorization;
 
 namespace Orleans.Security.IntegrationTests.Grains
 {
@@ -26,6 +27,14 @@ namespace Orleans.Security.IntegrationTests.Grains
         public Task<string> GetWithAnonymousUser(string secret)
         {
             return Task.FromResult(secret);
+        }
+
+        public async Task<string> GetDocumentContent(string documentName)
+        {
+            var grain = GrainFactory.GetGrain<IDocumentsRegistryGrain>("DocRegistryDefault");
+            var doc = await grain.Take(documentName);
+            
+            return doc.Content;
         }
     }
 }

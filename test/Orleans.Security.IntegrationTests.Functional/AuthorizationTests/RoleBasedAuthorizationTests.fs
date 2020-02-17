@@ -12,7 +12,7 @@ let ``Multiple roles as a comma separated list should work when the user has bot
     (userName: string) (password: string) (scope: string) =
     async {
         // Arrange
-        let! accessTokenResponse = TokenFactory.getAccessTokenForUserOnWebClient1Async
+        let! accessTokenResponse = IdSTokenFactory.getAccessTokenForUserOnWebClient1Async
                                        userName password scope |> Async.AwaitTask
 
         let clusterClient = SiloClient.getClusterClient accessTokenResponse.AccessToken
@@ -28,7 +28,7 @@ let ``Multiple roles as a comma separated list shouldn't work when the user has 
     (userName: string) (password: string) (scope: string) =
     async {
         // Arrange
-        let! accessTokenResponse = TokenFactory.getAccessTokenForUserOnWebClient1Async
+        let! accessTokenResponse = IdSTokenFactory.getAccessTokenForUserOnWebClient1Async
                                        userName password scope |> Async.AwaitTask
 
         let clusterClient = SiloClient.getClusterClient accessTokenResponse.AccessToken
@@ -49,7 +49,7 @@ let ``Multiple roles applied as multiple attributes should work when the user ha
     (userName: string) (password: string) (scope: string) =
     async {
         // Arrange
-        let! accessTokenResponse = TokenFactory.getAccessTokenForUserOnWebClient1Async
+        let! accessTokenResponse = IdSTokenFactory.getAccessTokenForUserOnWebClient1Async
                                        userName password scope |> Async.AwaitTask
 
         let clusterClient = SiloClient.getClusterClient accessTokenResponse.AccessToken
@@ -65,7 +65,7 @@ let ``Multiple roles applied as multiple attributes shouldn't work when the user
     (userName: string) (password: string) (scope: string) =
     async {
         // Arrange
-        let! accessTokenResponse = TokenFactory.getAccessTokenForUserOnWebClient1Async
+        let! accessTokenResponse = IdSTokenFactory.getAccessTokenForUserOnWebClient1Async
                                        userName password scope |> Async.AwaitTask
 
         let clusterClient = SiloClient.getClusterClient accessTokenResponse.AccessToken

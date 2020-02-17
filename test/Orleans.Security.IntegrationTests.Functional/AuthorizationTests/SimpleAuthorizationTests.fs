@@ -14,7 +14,7 @@ let ``An authenticated user can invoke the grain method``
     (userName: string) (password: string) (scope: string) =
     async {
         // Arrange
-        let! accessTokenResponse = TokenFactory.getAccessTokenForUserOnWebClient1Async
+        let! accessTokenResponse = IdSTokenFactory.getAccessTokenForUserOnWebClient1Async
                                        userName password scope |> Async.AwaitTask
 
         let clusterClient = SiloClient.getClusterClient accessTokenResponse.AccessToken
@@ -30,7 +30,7 @@ let ``An authenticated user on an unauthenticated client can't invoke the grain 
     (userName: string) (password: string) (scope: string) =
     async {
         // Arrange
-        let! accessTokenResponse = TokenFactory.getAccessTokenForUserOnWebClient2Async
+        let! accessTokenResponse = IdSTokenFactory.getAccessTokenForUserOnWebClient2Async
                                        userName password scope |> Async.AwaitTask
 
         let clusterClient = SiloClient.getClusterClient accessTokenResponse.AccessToken

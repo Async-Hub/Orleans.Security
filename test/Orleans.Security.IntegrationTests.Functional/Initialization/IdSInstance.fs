@@ -1,4 +1,4 @@
-module Initializer
+module IdSInstance
 
 open IdentityModel.Client
 open Orleans.Security.AccessToken
@@ -18,13 +18,10 @@ let private getDiscoveryDocumentAsync (client: HttpClient) =
         return discoveryDocument
     }
 
-let identityServer4Client =
-    IdentityServer4.startServer() |> ignore
+let client =
+    IdentityServer.startServer() |> ignore
     let httpClient = new HttpClient()
     httpClient.BaseAddress <- Uri GlobalConfig.identityServer4Url
     httpClient
 
-let public discoveryDocument =
-    identityServer4Client
-    |> getDiscoveryDocumentAsync
-    |> Async.RunSynchronously
+let public discoveryDocument = client |> getDiscoveryDocumentAsync |> Async.RunSynchronously

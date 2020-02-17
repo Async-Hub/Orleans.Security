@@ -1,7 +1,7 @@
-module TokenFactory
+module IdSTokenFactory
 
 open IdentityModel.Client
-open Initializer
+open IdSInstance
 
 let getAccessTokenForClientAsync (clientId: string) (clientSecret: string) (scope: string) =
     let tokenRequest =
@@ -9,7 +9,7 @@ let getAccessTokenForClientAsync (clientId: string) (clientSecret: string) (scop
                                           Scope = scope, ClientId = clientId,
                                           ClientSecret = clientSecret)
 
-    identityServer4Client.RequestClientCredentialsTokenAsync(tokenRequest)
+    client.RequestClientCredentialsTokenAsync(tokenRequest)
     
 let getAccessTokenForUserAsync (clientId: string) (clientSecret: string) (userName: string)
     (password: string) (scope: string) =
@@ -21,7 +21,7 @@ let getAccessTokenForUserAsync (clientId: string) (clientSecret: string) (userNa
                                 Password = password,
                                 Scope = scope)
 
-    identityServer4Client.RequestPasswordTokenAsync(passwordTokenRequest)
+    client.RequestPasswordTokenAsync(passwordTokenRequest)
 
 let getAccessTokenForUserOnWebClient1Async = getAccessTokenForUserAsync GlobalConfig.WebClient1 "Secret1"
 let getAccessTokenForUserOnWebClient2Async = getAccessTokenForUserAsync GlobalConfig.WebClient2 "Secret2"

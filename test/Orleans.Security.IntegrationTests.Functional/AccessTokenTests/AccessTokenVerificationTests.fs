@@ -11,12 +11,12 @@ let ``Access token verification with valid scope should be passed``
     (clientId: string) (clientSecret: string) (scope: string) =
     async {
         // Arrange
-        let! accessTokenResponse = TokenFactory.getAccessTokenForClientAsync clientId clientSecret scope
+        let! accessTokenResponse = IdSTokenFactory.getAccessTokenForClientAsync clientId clientSecret scope
                                    |> Async.AwaitTask
 
         // Act
         let claims =
-            JwtSecurityTokenVerifier.Verify(accessTokenResponse.AccessToken, scope, Initializer.discoveryDocument)
+            JwtSecurityTokenVerifier.Verify(accessTokenResponse.AccessToken, scope, IdSInstance.discoveryDocument)
 
         // Assert
         Assert.True(claims |> Seq.exists (fun c -> c.Type = "aud" && c.Value = scope))
@@ -28,14 +28,14 @@ let ``Access token verification with invalid scope should be failed``
     (clientId: string) (clientSecret: string) (scope: string) =
     async {
         // Arrange
-        let! accessTokenResponse = TokenFactory.getAccessTokenForClientAsync clientId clientSecret "Api1"
+        let! accessTokenResponse = IdSTokenFactory.getAccessTokenForClientAsync clientId clientSecret "Api1"
                                    |> Async.AwaitTask
 
         // Act
         let verify =
             fun () ->
                 JwtSecurityTokenVerifier.Verify
-                    (accessTokenResponse.AccessToken, scope, Initializer.discoveryDocument) |> ignore
+                    (accessTokenResponse.AccessToken, scope, IdSInstance.discoveryDocument) |> ignore
 
         // Assert
         Assert.Throws<SecurityTokenInvalidAudienceException>(verify) |> ignore

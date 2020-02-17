@@ -39,6 +39,8 @@ let private clusterClient =
                                       config.ConfigureAuthorizationOptions <- Action<AuthorizationOptions>(fun options ->
                                           AuthorizationConfig.ConfigureOptions(options) |> ignore)
                                       ignore())
+                                  // Some custom authorization services.
+                                  AuthorizationConfig.ConfigureServices(services)
                                   services.AddSingleton<IAccessTokenProvider>( fun _ -> accessTokenProvider)
                                   |> ignore)
 

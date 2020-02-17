@@ -27,13 +27,16 @@ let startSilo () =
                        ignore())         
                    .ConfigureApplicationParts(fun parts ->          
                        parts.AddApplicationPart(typeof<UserGrain>.Assembly).WithReferences()         
-                       |> ignore)         
+                       |> ignore)
+                   .AddMemoryGrainStorage("MemoryGrainStorage")
                    .ConfigureServices(fun services ->         
                        services.AddOrleansClusteringAuthorization(GlobalConfig.identityServer4Info,         
                            fun (config:Configuration) ->         
                            config.ConfigureAuthorizationOptions <- Action<AuthorizationOptions>(fun options ->         
                                AuthorizationConfig.ConfigureOptions(options) |> ignore)         
-                           ignore())         
+                           ignore())
+                       // Some custom authorization services.
+                       AuthorizationConfig.ConfigureServices(services)
                        ignore()) |> ignore         
                )         
 

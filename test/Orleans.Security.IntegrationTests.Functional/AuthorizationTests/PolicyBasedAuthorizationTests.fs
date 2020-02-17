@@ -13,7 +13,7 @@ let ``A user with an appropriate role should have access to the method``
     (userName: string) (password: string) (scope: string) =
     async {
         // Arrange
-        let! accessTokenResponse = TokenFactory.getAccessTokenForUserOnWebClient1Async
+        let! accessTokenResponse = IdSTokenFactory.getAccessTokenForUserOnWebClient1Async
                                        userName password scope |> Async.AwaitTask
 
         let clusterClient = SiloClient.getClusterClient accessTokenResponse.AccessToken
@@ -29,7 +29,7 @@ let ``A user without an appropriate role shouldn't have access to the method``
     (userName: string) (password: string) (scope: string) =
     async {
         // Arrange
-        let! accessTokenResponse = TokenFactory.getAccessTokenForUserOnWebClient1Async
+        let! accessTokenResponse = IdSTokenFactory.getAccessTokenForUserOnWebClient1Async
                                        userName password scope |> Async.AwaitTask
 
         let clusterClient = SiloClient.getClusterClient accessTokenResponse.AccessToken

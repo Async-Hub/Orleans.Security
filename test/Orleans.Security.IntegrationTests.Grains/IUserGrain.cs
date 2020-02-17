@@ -10,5 +10,7 @@ namespace Orleans.Security.IntegrationTests.Grains
         
         [AllowAnonymous]
         Task<string> GetWithAnonymousUser(string secret);
+
+        Task<string> GetDocumentContent(string documentName);
     }
 }

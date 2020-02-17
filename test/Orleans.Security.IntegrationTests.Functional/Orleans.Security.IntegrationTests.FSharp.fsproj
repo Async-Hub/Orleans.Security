@@ -32,17 +32,20 @@
     <Compile Include="Assembly.fs" />
     <Compile Include="Initialization\GlobalConfig.fs" />
     <Compile Include="Initialization\Users.fs" />
-    <Compile Include="Initialization\Clients.fs" />
-    <Compile Include="Initialization\IdentityServer4Resources.fs" />
-    <Compile Include="Initialization\IdentityServer4.fs" />
-    <Compile Include="Initialization\Initializer.fs" />
-    <Compile Include="Initialization\TokenFactory.fs" />
+    <Compile Include="Initialization\IdSClients.fs" />
+    <Compile Include="Initialization\IdSResources.fs" />
+    <Compile Include="Initialization\ProfileService.fs" />
+    <Compile Include="Initialization\IdentityServer.fs" />
+    <Compile Include="Initialization\IdSInstance.fs" />
+    <Compile Include="Initialization\IdSTokenFactory.fs" />
     <Compile Include="Initialization\SiloHost.fs" />
     <Compile Include="Initialization\SiloClient.fs" />
-    <Compile Include="AccessTokenVerificationTests.fs" />
+    <Compile Include="Initialization\ClusterSetup.fs" />
+    <Compile Include="AccessTokenTests\AccessTokenVerificationTests.fs" />
     <Compile Include="AuthorizationTests\SimpleAuthorizationTests.fs" />
     <Compile Include="AuthorizationTests\RoleBasedAuthorizationTests.fs" />
     <Compile Include="AuthorizationTests\PolicyBasedAuthorizationTests.fs" />
+    <Compile Include="AuthorizationTests\ResourceBasedAuthorizationTests.fs" />
     <Compile Include="TestsNUnit.fs" />
     <Compile Include="Program.fs" />
   </ItemGroup>

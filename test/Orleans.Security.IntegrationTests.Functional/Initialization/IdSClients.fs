@@ -1,7 +1,8 @@
-module Clients
+module IdSClients
 
 open IdentityModel
 open IdentityServer4.Models
+open Orleans.Security.IntegrationTests.Grains.ResourceBasedAuthorization
 open System.Collections.Generic
 open System.Security.Claims
 
@@ -14,7 +15,8 @@ let getClients() =
     webClient1.AllowedScopes.Add("Api1")
     webClient1.AllowedScopes.Add("Orleans")
     webClient1.AllowedScopes.Add(JwtClaimTypes.Role)
-    webClient1.Claims <- List<Claim> [ Claim(JwtClaimTypes.Role, "Admin") ]
+    webClient1.Claims <- [ Claim(JwtClaimTypes.Role, "")
+                           Claim(DocRegistryAccessClaim.Name, "")] |> ResizeArray<Claim>
     
     let webClient2 = Client()
     webClient2.ClientId <- GlobalConfig.WebClient2
