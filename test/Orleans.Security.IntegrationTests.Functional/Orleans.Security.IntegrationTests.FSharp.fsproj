@@ -44,6 +44,7 @@
     <Compile Include="AccessTokenTests\AccessTokenVerificationTests.fs" />
     <Compile Include="AuthorizationTests\SimpleAuthorizationTests.fs" />
     <Compile Include="AuthorizationTests\RoleBasedAuthorizationTests.fs" />
+    <Compile Include="AuthorizationTests\ClaimsBasedAuthorizationTests.fs" />
     <Compile Include="AuthorizationTests\PolicyBasedAuthorizationTests.fs" />
     <Compile Include="AuthorizationTests\ResourceBasedAuthorizationTests.fs" />
     <Compile Include="TestsNUnit.fs" />

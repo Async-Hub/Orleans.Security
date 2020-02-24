@@ -14,6 +14,8 @@ namespace Orleans.Security.IntegrationTests.Grains
         {
             options.AddPolicy("AdminPolicy", policy => policy.RequireRole("Admin"));
             options.AddPolicy("ManagerPolicy", policy => policy.RequireRole("Manager"));
+            options.AddPolicy("NewYorkCityOnly", 
+                policy => policy.RequireClaim("City", "New York"));
             
             options.AddPolicy("DocRegistryAccess", 
                 policy => policy.AddRequirements(new DocRegistryAccessRequirement()));

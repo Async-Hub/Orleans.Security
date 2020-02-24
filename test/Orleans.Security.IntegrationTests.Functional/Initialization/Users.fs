@@ -2,6 +2,7 @@
 
 open IdentityModel
 open IdentityServer4.Test
+open Orleans.Security.IntegrationTests.Grains.ClaimsBasedAuthorization
 open Orleans.Security.IntegrationTests.Grains.ResourceBasedAuthorization
 open System.Security.Claims
 
@@ -19,7 +20,8 @@ let private aliceClaims =
        Claim(JwtClaimTypes.WebSite, "http://alice.com")
        Claim(JwtClaimTypes.Role, "Admin")
        Claim(JwtClaimTypes.Role, "Manager")
-       Claim(DocRegistryAccessClaim.Name, DocRegistryAccessClaim.Value) |]
+       Claim(DocRegistryAccessClaim.Name, DocRegistryAccessClaim.Value)
+       Claim(CityClaim.Name, "New York") |]
 let private alice = TestUser(SubjectId = aliceId, Username = "alice",
                      Password = "Pass123$", Claims = aliceClaims)
 // Bob user definition
@@ -43,7 +45,8 @@ let private carolClaims =
        Claim(JwtClaimTypes.EmailVerified, "false", ClaimValueTypes.Boolean)
        Claim(JwtClaimTypes.WebSite, "http://carol.com")
        Claim(JwtClaimTypes.Role, "Developer")
-       Claim(JwtClaimTypes.Role, "Manager") |]
+       Claim(JwtClaimTypes.Role, "Manager")
+       Claim(CityClaim.Name, "Boston") |]
 let private carol = TestUser(SubjectId = carolId, Username = "carol",
                      Password = "Pass123$", Claims = carolClaims)
 
