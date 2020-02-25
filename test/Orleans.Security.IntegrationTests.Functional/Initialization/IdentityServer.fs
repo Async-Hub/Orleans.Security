@@ -1,17 +1,20 @@
-﻿module IdentityServer4
+﻿module IdentityServer
 
 open Microsoft.AspNetCore.Builder
 open Microsoft.AspNetCore.Hosting
 open Microsoft.Extensions.DependencyInjection
 open Microsoft.Extensions.Hosting
+open IdentityServer4.Services
+open Orleans.Security.IntegrationTests.FSharp
 
 type Startup() =
     member this.ConfigureServices(services: IServiceCollection) =
         services.AddIdentityServer().AddDeveloperSigningCredential()
-                .AddInMemoryApiResources(IdentityServer4Resources.getApiResources())
-                .AddInMemoryIdentityResources(IdentityServer4Resources.getIdentityResources())
-                .AddInMemoryClients(Clients.getClients()).AddTestUsers(Users.getUsers()) |> ignore
+                .AddInMemoryApiResources(IdSResources.getApiResources())
+                .AddInMemoryIdentityResources(IdSResources.getIdentityResources())
+                .AddInMemoryClients(IdSClients.getClients()).AddTestUsers(Users.getUsers()) |> ignore
 
+        services.AddTransient<IProfileService, ProfileService>() |> ignore
         services.AddControllersWithViews() |> ignore
 
     member this.Configure(app: IApplicationBuilder, env: IWebHostEnvironment) =

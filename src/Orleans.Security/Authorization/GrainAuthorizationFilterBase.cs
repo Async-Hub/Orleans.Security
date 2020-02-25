@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Reflection;
+using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Orleans.Runtime;
@@ -23,7 +24,7 @@ namespace Orleans.Security.Authorization
             _accessTokenVerifier = accessTokenVerifier;
         }
 
-        protected async Task AuthorizeAsync(IGrainCallContext grainCallContext)
+        protected async Task<IEnumerable<Claim>> AuthorizeAsync(IGrainCallContext grainCallContext)
         {
             var accessToken = RequestContext.Get(ConfigurationKeys.AccessTokenKey).ToString();
             
@@ -34,6 +35,7 @@ namespace Orleans.Security.Authorization
 
             var accessTokenVerificationResult = await _accessTokenVerifier.Verify(accessToken);
 
+            // ReSharper disable once InvertIf
             if (accessTokenVerificationResult.IsVerified)
             {
                 IEnumerable<IAuthorizeData> grainAuthorizeData = null;
@@ -47,12 +49,12 @@ namespace Orleans.Security.Authorization
 
                 await _authorizeHandler.AuthorizeAsync(accessTokenVerificationResult.Claims,
                     grainAuthorizeData, grainMethodAuthorizeData);
+
+                return accessTokenVerificationResult.Claims;
             }
-            else
-            {
-                throw new OrleansClusterUnauthorizedAccessException("Access token verification failed.",
-                    new InvalidAccessTokenException(accessTokenVerificationResult.InvalidValidationMessage));
-            }
+
+            throw new OrleansClusterUnauthorizedAccessException("Access token verification failed.",
+                new InvalidAccessTokenException(accessTokenVerificationResult.InvalidValidationMessage));
         }
 
         protected void Log(EventId eventId, string grainTypeName, string interfaceMethodName)

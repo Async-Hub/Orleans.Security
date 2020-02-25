@@ -5,6 +5,7 @@ open Orleans.Configuration;
 open Orleans.Security.Authorization
 open Orleans.Security.Client
 open Orleans.Security.IntegrationTests.Grains
+open Orleans.Security.IntegrationTests.Grains.SimpleAuthorization
 open Orleans.Security;
 open Orleans;
 open System
@@ -32,18 +33,24 @@ let private clusterClient =
                         options.ServiceId <- "ServiceId"
                         ignore())
                     .ConfigureApplicationParts(fun parts -> 
-                                  parts.AddApplicationPart(typeof<UserGrain>.Assembly).WithReferences() |> ignore)
+                                  parts.AddApplicationPart(typeof<SimpleGrain>.Assembly).WithReferences() |> ignore)
                     .ConfigureServices(fun services ->
                                   services.AddOrleansClusteringAuthorization(GlobalConfig.identityServer4Info,
                                       fun (config:Configuration) ->
                                       config.ConfigureAuthorizationOptions <- Action<AuthorizationOptions>(fun options ->
                                           AuthorizationConfig.ConfigureOptions(options) |> ignore)
                                       ignore())
+                                  // Some custom authorization services.
+                                  AuthorizationConfig.ConfigureServices(services)
                                   services.AddSingleton<IAccessTokenProvider>( fun _ -> accessTokenProvider)
                                   |> ignore)
 
     let clusterClient = builder.Build()
     clusterClient.Connect().Wait()
+    ClusterSetup.initDocumentsRegistry (fun accessToken ->
+        globalAccessToken.AccessToken <- accessToken
+        clusterClient)
+    
     clusterClient
     
 let getClusterClient (accessToken: string) =

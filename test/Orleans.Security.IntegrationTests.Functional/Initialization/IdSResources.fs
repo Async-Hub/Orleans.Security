@@ -1,4 +1,4 @@
-﻿module IdentityServer4Resources
+﻿module IdSResources
 
 open IdentityModel
 open IdentityServer4.Models

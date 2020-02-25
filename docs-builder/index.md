@@ -9,7 +9,7 @@ permalink: /
 # Authorization library for Microsoft Orleans
 {: .fs-9 }
 
-The set of security packages for Microsoft Orleans 2.x/3.0.x provide the ability to use the same authorization functionality which is used in ASP.NET Core 2.x/3.x. It allows sharing IdentityServer4 (version 2 or version 3) with MS Orleans grains and any ASP.NET Core 2.x/3.x application.
+The set of security packages for Microsoft Orleans 2.x.x/3.1.x provide the ability to use the same authorization functionality which is used in ASP.NET Core 2.x/3.x. It allows sharing IdentityServer4 (version 2 or version 3) with MS Orleans grains and any ASP.NET Core 2.x/3.x application.
 {: .fs-5 .fw-300 }
 
 ![Image 1](Index1.jpg)
@@ -38,4 +38,4 @@ Orleans.Security is distributed by an MIT license.
 
 ### Contributing
 
-Contributions are welcome, please contact via issue, email <admin@asynchub.org>, or any other method with the owners of this repository.
+Contributions are welcome, please contact [via Azure DevOps](https://dev.azure.com/asynchub/Orleans.Security/_workitems/recentlyupdated/), email <admin@asynchub.org>, or any other method with the owners of this repository.
