@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Policy-based authorization
-nav_order: 4
+nav_order: 5
 parent: Authorization
 permalink: docs/authorization/policy-based-authorization
 ---
