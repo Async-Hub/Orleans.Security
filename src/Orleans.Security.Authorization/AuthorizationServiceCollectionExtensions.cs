@@ -3,8 +3,8 @@
 
 using System;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.Extensions.DependencyInjection.Extensions;
 using Orleans.Security.Authorization.Infrastructure;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 
 namespace Orleans.Security.Authorization
 {
@@ -18,7 +18,7 @@ namespace Orleans.Security.Authorization
         /// </summary>
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
-        public static IServiceCollection AddAuthorization(this IServiceCollection services)
+        public static IServiceCollection AddAuthorizationCore(this IServiceCollection services)
         {
             if (services == null)
             {
@@ -40,20 +40,19 @@ namespace Orleans.Security.Authorization
         /// <param name="services">The <see cref="IServiceCollection" /> to add services to.</param>
         /// <param name="configure">An action delegate to configure the provided <see cref="AuthorizationOptions"/>.</param>
         /// <returns>The <see cref="IServiceCollection"/> so that additional calls can be chained.</returns>
-        public static IServiceCollection AddAuthorization(this IServiceCollection services, Action<AuthorizationOptions> configure)
+        public static IServiceCollection AddAuthorizationCore(this IServiceCollection services, Action<AuthorizationOptions> configure)
         {
             if (services == null)
             {
                 throw new ArgumentNullException(nameof(services));
             }
 
-            if (configure == null)
+            if (configure != null)
             {
-                throw new ArgumentNullException(nameof(configure));
+                services.Configure(configure);
             }
 
-            services.Configure(configure);
-            return services.AddAuthorization();
+            return services.AddAuthorizationCore();
         }
     }
 }

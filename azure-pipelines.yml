@@ -19,7 +19,7 @@ jobs:
   # ...
   # Use NuGet 5.x
   - task: NuGetToolInstaller@0
-    displayName: 'Use NuGet 5'
+    displayName: 'Use NuGet 5.x'
     inputs:
       versionSpec: 5.x
   # ...
@@ -63,15 +63,11 @@ jobs:
     displayName: 'Run Tests'
     inputs:
       command: test
-      projects: 'test/**/*.csproj'
-      arguments: '--logger:trx'
-  # ...
-  # Publish Test Results
-  - task: PublishTestResults@2
-    displayName: 'Publish Test Results'
-    inputs:
-      testResultsFormat: VSTest
-      testResultsFiles: 'test/**/*.trx'
+      projects: |
+         test/Orleans.Security.IntegrationTests/Orleans.Security.IntegrationTests.csproj
+         test/Orleans.Security.IntegrationTests.Functional/Orleans.Security.IntegrationTests.FSharp.fsproj
+         test/Orleans.Security.IntegrationTests.TokenVerification/Orleans.Security.IntegrationTests.TokenVerification.csproj
+         publishTestResults: true
   # ...
   # NuGet pack Orleans.Security.Build.sln
   - task: DotNetCoreCLI@2
@@ -87,7 +83,7 @@ jobs:
     displayName: 'NuGet push to Azure Artifacts'
     inputs:
       command: push
-      publishVstsFeed: '5a6d822d-5d9b-4d9a-8ce4-23803c42a92f/225dde7f-9969-4654-bcaf-9be5de5a4985'
+      publishVstsFeed: '5a6d822d-5d9b-4d9a-8ce4-23803c42a92f/b388ac66-fe7a-4cd1-a30c-f06f7df3fc87'
       allowPackageConflicts: true
     continueOnError: true
   # Pass $(GitVersion.NuGetVersion) to the next job
@@ -102,7 +98,7 @@ jobs:
   - name: GitVersion.NuGetVersion
     value: $[ dependencies.General_Build.outputs['gitVersionNumber.GitVersionNuGetVersion'] ] 
   #condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'),contains(variables['Build.SourceBranch'], 'refs/heads/release')))
-  condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'),true))
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   steps:
   # ...
   # NuGet pack Orleans.Security.Build.sln

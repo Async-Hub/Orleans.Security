@@ -9,7 +9,7 @@ namespace Orleans.Security.Authorization.Properties
     internal static class Resources
     {
         private static readonly ResourceManager _resourceManager
-            = new ResourceManager("Microsoft.AspNetCore.Authorization.Resources", typeof(Resources).GetTypeInfo().Assembly);
+            = new ResourceManager("Orleans.Security.Authorization.Resources", typeof(Resources).GetTypeInfo().Assembly);
 
         /// <summary>
         /// AuthorizationPolicy must have at least one requirement.

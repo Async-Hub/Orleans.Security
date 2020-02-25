@@ -24,7 +24,7 @@ namespace Orleans.Security
             var configuration = new Configuration();
             configure.Invoke(configuration);
 
-            services.AddAuthorization(configuration.ConfigureAuthorizationOptions);
+            services.AddAuthorizationCore(configuration.ConfigureAuthorizationOptions);
 
             services.TryAdd(ServiceDescriptor.Singleton<IAuthorizationExecutor, AuthorizationExecutor>());
 
@@ -36,7 +36,7 @@ namespace Orleans.Security
             services.Add(ServiceDescriptor.Singleton(accessTokenVerifierOptions));
 
             services.TryAddSingleton<DefaultAccessTokenVerifier>();
-            services.AddScoped<IAccessTokenIntrospectionService, AccessTokenIntrospectionServiceDefault>();
+            services.AddTransient<IAccessTokenIntrospectionService, AccessTokenIntrospectionServiceDefault>();
 
             //TODO: Maybe there is a better solution to split configuration for testing purposes.
             // If the environment is not in testing mode.

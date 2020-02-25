@@ -69,3 +69,16 @@ node_modules
 /samples/dotnetcore-3-1/SiloHost1/SiloHost1.csproj.user
 /test/Orleans.Security.IntegrationTests.Grains/obj
 /test/Orleans.Security.IntegrationTests.Grains/bin
+/src/Orleans.Security.CoHosting/bin
+/src/Orleans.Security.CoHosting/obj
+/samples/aspnetcore-co-hosting/ApiAndSiloHost/bin
+/samples/aspnetcore-co-hosting/ApiAndSiloHost/obj
+/samples/aspnetcore-co-hosting/ApiAndSiloHost/ApiAndSiloHost.csproj.user
+/samples/aspnetcore-co-hosting/Grains/bin
+/samples/aspnetcore-co-hosting/Grains/obj
+/samples/aspnetcore-co-hosting/IdentityServer/bin
+/samples/aspnetcore-co-hosting/IdentityServer/obj
+/samples/aspnetcore-co-hosting/IdentityServer/IdentityServer.csproj.user
+/samples/aspnetcore-co-hosting/WebClient/bin/
+/samples/aspnetcore-co-hosting/WebClient/obj
+/samples/aspnetcore-co-hosting/WebClient/WebClient.csproj.user

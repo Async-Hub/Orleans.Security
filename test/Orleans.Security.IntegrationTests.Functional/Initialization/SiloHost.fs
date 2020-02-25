@@ -6,6 +6,7 @@ open Orleans.Hosting;
 open Orleans.Security.Authorization
 open Orleans.Security.Clustering;
 open Orleans.Security.IntegrationTests.Grains
+open Orleans.Security.IntegrationTests.Grains.SimpleAuthorization
 open Orleans.Security;
 open Orleans;
 open System
@@ -26,14 +27,17 @@ let startSilo () =
                        options.AdvertisedIPAddress <- IPAddress.Loopback         
                        ignore())         
                    .ConfigureApplicationParts(fun parts ->          
-                       parts.AddApplicationPart(typeof<UserGrain>.Assembly).WithReferences()         
-                       |> ignore)         
+                       parts.AddApplicationPart(typeof<SimpleGrain>.Assembly).WithReferences()         
+                       |> ignore)
+                   .AddMemoryGrainStorage("MemoryGrainStorage")
                    .ConfigureServices(fun services ->         
                        services.AddOrleansClusteringAuthorization(GlobalConfig.identityServer4Info,         
                            fun (config:Configuration) ->         
                            config.ConfigureAuthorizationOptions <- Action<AuthorizationOptions>(fun options ->         
                                AuthorizationConfig.ConfigureOptions(options) |> ignore)         
-                           ignore())         
+                           ignore())
+                       // Some custom authorization services.
+                       AuthorizationConfig.ConfigureServices(services)
                        ignore()) |> ignore         
                )         
 

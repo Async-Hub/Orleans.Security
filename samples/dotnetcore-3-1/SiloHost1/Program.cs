@@ -13,7 +13,7 @@ using Orleans.Security.Clustering;
 
 namespace SiloHost1
 {
-    internal class Program
+    internal static class Program
     {
         public static async Task Main(string[] args)
         {

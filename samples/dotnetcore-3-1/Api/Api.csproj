@@ -8,10 +8,10 @@
     <PackageReference Include="IdentityModel" Version="4.1.1" />
     <PackageReference Include="IdentityServer4.AccessTokenValidation" Version="3.0.1" />
     <PackageReference Include="Microsoft.Orleans.Client" Version="3.0.2" />
+    <PackageReference Include="Orleans.Security.Client" Version="1.0.0" />
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\..\..\src\Orleans.Security.Client\Orleans.Security.Client.csproj" />
     <ProjectReference Include="..\Interfaces\GrainsInterfaces.csproj" />
   </ItemGroup>
 
