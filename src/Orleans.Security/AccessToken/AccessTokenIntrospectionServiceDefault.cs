@@ -52,7 +52,7 @@ namespace Orleans.Security.AccessToken
             // TODO: This approach should be reconsidered in future.
             /*
             The solution below allows use "Orleans.Security" with IdentityServer4 v2.x and IdentityServer4 v3.x.
-            At the same time, DLR with Reflection in is a bad idea.
+            At the same time, DLR with Reflection is a bad idea.
             */
 
             const string fullyQualifiedNameOfType =

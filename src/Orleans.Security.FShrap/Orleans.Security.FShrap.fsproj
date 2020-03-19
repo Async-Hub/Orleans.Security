@@ -2,16 +2,26 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard2.0</TargetFramework>
-    <Authors>AsyncHub</Authors>
-    <Company>AsyncHub</Company>
-    <PackageProjectUrl>https://orlsec.asynchub.org/</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/Async-Hub/Orleans.Security</RepositoryUrl>
-    <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="DiscoveryDocumentShortInfo.fs" />
+    <Compile Include="IdS4DiscoveryDocumentProvider.fs" />
+    <Compile Include="IdentityServer4Info.fs" />
+    <Compile Include="AccessToken\JwtSecurityTokenVerifier.fs" />
+    <Compile Include="AccessToken\AccessTokenType.fs" />
+    <Compile Include="AccessToken\AccessTokenAnalyzer.fs" />
+    <Compile Include="AccessToken\AccessTokenIntrospectionResult.fs" />
+    <Compile Include="AccessToken\IAccessTokenIntrospectionService.fs" />
+    <Compile Include="AccessToken\AccessTokenIntrospectionServiceDefault.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Orleans.Security.Authorization\Orleans.Security.Authorization.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="FSharp.Interop.Dynamic" Version="5.0.1.268" />
     <PackageReference Include="IdentityModel" Version="[3.10.*,4.2)" />
     <PackageReference Include="JWT" Version="5.2.*" />
     <PackageReference Include="Microsoft.CSharp" Version="4.6.*" />
@@ -22,10 +32,6 @@
     <PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="[2.4,3.2)" />
     <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.*" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <ProjectReference Include="..\Orleans.Security.Authorization\Orleans.Security.Authorization.csproj" />
   </ItemGroup>
 
 </Project>
