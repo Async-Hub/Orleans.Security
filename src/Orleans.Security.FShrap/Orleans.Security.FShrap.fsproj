@@ -14,6 +14,11 @@
     <Compile Include="AccessToken\AccessTokenIntrospectionResult.fs" />
     <Compile Include="AccessToken\IAccessTokenIntrospectionService.fs" />
     <Compile Include="AccessToken\AccessTokenIntrospectionServiceDefault.fs" />
+    <Compile Include="AccessToken\AccessTokenVerificationResult.fs" />
+    <Compile Include="AccessToken\AccessTokenVerifierOptions.fs" />
+    <Compile Include="AccessToken\IAccessTokenVerifier.fs" />
+    <Compile Include="AccessToken\DefaultAccessTokenVerifier.fs" />
+    <Compile Include="Authorization\AuthorizationAdmission.fs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -21,7 +26,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="FSharp.Interop.Dynamic" Version="5.0.1.268" />
     <PackageReference Include="IdentityModel" Version="[3.10.*,4.2)" />
     <PackageReference Include="JWT" Version="5.2.*" />
     <PackageReference Include="Microsoft.CSharp" Version="4.6.*" />

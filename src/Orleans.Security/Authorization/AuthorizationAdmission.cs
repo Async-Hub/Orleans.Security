@@ -16,18 +16,14 @@ namespace Orleans.Security.Authorization
             { 
                 return false;
             }
-
-            IEnumerable<IAuthorizeData> grainAuthorizeData = null;
+            
             var grainMethodAuthorizeData = 
-                grainCallContext.InterfaceMethod.GetCustomAttributes<AuthorizeAttribute>();
+                grainCallContext.InterfaceMethod.GetCustomAttributes<AuthorizeAttribute>(); 
+            
+            IEnumerable<IAuthorizeData>  grainAuthorizeData =
+                    grainCallContext.InterfaceMethod.ReflectedType?.GetCustomAttributes<AuthorizeAttribute>();
 
-            if (grainCallContext.InterfaceMethod.ReflectedType != null)
-            {
-                grainAuthorizeData =
-                    grainCallContext.InterfaceMethod.ReflectedType.GetCustomAttributes<AuthorizeAttribute>();
-            }
-
-            // No authorization required.
+                // No authorization required.
             // ReSharper disable once ConvertIfStatementToReturnStatement
             if (grainAuthorizeData != null && !grainAuthorizeData.Any() && !grainMethodAuthorizeData.Any())
             {
