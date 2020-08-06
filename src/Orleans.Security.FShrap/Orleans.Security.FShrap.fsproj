@@ -6,6 +6,9 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Caching\IAccessTokenCache.fs" />
+    <Compile Include="Caching\AccessTokenCache.fs" />
+    <Compile Include="IAccessTokenProvider.fs" />
     <Compile Include="AssemblyInfo.fs" />
     <Compile Include="DiscoveryDocumentShortInfo.fs" />
     <Compile Include="IdS4DiscoveryDocumentProvider.fs" />
