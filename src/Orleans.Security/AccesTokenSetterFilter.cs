@@ -19,17 +19,18 @@ namespace Orleans.Security
             if (AuthorizationAdmission.IsRequired(context))
             {
                 var accessToken = RequestContext.Get(ConfigurationKeys.AccessTokenKey)?.ToString();
-                
-                if (!string.IsNullOrWhiteSpace(accessToken)) return;
-                
-                accessToken = await _accessTokenProvider.RetrieveTokenAsync();
 
                 if (string.IsNullOrWhiteSpace(accessToken))
                 {
-                    throw new InvalidOperationException("AccessToken can not be null or empty.");
+                    accessToken = await _accessTokenProvider.RetrieveTokenAsync();
+
+                    if (string.IsNullOrWhiteSpace(accessToken))
+                    {
+                        throw new InvalidOperationException("AccessToken can not be null or empty.");
+                    }
+
+                    RequestContext.Set(ConfigurationKeys.AccessTokenKey, accessToken);
                 }
-                
-                RequestContext.Set(ConfigurationKeys.AccessTokenKey, accessToken);
             }
 
             await context.Invoke();

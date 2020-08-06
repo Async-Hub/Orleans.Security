@@ -12,20 +12,22 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="IdentityModel" Version="[3.10.*,4.2)" />
+    <PackageReference Include="IdentityModel" Version="[3.10.*,4.4)" />
+    <!--<PackageReference Include="IdentityModel" Version="4.0.0" />-->
     <PackageReference Include="JWT" Version="5.2.*" />
     <PackageReference Include="Microsoft.CSharp" Version="4.6.*" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="[2.2,3.2)" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.5.*" />
-    <PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="[2.4,3.2)" />
+    <PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="[2.4,3.3)" />
     <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.*" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Orleans.Security.Authorization\Orleans.Security.Authorization.csproj" />
+    <ProjectReference Include="..\Orleans.Security.FShrap\Orleans.Security.FShrap.fsproj" />
   </ItemGroup>
 
 </Project>

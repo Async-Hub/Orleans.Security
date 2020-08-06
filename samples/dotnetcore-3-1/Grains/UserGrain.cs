@@ -18,7 +18,7 @@ namespace Grains
 
         public async Task<string> TakeSecret()
         {
-            var grain = GrainFactory.GetGrain<IGlobalSecretStorageGrain>(nameof(IGlobalSecretStorageGrain));
+            var grain = GrainFactory.GetGrain<IGlobalSecretStorageGrain>("New");
             var userId = this.GetPrimaryKeyString();
             string secret;
 
