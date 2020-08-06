@@ -67,7 +67,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grains", "samples\aspnetcor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "samples\aspnetcore-co-hosting\IdentityServer\IdentityServer.csproj", "{E8E428A7-EECD-4291-B1F3-8066EA226647}"
 EndProject
-Project("{F2A71F9B-5D33-465A-A702-920D77279786}") = "Orleans.Security.FShrap", "src\Orleans.Security.FShrap\Orleans.Security.FShrap.fsproj", "{444D48B9-3088-4853-BB8D-0657B16FDE6F}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Orleans.Security.FShrap", "src\Orleans.Security.FShrap\Orleans.Security.FShrap.fsproj", "{444D48B9-3088-4853-BB8D-0657B16FDE6F}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Orleans.Security.Tests", "test\Orleans.Security.Tests\Orleans.Security.Tests.csproj", "{F8B97F66-AAE3-4888-965A-C4CC0305BF3A}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -183,6 +185,10 @@ Global
 		{444D48B9-3088-4853-BB8D-0657B16FDE6F}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{444D48B9-3088-4853-BB8D-0657B16FDE6F}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{444D48B9-3088-4853-BB8D-0657B16FDE6F}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F8B97F66-AAE3-4888-965A-C4CC0305BF3A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F8B97F66-AAE3-4888-965A-C4CC0305BF3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F8B97F66-AAE3-4888-965A-C4CC0305BF3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F8B97F66-AAE3-4888-965A-C4CC0305BF3A}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -218,6 +224,7 @@ Global
 		{9A31A455-7779-4050-B4A2-C88C6C6BCBDC} = {5B25CCAC-F571-47A5-AB5F-CA7B877A74D7}
 		{E8E428A7-EECD-4291-B1F3-8066EA226647} = {5B25CCAC-F571-47A5-AB5F-CA7B877A74D7}
 		{444D48B9-3088-4853-BB8D-0657B16FDE6F} = {B8259074-F610-4834-AAFB-A86316ADB663}
+		{F8B97F66-AAE3-4888-965A-C4CC0305BF3A} = {E01BBEE2-F8CA-4DA9-A0E8-641CFD1B7AB2}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A230B4DE-036D-4400-ABD6-F39E51AA3F36}

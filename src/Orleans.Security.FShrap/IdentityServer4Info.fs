@@ -12,7 +12,7 @@ type IdentityServer4Info(url: string, clientId: string, clientSecret: string, al
     member this.ClientId = clientId
     member this.ClientSecret = clientSecret
     member this.AllowedScope = allowedScope
-    member this.DiscoveryEndpointUrl = discoveryEndpointEndpointPath
+    member this.DiscoveryEndpointUrl = url + "/" + discoveryEndpointEndpointPath
 
 //namespace Orleans.Security
 //{

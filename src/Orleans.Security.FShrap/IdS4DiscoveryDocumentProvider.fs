@@ -6,15 +6,15 @@ open System.Net.Http
 open Orleans.Security.AccessToken
 open IdentityModel.Client
 
-module RuntimeMethodBinder =
-    let invokeAsync (fullyQualifiedNameOfType: string) (nameOfMethod: string) (arguments: obj []) (argumentsCount: int) =
-        let typeVal = Type.GetType(fullyQualifiedNameOfType, true)
-        let methodQueryPredicate = typeVal.GetMethods().Where(fun m -> m.Name.Contains(nameOfMethod))
-        let method = methodQueryPredicate.Where(fun m -> m.GetParameters().Length = argumentsCount).FirstOrDefault()
+//module RuntimeMethodBinder =
+//    let invokeAsync (fullyQualifiedNameOfType: string) (nameOfMethod: string) (arguments: obj []) (argumentsCount: int) =
+//        let typeVal = Type.GetType(fullyQualifiedNameOfType, true)
+//        let methodQueryPredicate = typeVal.GetMethods().Where(fun m -> m.Name.Contains(nameOfMethod))
+//        let method = methodQueryPredicate.Where(fun m -> m.GetParameters().Length = argumentsCount).FirstOrDefault()
 
-        if method = null then
-            let message = "The appropriate method " + nameOfMethod + "doesn't find in IdentityModel package."
-            raise (InvalidOperationException(message))
+//        if method = null then
+//            let message = "The appropriate method " + nameOfMethod + "doesn't find in IdentityModel package."
+//            raise (InvalidOperationException(message))
 
 
 type IdS4DiscoveryDocumentProvider(clientFactory: IHttpClientFactory,
