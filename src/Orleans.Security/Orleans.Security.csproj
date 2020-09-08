@@ -12,8 +12,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="IdentityModel" Version="[3.10.*,4.4)" />
-    <!--<PackageReference Include="IdentityModel" Version="4.0.0" />-->
+    <!--<PackageReference Include="IdentityModel" Version="[3.10.*,4.4)" />-->
+    <PackageReference Include="IdentityModel" Version="4.3.*" />
     <PackageReference Include="JWT" Version="5.2.*" />
     <PackageReference Include="Microsoft.CSharp" Version="4.6.*" />
     <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="2.2.0" />
@@ -27,6 +27,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Orleans.Security.Authorization\Orleans.Security.Authorization.csproj" />
+    <ProjectReference Include="..\Orleans.Security.FShrap\Orleans.Security.FSharp.fsproj" />
   </ItemGroup>
 
 </Project>

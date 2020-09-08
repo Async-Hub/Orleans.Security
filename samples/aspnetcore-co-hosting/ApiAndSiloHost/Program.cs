@@ -23,7 +23,12 @@ namespace ApiAndSiloHost
         public static void Main(string[] args)
         {
             _identityServer4Info = new IdentityServer4Info("https://localhost:5001",
-                "Orleans", "@3x3g*RLez$TNU!_7!QW", "Orleans");
+                "Api1", @"TFGB=?Gf3UvH+Uqfu_5p", "Orleans");
+
+            // TODO: Audience validation logic
+            // https://leastprivilege.com/2020/06/15/the-jwt-profile-for-oauth-2-0-access-tokens-and-identityserver/
+            //_identityServer4Info = new IdentityServer4Info("https://localhost:5001",
+            //    "Orleans", "@3x3g*RLez$TNU!_7!QW", "Orleans");
 
             CreateHostBuilder(args).Build().Run();
         }
@@ -56,6 +61,7 @@ namespace ApiAndSiloHost
                                     config.ConfigureAccessTokenVerifierOptions = options =>
                                     {
                                         options.InMemoryCacheEnabled = true;
+                                        options.AllowOfflineValidation = false;
                                     };
 
                                     config.TracingEnabled = true;

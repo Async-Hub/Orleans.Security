@@ -26,7 +26,7 @@ namespace Orleans.Security.Authorization
 
         protected async Task<IEnumerable<Claim>> AuthorizeAsync(IGrainCallContext grainCallContext)
         {
-            var accessToken = RequestContext.Get(ConfigurationKeys.AccessTokenKey).ToString();
+            var accessToken = RequestContext.Get(ConfigurationKeys.AccessTokenKey)?.ToString();
             
             if (string.IsNullOrWhiteSpace(accessToken))
             {

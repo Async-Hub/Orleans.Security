@@ -82,3 +82,7 @@ node_modules
 /samples/aspnetcore-co-hosting/WebClient/bin/
 /samples/aspnetcore-co-hosting/WebClient/obj
 /samples/aspnetcore-co-hosting/WebClient/WebClient.csproj.user
+/src/Orleans.Security.FShrap/bin
+/src/Orleans.Security.FShrap/obj
+/test/Orleans.Security.Tests/bin
+/test/Orleans.Security.Tests/obj
