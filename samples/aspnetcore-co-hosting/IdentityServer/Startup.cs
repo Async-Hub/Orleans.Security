@@ -20,6 +20,7 @@ namespace IdentityServer4
             // configure identity server with in-memory stores, keys, clients and resources
             services.AddIdentityServer()
                 .AddDeveloperSigningCredential()
+                .AddInMemoryApiScopes(IdentityServerConfig.GetApiScopes())
                 .AddInMemoryApiResources(IdentityServerConfig.GetApiResources())
                 .AddInMemoryIdentityResources(IdentityServerConfig.GetIdentityResources())
                 .AddInMemoryClients(IdentityServerConfig.GetClients())

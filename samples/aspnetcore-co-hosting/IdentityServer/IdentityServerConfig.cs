@@ -9,6 +9,17 @@ namespace IdentityServer4
 {
     public static class IdentityServerConfig
     {
+        public static IEnumerable<ApiScope> GetApiScopes()
+        {
+            return new List<ApiScope>
+            {
+                new ApiScope(name: "Api1",   displayName: "Api1"),
+                new ApiScope(name: "Api1.Read",  displayName: "Api1.Read"),
+                new ApiScope(name: "Api1.Write", displayName: "Api1.Read"),
+                new ApiScope(name: "Orleans", displayName: "Orleans")
+            };
+        }
+
         public static IEnumerable<ApiResource> GetApiResources()
         {
             var resources = new List<ApiResource>();
@@ -16,8 +27,8 @@ namespace IdentityServer4
             var api1 = new ApiResource("Api1", new[] { JwtClaimTypes.Email, JwtClaimTypes.Role });
             api1.ApiSecrets.Add(new Secret("TFGB=?Gf3UvH+Uqfu_5p".Sha256()));
             resources.Add(api1);
-            api1.Scopes.Add(new Scope("Api1.Read"));
-            api1.Scopes.Add(new Scope("Api1.Write"));
+            api1.Scopes.Add("Api1.Read");
+            api1.Scopes.Add("Api1.Write");
 
             var orleans = new ApiResource("Orleans");
             orleans.ApiSecrets.Add(new Secret("@3x3g*RLez$TNU!_7!QW".Sha256()));
@@ -38,7 +49,7 @@ namespace IdentityServer4
                     {
                         new Secret("KHG+TZ8htVx2h3^!vJ65".Sha256())
                     },
-                    Claims = new List<Claim> {new Claim(JwtClaimTypes.Role, "Admin")},
+                    Claims = new List<ClientClaim> {new ClientClaim(JwtClaimTypes.Role, "Admin")},
                     AllowedScopes =
                     {
                         "Api1", "Api1.Read", "Api1.Write", "Orleans",
@@ -50,8 +61,9 @@ namespace IdentityServer4
                 {
                     ClientId = "WebClient",
                     AccessTokenType = AccessTokenType.Reference,
-                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
+                    AllowedGrantTypes = GrantTypes.Code,
                     AllowOfflineAccess = true,
+                    RequireConsent = true,
                     ClientSecrets =
                     {
                         new Secret(@"pckJ#MH-9f9K?+^Bzx&4".Sha256())

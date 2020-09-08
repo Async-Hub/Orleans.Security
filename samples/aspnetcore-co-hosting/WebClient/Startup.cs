@@ -47,7 +47,8 @@ namespace WebClient
                     options.ClientId = "WebClient";
                     options.ClientSecret = "pckJ#MH-9f9K?+^Bzx&4";
 
-                    options.ResponseType = "code id_token";
+                    options.ResponseType = "code";
+                    options.UsePkce = true;
                     options.SaveTokens = true;
 
                     options.Scope.Add("Api1");
