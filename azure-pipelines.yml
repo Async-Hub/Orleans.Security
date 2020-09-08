@@ -69,7 +69,22 @@ jobs:
          test/Orleans.Security.IntegrationTests.TokenVerification/Orleans.Security.IntegrationTests.TokenVerification.csproj
          publishTestResults: true
   # ...
-  # NuGet pack Orleans.Security.Build.sln
+  # Pass $(GitVersion.NuGetVersion) to the next job
+  - powershell: echo "##vso[task.setvariable variable=GitVersionNuGetVersion;isOutput=true]$env:GITVERSION_NUGETVERSION"
+    name: gitVersionNumber
+  - script: echo $(gitVersionNumber.GitVersionNuGetVersion)
+#*******
+#For develop branch deploy to the CI feed (https://pkgs.dev.azure.com/asynchub/Orleans.Security/_packaging/Orleans.Security/nuget/v3/index.json).
+#*******
+- job: Deploy_Packages_CI_Feed
+  dependsOn: General_Build
+  variables:
+    - group: Default
+    - name: GitVersion.NuGetVersion
+      value: $[ dependencies.General_Build.outputs['gitVersionNumber.GitVersionNuGetVersion'] ]
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
+  steps:
+    # NuGet pack Orleans.Security.Build.sln
   - task: DotNetCoreCLI@2
     displayName: 'NuGet pack Orleans.Security.Build.sln'
     inputs:
@@ -86,12 +101,10 @@ jobs:
       publishVstsFeed: '5a6d822d-5d9b-4d9a-8ce4-23803c42a92f/b388ac66-fe7a-4cd1-a30c-f06f7df3fc87'
       allowPackageConflicts: true
     continueOnError: true
-  # Pass $(GitVersion.NuGetVersion) to the next job
-  - powershell: echo "##vso[task.setvariable variable=GitVersionNuGetVersion;isOutput=true]$env:GITVERSION_NUGETVERSION"
-    name: gitVersionNumber
-  - script: echo $(gitVersionNumber.GitVersionNuGetVersion)
-
-- job: Deploy_Packages
+#*******
+#For master branch deploy to the RTW feed (https://www.nuget.org/).
+#*******
+- job: Deploy_Packages_RTW_Feed
   dependsOn: General_Build
   variables:
   - group: Default
