@@ -1,4 +1,5 @@
 using IdentityModel.AspNetCore.AccessTokenValidation;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,13 +15,16 @@ namespace ApiAndSiloHost
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            var oAuth2EndpointInfo = new IdentityServer4Info("https://localhost:5001",
+            var oAuth2EndpointInfo = new IdentityServer4Info("http://localhost:5000",
                 "Api1", @"TFGB=?Gf3UvH+Uqfu_5p", "Orleans");
 
             services.AddAuthentication("token")
                 // JWT tokens
                 .AddJwtBearer("token", options =>
                 {
+                    // For development environments only. Do not use for production.
+                    options.RequireHttpsMetadata = false;
+
                     options.Authority = oAuth2EndpointInfo.Url;
                     options.Audience = "Api1";
                     options.TokenValidationParameters.ValidTypes = new[] { "at+jwt" };
@@ -54,7 +58,7 @@ namespace ApiAndSiloHost
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseAuthentication();
             app.UseRouting();

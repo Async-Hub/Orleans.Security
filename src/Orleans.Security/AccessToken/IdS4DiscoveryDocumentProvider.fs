@@ -18,16 +18,21 @@ open IdentityModel.Client
 
 
 type IdS4DiscoveryDocumentProvider(clientFactory: IHttpClientFactory,
-                                   discoveryEndpointUrl: string) =
+                                   discoveryEndpointUrl: string,
+                                   securityOptions: SecurityOptions) =
     let httpClient = clientFactory.CreateClient("IdS4")
     let mutable discoveryDocument: DiscoveryDocumentShortInfo = null
 
     member this.GetDiscoveryDocumentAsync() =
         async {
-            if discoveryDocument <> null then
+            if not (isNull discoveryDocument) then
                 return discoveryDocument
             else
-                let! discoveryResponse = httpClient.GetDiscoveryDocumentAsync(discoveryEndpointUrl) |> Async.AwaitTask
+                let request = new DiscoveryDocumentRequest()
+                request.Address <- discoveryEndpointUrl
+                request.Policy.RequireHttps <- securityOptions.RequireHttps
+                
+                let! discoveryResponse = httpClient.GetDiscoveryDocumentAsync(request) |> Async.AwaitTask
                 if discoveryResponse.IsError then raise (Exception(discoveryResponse.Error))
 
                 let discoveryDocument = DiscoveryDocumentShortInfo()

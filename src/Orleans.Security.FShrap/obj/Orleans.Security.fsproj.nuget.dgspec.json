@@ -1,0 +1,183 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Repos\\AsyncHub\\Orleans.Security\\src\\Orleans.Security.FShrap\\Orleans.Security.fsproj": {}
+  },
+  "projects": {
+    "C:\\Repos\\AsyncHub\\Orleans.Security\\src\\Orleans.Security.Authorization\\Orleans.Security.Authorization.csproj": {
+      "version": "1.0.1.1",
+      "restore": {
+        "projectUniqueName": "C:\\Repos\\AsyncHub\\Orleans.Security\\src\\Orleans.Security.Authorization\\Orleans.Security.Authorization.csproj",
+        "projectName": "Orleans.Security.Authorization",
+        "projectPath": "C:\\Repos\\AsyncHub\\Orleans.Security\\src\\Orleans.Security.Authorization\\Orleans.Security.Authorization.csproj",
+        "packagesPath": "C:\\Users\\U1\\.nuget\\packages\\",
+        "outputPath": "C:\\Repos\\AsyncHub\\Orleans.Security\\src\\Orleans.Security.Authorization\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\U1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://botbuilder.myget.org/F/experimental/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[2.2.0, 3.2.0)"
+            },
+            "Microsoft.Extensions.Options": {
+              "target": "Package",
+              "version": "[2.2.0, 3.2.0)"
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    },
+    "C:\\Repos\\AsyncHub\\Orleans.Security\\src\\Orleans.Security.FShrap\\Orleans.Security.fsproj": {
+      "version": "1.0.1.1",
+      "restore": {
+        "projectUniqueName": "C:\\Repos\\AsyncHub\\Orleans.Security\\src\\Orleans.Security.FShrap\\Orleans.Security.fsproj",
+        "projectName": "Orleans.Security",
+        "projectPath": "C:\\Repos\\AsyncHub\\Orleans.Security\\src\\Orleans.Security.FShrap\\Orleans.Security.fsproj",
+        "packagesPath": "C:\\Users\\U1\\.nuget\\packages\\",
+        "outputPath": "C:\\Repos\\AsyncHub\\Orleans.Security\\src\\Orleans.Security.FShrap\\obj\\",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "C:\\Users\\U1\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "netstandard2.0"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "https://api.nuget.org/v3/index.json": {},
+          "https://botbuilder.myget.org/F/experimental/api/v3/index.json": {}
+        },
+        "frameworks": {
+          "netstandard2.0": {
+            "projectReferences": {
+              "C:\\Repos\\AsyncHub\\Orleans.Security\\src\\Orleans.Security.Authorization\\Orleans.Security.Authorization.csproj": {
+                "projectPath": "C:\\Repos\\AsyncHub\\Orleans.Security\\src\\Orleans.Security.Authorization\\Orleans.Security.Authorization.csproj"
+              }
+            }
+          }
+        }
+      },
+      "frameworks": {
+        "netstandard2.0": {
+          "dependencies": {
+            "FSharp.Core": {
+              "target": "Package",
+              "version": "[4.7.2, )",
+              "generatePathProperty": true
+            },
+            "IdentityModel": {
+              "target": "Package",
+              "version": "[4.3.*, )",
+              "generatePathProperty": true
+            },
+            "JWT": {
+              "target": "Package",
+              "version": "[5.2.*, )",
+              "generatePathProperty": true
+            },
+            "Microsoft.CSharp": {
+              "target": "Package",
+              "version": "[4.6.*, )",
+              "generatePathProperty": true
+            },
+            "Microsoft.Extensions.Caching.Memory": {
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "generatePathProperty": true
+            },
+            "Microsoft.Extensions.Http": {
+              "target": "Package",
+              "version": "[2.2.0, )",
+              "generatePathProperty": true
+            },
+            "Microsoft.Extensions.Logging.Abstractions": {
+              "target": "Package",
+              "version": "[2.2.0, 3.2.0)",
+              "generatePathProperty": true
+            },
+            "Microsoft.IdentityModel.Tokens": {
+              "target": "Package",
+              "version": "[5.5.*, )",
+              "generatePathProperty": true
+            },
+            "Microsoft.Orleans.Core.Abstractions": {
+              "target": "Package",
+              "version": "[2.4.0, 3.4.0)",
+              "generatePathProperty": true
+            },
+            "NETStandard.Library": {
+              "suppressParent": "All",
+              "target": "Package",
+              "version": "[2.0.3, )",
+              "autoReferenced": true,
+              "generatePathProperty": true
+            },
+            "System.Dynamic.Runtime": {
+              "target": "Package",
+              "version": "[4.3.0, )",
+              "generatePathProperty": true
+            },
+            "System.IdentityModel.Tokens.Jwt": {
+              "target": "Package",
+              "version": "[5.5.*, )",
+              "generatePathProperty": true
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\3.1.402\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

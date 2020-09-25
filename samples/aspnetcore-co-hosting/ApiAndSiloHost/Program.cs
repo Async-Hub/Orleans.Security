@@ -2,7 +2,6 @@ using System;
 using System.Net;
 using ApiAndSiloHost.Orleans;
 using Grains;
-using GrainsInterfaces;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -22,7 +21,7 @@ namespace ApiAndSiloHost
 
         public static void Main(string[] args)
         {
-            _identityServer4Info = new IdentityServer4Info("https://localhost:5001",
+            _identityServer4Info = new IdentityServer4Info("http://localhost:5000",
                 "Api1", @"TFGB=?Gf3UvH+Uqfu_5p", "Orleans");
 
             // TODO: Audience validation logic
@@ -65,6 +64,10 @@ namespace ApiAndSiloHost
                                     };
 
                                     config.TracingEnabled = true;
+                                    config.ConfigureSecurityOptions = options =>
+                                    {
+                                        options.RequireHttps = false;
+                                    };
                                 });
                             
                             services.AddHttpContextAccessor();

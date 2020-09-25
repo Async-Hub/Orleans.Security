@@ -14,7 +14,6 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\..\src\Orleans.Security.Client\Orleans.Security.Client.csproj" />
-    <ProjectReference Include="..\..\..\src\Orleans.Security\Orleans.Security.csproj" />
     <ProjectReference Include="..\Interfaces\GrainsInterfaces.csproj" />
   </ItemGroup>
 

@@ -17,8 +17,7 @@ node_modules
 /src/Orleans.Security.Clustering/obj
 /src/Orleans.Security.Client/bin
 /src/Orleans.Security.Client/obj
-/src/Orleans.Security.Core/bin
-/src/Orleans.Security.Core/obj
+
 /src/Orleans.Security/bin
 /src/Orleans.Security/obj
 /test/Orleans.Security.IntegrationTests/bin
@@ -82,7 +81,7 @@ node_modules
 /samples/aspnetcore-co-hosting/WebClient/bin/
 /samples/aspnetcore-co-hosting/WebClient/obj
 /samples/aspnetcore-co-hosting/WebClient/WebClient.csproj.user
-/src/Orleans.Security.FShrap/bin
-/src/Orleans.Security.FShrap/obj
 /test/Orleans.Security.Tests/bin
 /test/Orleans.Security.Tests/obj
+/src/Orleans.Security.Interoperability/bin
+/src/Orleans.Security.Interoperability/obj
