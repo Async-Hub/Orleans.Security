@@ -75,7 +75,7 @@ namespace IdentityServer4
                         IdentityServerConstants.StandardScopes.Email,
                         "Api1", "Api1.Read", "Api1.Write", "Orleans"
                     },
-                    RedirectUris = {"https://localhost:5004/signin-oidc"}
+                    RedirectUris = {"http://localhost:5004/signin-oidc"}
                 }
             };
         }

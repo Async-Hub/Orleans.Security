@@ -1,6 +1,6 @@
 ﻿using System;
 using System.Threading.Tasks;
-using GrainsInterfaces;
+using Grains;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Orleans;

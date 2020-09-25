@@ -17,7 +17,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\Orleans.Security.Authorization\Orleans.Security.Authorization.csproj" />
-    <ProjectReference Include="..\..\src\Orleans.Security.FShrap\Orleans.Security.FSharp.fsproj" />
+    <ProjectReference Include="..\..\src\Orleans.Security.Interoperability\Orleans.Security.Interoperability.csproj" />
   </ItemGroup>
 
 </Project>

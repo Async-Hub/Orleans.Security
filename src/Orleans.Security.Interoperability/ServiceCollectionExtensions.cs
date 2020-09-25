@@ -30,6 +30,12 @@ namespace Orleans.Security
 
             configureServices?.Invoke(services);
 
+            // Configure Security
+
+            var securityOptions = new SecurityOptions();
+            configuration.ConfigureSecurityOptions?.Invoke(securityOptions);
+            services.Add(ServiceDescriptor.Singleton(securityOptions));
+
             // Access Token verification section.
             var accessTokenVerifierOptions = new AccessTokenVerifierOptions();
             configuration.ConfigureAccessTokenVerifierOptions?.Invoke(accessTokenVerifierOptions);
@@ -79,7 +85,8 @@ namespace Orleans.Security
                 var httpClientHandler = new HttpClientHandler();
                 builder.PrimaryHandler = httpClientHandler;
 
-                if (accessTokenVerifierOptions.DisableCertificateValidation)
+                // Disable SSL Certificate validation for development environments.
+                if (!securityOptions.RequireHttps)
                 {
                     httpClientHandler.ServerCertificateCustomValidationCallback +=
                         (sender, certificate, chain, sslPolicyErrors) =>
@@ -97,7 +104,8 @@ namespace Orleans.Security
             services.AddSingleton<IAccessTokenCache>(serviceProvider => new AccessTokenCache(memoryCacheOptions));
             services.AddSingleton(provider => new
                 IdS4DiscoveryDocumentProvider(provider.GetRequiredService<IHttpClientFactory>(),
-                    provider.GetRequiredService<IdentityServer4Info>().DiscoveryEndpointUrl));
+                    provider.GetRequiredService<IdentityServer4Info>().DiscoveryEndpointUrl,
+                    securityOptions));
         }
     }
 }

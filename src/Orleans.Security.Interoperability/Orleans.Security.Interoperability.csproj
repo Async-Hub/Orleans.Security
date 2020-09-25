@@ -9,6 +9,7 @@
     <GenerateAssemblyInfo>false</GenerateAssemblyInfo>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
     <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <RootNamespace>Orleans.Security</RootNamespace>
   </PropertyGroup>
 
   <ItemGroup>
@@ -20,14 +21,14 @@
     <PackageReference Include="Microsoft.Extensions.Http" Version="2.2.0" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="[2.2,3.2)" />
     <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.5.*" />
-    <PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="[2.4,3.3)" />
+    <PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="[2.4,3.4)" />
     <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
     <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.*" />
   </ItemGroup>
 
   <ItemGroup>
     <ProjectReference Include="..\Orleans.Security.Authorization\Orleans.Security.Authorization.csproj" />
-    <ProjectReference Include="..\Orleans.Security.FShrap\Orleans.Security.FSharp.fsproj" />
+    <ProjectReference Include="..\Orleans.Security\Orleans.Security.fsproj" />
   </ItemGroup>
 
 </Project>

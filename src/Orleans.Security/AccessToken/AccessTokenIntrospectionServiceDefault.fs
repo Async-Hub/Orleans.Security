@@ -16,7 +16,7 @@ type internal AccessTokenIntrospectionServiceDefault(httpClientFactory: IHttpCli
     member private this.IntrospectTokenOnlineAsync (accessToken:string) (accessTokenType: AccessTokenType)
             (discoveryDocument:DiscoveryDocumentShortInfo) =
             async{
-                let request = TokenIntrospectionRequest()
+                let request = new TokenIntrospectionRequest()
                 request.Address <- discoveryDocument.IntrospectionEndpoint
                 request.ClientId <- identityServer4Info.ClientId
                 request.Token <- accessToken

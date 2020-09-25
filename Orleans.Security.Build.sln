@@ -3,15 +3,15 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29728.190
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orleans.Security", "src\Orleans.Security\Orleans.Security.csproj", "{6A0355C2-63B1-4C46-B76B-B06424685983}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orleans.Security.Authorization", "src\Orleans.Security.Authorization\Orleans.Security.Authorization.csproj", "{EDFACD48-6377-41F6-B7E5-23B055062932}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orleans.Security.Client", "src\Orleans.Security.Client\Orleans.Security.Client.csproj", "{4AB0EAF5-F298-4C58-8A77-2D307131C73E}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orleans.Security.Clustering", "src\Orleans.Security.Clustering\Orleans.Security.Clustering.csproj", "{205066E5-EB89-4AC0-BA24-AFF1474A9C81}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Orleans.Security.FSharp", "src\Orleans.Security.FShrap\Orleans.Security.FSharp.fsproj", "{93E3C4B3-52EB-4C1A-9854-5B11640B2E17}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Orleans.Security", "src\Orleans.Security\Orleans.Security.fsproj", "{9F930B79-9460-470C-9EA3-CBFB9FF0B673}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orleans.Security.Interoperability", "src\Orleans.Security.Interoperability\Orleans.Security.Interoperability.csproj", "{249F5ABC-C1B6-4AB3-98AD-980D90E9B559}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,10 +19,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6A0355C2-63B1-4C46-B76B-B06424685983}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6A0355C2-63B1-4C46-B76B-B06424685983}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6A0355C2-63B1-4C46-B76B-B06424685983}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6A0355C2-63B1-4C46-B76B-B06424685983}.Release|Any CPU.Build.0 = Release|Any CPU
 		{EDFACD48-6377-41F6-B7E5-23B055062932}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{EDFACD48-6377-41F6-B7E5-23B055062932}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{EDFACD48-6377-41F6-B7E5-23B055062932}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -35,10 +31,14 @@ Global
 		{205066E5-EB89-4AC0-BA24-AFF1474A9C81}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{205066E5-EB89-4AC0-BA24-AFF1474A9C81}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{205066E5-EB89-4AC0-BA24-AFF1474A9C81}.Release|Any CPU.Build.0 = Release|Any CPU
-		{93E3C4B3-52EB-4C1A-9854-5B11640B2E17}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{93E3C4B3-52EB-4C1A-9854-5B11640B2E17}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{93E3C4B3-52EB-4C1A-9854-5B11640B2E17}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{93E3C4B3-52EB-4C1A-9854-5B11640B2E17}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9F930B79-9460-470C-9EA3-CBFB9FF0B673}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9F930B79-9460-470C-9EA3-CBFB9FF0B673}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9F930B79-9460-470C-9EA3-CBFB9FF0B673}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9F930B79-9460-470C-9EA3-CBFB9FF0B673}.Release|Any CPU.Build.0 = Release|Any CPU
+		{249F5ABC-C1B6-4AB3-98AD-980D90E9B559}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{249F5ABC-C1B6-4AB3-98AD-980D90E9B559}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{249F5ABC-C1B6-4AB3-98AD-980D90E9B559}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{249F5ABC-C1B6-4AB3-98AD-980D90E9B559}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,8 +9,6 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{B8259074-F61
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orleans.Security.Authorization", "src\Orleans.Security.Authorization\Orleans.Security.Authorization.csproj", "{CA982BF3-E940-4853-988B-A93046E92A36}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orleans.Security", "src\Orleans.Security\Orleans.Security.csproj", "{AA4A0E97-1853-479C-8DFC-4F70F3B59B53}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "test", "test", "{E01BBEE2-F8CA-4DA9-A0E8-641CFD1B7AB2}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orleans.Security.IntegrationTests", "test\Orleans.Security.IntegrationTests\Orleans.Security.IntegrationTests.csproj", "{41781993-78CB-4B43-B1B8-7B6C0E85AEF1}"
@@ -67,9 +65,11 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Grains", "samples\aspnetcor
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "IdentityServer", "samples\aspnetcore-co-hosting\IdentityServer\IdentityServer.csproj", "{E8E428A7-EECD-4291-B1F3-8066EA226647}"
 EndProject
-Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Orleans.Security.FSharp", "src\Orleans.Security.FShrap\Orleans.Security.FSharp.fsproj", "{444D48B9-3088-4853-BB8D-0657B16FDE6F}"
+Project("{6EC3EE1D-3C4E-46DD-8F32-0CC8E7565705}") = "Orleans.Security", "src\Orleans.Security\Orleans.Security.fsproj", "{444D48B9-3088-4853-BB8D-0657B16FDE6F}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orleans.Security.Tests", "test\Orleans.Security.Tests\Orleans.Security.Tests.csproj", "{F8B97F66-AAE3-4888-965A-C4CC0305BF3A}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Orleans.Security.Interoperability", "src\Orleans.Security.Interoperability\Orleans.Security.Interoperability.csproj", "{74A6CC8B-145D-4B46-95EE-F6EA687F7C60}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -81,10 +81,6 @@ Global
 		{CA982BF3-E940-4853-988B-A93046E92A36}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CA982BF3-E940-4853-988B-A93046E92A36}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CA982BF3-E940-4853-988B-A93046E92A36}.Release|Any CPU.Build.0 = Release|Any CPU
-		{AA4A0E97-1853-479C-8DFC-4F70F3B59B53}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{AA4A0E97-1853-479C-8DFC-4F70F3B59B53}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{AA4A0E97-1853-479C-8DFC-4F70F3B59B53}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{AA4A0E97-1853-479C-8DFC-4F70F3B59B53}.Release|Any CPU.Build.0 = Release|Any CPU
 		{41781993-78CB-4B43-B1B8-7B6C0E85AEF1}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{41781993-78CB-4B43-B1B8-7B6C0E85AEF1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{41781993-78CB-4B43-B1B8-7B6C0E85AEF1}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -189,13 +185,16 @@ Global
 		{F8B97F66-AAE3-4888-965A-C4CC0305BF3A}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F8B97F66-AAE3-4888-965A-C4CC0305BF3A}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F8B97F66-AAE3-4888-965A-C4CC0305BF3A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{74A6CC8B-145D-4B46-95EE-F6EA687F7C60}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{74A6CC8B-145D-4B46-95EE-F6EA687F7C60}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{74A6CC8B-145D-4B46-95EE-F6EA687F7C60}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{74A6CC8B-145D-4B46-95EE-F6EA687F7C60}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{CA982BF3-E940-4853-988B-A93046E92A36} = {B8259074-F610-4834-AAFB-A86316ADB663}
-		{AA4A0E97-1853-479C-8DFC-4F70F3B59B53} = {B8259074-F610-4834-AAFB-A86316ADB663}
 		{41781993-78CB-4B43-B1B8-7B6C0E85AEF1} = {E01BBEE2-F8CA-4DA9-A0E8-641CFD1B7AB2}
 		{B0D04904-4301-46AD-A76A-E1AA2ED6A1AD} = {B8259074-F610-4834-AAFB-A86316ADB663}
 		{4ECB642E-F0F6-41E7-93F5-642D1B5DBBCB} = {B8259074-F610-4834-AAFB-A86316ADB663}
@@ -225,6 +224,7 @@ Global
 		{E8E428A7-EECD-4291-B1F3-8066EA226647} = {5B25CCAC-F571-47A5-AB5F-CA7B877A74D7}
 		{444D48B9-3088-4853-BB8D-0657B16FDE6F} = {B8259074-F610-4834-AAFB-A86316ADB663}
 		{F8B97F66-AAE3-4888-965A-C4CC0305BF3A} = {E01BBEE2-F8CA-4DA9-A0E8-641CFD1B7AB2}
+		{74A6CC8B-145D-4B46-95EE-F6EA687F7C60} = {B8259074-F610-4834-AAFB-A86316ADB663}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {A230B4DE-036D-4400-ABD6-F39E51AA3F36}
