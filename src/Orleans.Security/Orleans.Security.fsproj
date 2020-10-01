@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="Extensions.fs" />
     <Compile Include="GlobalSettings.fs" />
     <Compile Include="ConfigurationKeys.fs" />
     <Compile Include="Caching\IAccessTokenCache.fs" />
@@ -30,6 +31,7 @@
     <Compile Include="AccessToken\AccessTokenVerifierWithCaching.fs" />
     <Compile Include="Configuration.fs" />
     <Compile Include="Authorization\AuthorizationAdmission.fs" />
+    <Compile Include="AccessTokenSetterFilter.fs" />
     <Compile Include="ServiceCollectionExtensions.fs" />
   </ItemGroup>
 
@@ -53,10 +55,6 @@
 
   <ItemGroup>
     <PackageReference Update="FSharp.Core" Version="4.7.2" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="Common\" />
   </ItemGroup>
 
 </Project>
