@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="LoggingEvents.fs" />
     <Compile Include="Extensions.fs" />
     <Compile Include="GlobalSettings.fs" />
     <Compile Include="ConfigurationKeys.fs" />
@@ -30,6 +31,7 @@
     <Compile Include="AccessToken\DefaultAccessTokenVerifier.fs" />
     <Compile Include="AccessToken\AccessTokenVerifierWithCaching.fs" />
     <Compile Include="Configuration.fs" />
+    <Compile Include="Authorization\IAuthorizationExecutor.fs" />
     <Compile Include="Authorization\AuthorizationAdmission.fs" />
     <Compile Include="AccessTokenSetterFilter.fs" />
     <Compile Include="ServiceCollectionExtensions.fs" />
