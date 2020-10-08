@@ -63,7 +63,7 @@ namespace Orleans.Security.Authorization
 
             if (!authorizationSucceeded)
             {
-                throw new OrleansClusterUnauthorizedAccessException("Access to the requested grain denied.");
+                throw new NotAuthorizedException("Access to the requested grain denied.");
             }
         }
     }

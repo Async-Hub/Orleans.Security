@@ -6,6 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Include="NotAuthorizedException.fs" />
     <Compile Include="LoggingEvents.fs" />
     <Compile Include="Extensions.fs" />
     <Compile Include="GlobalSettings.fs" />

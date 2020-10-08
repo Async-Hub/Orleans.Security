@@ -26,7 +26,7 @@ namespace Grains
             {
                 secret = await grain.TakeUserSecret(userId);
             }
-            catch (OrleansClusterUnauthorizedAccessException ex)
+            catch (NotAuthorizedException ex)
             {
                 _logger.LogError(ex, ex.Message);
                 throw new UnauthorizedAccessException(ex.Message);

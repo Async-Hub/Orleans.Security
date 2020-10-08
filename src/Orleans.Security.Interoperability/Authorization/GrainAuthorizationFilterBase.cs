@@ -53,7 +53,7 @@ namespace Orleans.Security.Authorization
                 return accessTokenVerificationResult.Claims;
             }
 
-            throw new OrleansClusterUnauthorizedAccessException("Access token verification failed.",
+            throw new NotAuthorizedException("Access token verification failed.",
                 new InvalidAccessTokenException(accessTokenVerificationResult.InvalidValidationMessage));
         }
 
