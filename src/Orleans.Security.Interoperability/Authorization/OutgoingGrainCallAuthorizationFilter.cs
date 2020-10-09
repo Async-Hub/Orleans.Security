@@ -14,6 +14,7 @@ namespace Orleans.Security.Authorization
             Logger = logger;
         }
 
+
         public async Task Invoke(IOutgoingGrainCallContext context)
         {
             if (AuthorizationAdmission.IsRequired(context))

@@ -4,11 +4,11 @@ open System.Collections.Generic
 open System.Security.Claims
 open System.Threading.Tasks
 
-type IAuthorizationExecutor =
+type internal IAuthorizationExecutor =
     abstract member AuthorizeAsync : 
         claims: IEnumerable<Claim> * 
         grainInterfaceAuthorizeData: IEnumerable<IAuthorizeData> * 
-        grainMethodAuthorizeData: IEnumerable<IAuthorizeData> -> Task
+        grainMethodAuthorizeData: IEnumerable<IAuthorizeData> -> Task<bool>
 
 //using System.Collections.Generic;
 //using System.Security.Claims;
