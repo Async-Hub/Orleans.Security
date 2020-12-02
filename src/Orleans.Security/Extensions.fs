@@ -12,7 +12,7 @@ module Extensions =
                     do! task |> Async.AwaitTask
                 with
                 | :? System.AggregateException as ex -> 
-                    if ex.InnerExceptions.Count = 1 then
+                    if (not (isNull ex.InnerExceptions)) && ex.InnerExceptions.Count = 1 then
                         raise ex.InnerException
             }
     
