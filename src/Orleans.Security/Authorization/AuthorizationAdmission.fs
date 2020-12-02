@@ -8,7 +8,7 @@ type internal AuthorizationAdmission() =
     static member IsRequired(grainCallContext: IGrainCallContext) =
         let allowAnonymousAttribute = grainCallContext.InterfaceMethod.GetCustomAttribute<AllowAnonymousAttribute>()
 
-        if allowAnonymousAttribute <> null then
+        if not (isNull allowAnonymousAttribute) then
             false
         else
             let grainAuthorizeData = 

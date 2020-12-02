@@ -40,7 +40,7 @@ let ``A user without appropriate permission can't read a document``
             } |> Async.StartAsTask :> Task
         
 
-        Assert.ThrowsAsync<OrleansClusterUnauthorizedAccessException>(fun () -> action) |> ignore
+        Assert.ThrowsAsync<NotAuthorizedException>(fun () -> action) |> ignore
     }
     
 [<Theory>]

@@ -44,7 +44,7 @@ namespace Orleans.Security.IntegrationTests
             }
 
             // Assert
-            Assert.ThrowsAsync<OrleansClusterUnauthorizedAccessException>(Action);
+            Assert.ThrowsAsync<NotAuthorizedException>(Action);
         }
 
         [Description(@"Authorization must be a success if the email successfully verified.")]
@@ -75,7 +75,7 @@ absent should fail.")]
 
             // Act
             // Assert
-            Assert.ThrowsAsync<OrleansClusterUnauthorizedAccessException>(async () =>
+            Assert.ThrowsAsync<NotAuthorizedException>(async () =>
             {
                 await grain.TakeForFemaleAdminPolicy("Some private data.");
             });
@@ -99,7 +99,7 @@ should be success.")]
         }
 
         [Description(@"Any call to a protected grain method without required credentials 
-should throw an OrleansClusterUnauthorizedAccessException.")]
+should throw an NotAuthorizedException.")]
         [Test]
         public void GrainCall_WithFemaleManagerPolicyWithoutRequiredClaims_ShouldThrowException()
         {
@@ -110,7 +110,7 @@ should throw an OrleansClusterUnauthorizedAccessException.")]
 
             // Act
             // Assert
-            Assert.ThrowsAsync<OrleansClusterUnauthorizedAccessException>(async () =>
+            Assert.ThrowsAsync<NotAuthorizedException>(async () =>
             {
                 await grain.TakeForFemaleManagerPolicyAndAdminRole("Some private data.");
             });
@@ -133,7 +133,7 @@ should throw an OrleansClusterUnauthorizedAccessException.")]
         }
 
         [Description(@"Any call to a protected grain method without required credentials
-should throw an OrleansClusterUnauthorizedAccessException.")]
+should throw an NotAuthorizedException.")]
         [Test]
         public void GrainCall_WithoutRequiredCredentials_ShouldThrowException()
         {
@@ -144,7 +144,7 @@ should throw an OrleansClusterUnauthorizedAccessException.")]
 
             // Act
             // Assert
-            Assert.ThrowsAsync<OrleansClusterUnauthorizedAccessException>(async () =>
+            Assert.ThrowsAsync<NotAuthorizedException>(async () =>
             {
                 await grain.TakePrivateData("Some private data.");
             });

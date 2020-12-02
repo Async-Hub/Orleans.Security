@@ -3,6 +3,8 @@
 open System.Reflection
 open System.Runtime.CompilerServices
 
+[<assembly: InternalsVisibleTo("Orleans.Security.Client")>]
+[<assembly: InternalsVisibleTo("Orleans.Security.Clustering")>]
 [<assembly: InternalsVisibleTo("Orleans.Security.Interoperability")>]
 [<assembly: InternalsVisibleTo("Orleans.Security.Tests")>]
 //TODO: Check why we need this.

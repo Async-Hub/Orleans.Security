@@ -47,13 +47,18 @@ namespace Orleans.Security.Authorization
                         grainCallContext.InterfaceMethod.ReflectedType.GetCustomAttributes<AuthorizeAttribute>();
                 }
 
-                await _authorizeHandler.AuthorizeAsync(accessTokenVerificationResult.Claims,
+                var authorizationSucceeded = await _authorizeHandler.AuthorizeAsync(accessTokenVerificationResult.Claims,
                     grainAuthorizeData, grainMethodAuthorizeData);
+
+                if (!authorizationSucceeded)
+                {
+                    throw new NotAuthorizedException("Access to the requested grain denied.");
+                }
 
                 return accessTokenVerificationResult.Claims;
             }
 
-            throw new OrleansClusterUnauthorizedAccessException("Access token verification failed.",
+            throw new NotAuthorizedException("Access token verification failed.",
                 new InvalidAccessTokenException(accessTokenVerificationResult.InvalidValidationMessage));
         }
 
