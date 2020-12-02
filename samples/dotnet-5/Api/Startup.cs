@@ -1,9 +1,13 @@
-﻿using IdentityModel.AspNetCore.AccessTokenValidation;
+﻿using Api.Orleans;
+using IdentityModel.AspNetCore.AccessTokenValidation;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
+using Orleans;
 using Orleans.Security;
 
 namespace Api
@@ -46,7 +50,18 @@ namespace Api
                 });
 
             services.AddControllers();
-            services.AddHttpContextAccessor();
+            services.TryAddSingleton<IHttpContextAccessor, HttpContextAccessor>();
+
+            var clusterIdentityServer4Info = new IdentityServer4Info("https://localhost:5001",
+                "Orleans", "@3x3g*RLez$TNU!_7!QW", "Orleans");
+            // ReSharper disable once RedundantTypeArgumentsOfMethod
+            services.AddSingleton<IClusterClient>(serviceProvider =>
+            {
+                OrleansClusterClientProvider.StartClientWithRetries(out var client,
+                    serviceProvider.GetService<IHttpContextAccessor>(), clusterIdentityServer4Info);
+
+                return client;
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

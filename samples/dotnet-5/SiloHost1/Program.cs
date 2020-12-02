@@ -35,8 +35,11 @@ namespace SiloHost1
 
         private static async Task<IHost> StartSilo()
         {
-            var identityServer4Info = new IdentityServer4Info("https://localhost:5001",
-                "Orleans", "@3x3g*RLez$TNU!_7!QW", "Orleans");
+            //var identityServer4Info = new IdentityServer4Info("https://localhost:5001",
+            //    "Orleans", "@3x3g*RLez$TNU!_7!QW", "Orleans");
+
+            var identityServer4Info = new IdentityServer4Info("http://localhost:5000",
+                "Api1", @"TFGB=?Gf3UvH+Uqfu_5p", "Orleans");
 
             var builder = new HostBuilder()
                 .UseEnvironment(Environments.Development)
