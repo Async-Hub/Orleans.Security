@@ -39,8 +39,8 @@ node_modules
 /samples/dotnet-5/Grains/obj
 /samples/dotnet-5/IdentityServer/bin/
 /samples/dotnet-5/IdentityServer/obj
-/samples/dotnet-5/GrainInterfaces/bin/
-/samples/dotnet-5/GrainInterfaces/obj
+/samples/dotnet-5/GrainsInterfaces/bin/
+/samples/dotnet-5/GrainsInterfaces/obj
 /samples/dotnet-5/SiloHost1/bin/
 /samples/dotnet-5/SiloHost1/obj
 /samples/dotnet-5/WebClient/bin/
@@ -53,8 +53,8 @@ node_modules
 /samples/dotnetcore-3-1/Grains/obj
 /samples/dotnetcore-3-1/IdentityServer/bin/
 /samples/dotnetcore-3-1/IdentityServer/obj
-/samples/dotnetcore-3-1/Interfaces/bin/
-/samples/dotnetcore-3-1/Interfaces/obj
+/samples/dotnetcore-3-1/GrainsInterfaces/bin/
+/samples/dotnetcore-3-1/GrainsInterfaces/obj
 /samples/dotnetcore-3-1/SiloHost1/bin/
 /samples/dotnetcore-3-1/SiloHost1/obj
 /samples/dotnetcore-3-1/WebClient/bin/
