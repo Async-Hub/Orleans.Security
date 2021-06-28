@@ -20,7 +20,8 @@ namespace WebClient
         // For more information on how to configure your application, visit https://go.microsoft.com/fwlink/?LinkID=398940
         public void ConfigureServices(IServiceCollection services)
         {
-            const string authority = "https://localhost:5001";
+            const string authority = "http://localhost:5000";
+            //const string authority = "https://localhost:5001";
 
             services.AddControllersWithViews();
             services.AddHttpClient();
@@ -40,6 +41,9 @@ namespace WebClient
                 .AddCookie()
                 .AddOpenIdConnect(options =>
                 {
+                    // For development environments only. Do not use for production.
+                    options.RequireHttpsMetadata = false;
+
                     options.GetClaimsFromUserInfoEndpoint = true;
                     options.SignInScheme = CookieAuthenticationDefaults.AuthenticationScheme;
 
@@ -47,7 +51,8 @@ namespace WebClient
                     options.ClientId = "WebClient";
                     options.ClientSecret = "pckJ#MH-9f9K?+^Bzx&4";
 
-                    options.ResponseType = "code id_token";
+                    options.ResponseType = "code";
+                    options.UsePkce = true;
                     options.SaveTokens = true;
 
                     options.Scope.Add("Api1");

@@ -42,7 +42,7 @@ let ``An authenticated user on an unauthenticated client can't invoke the grain 
                 let! value = simpleGrain.GetValue() |> Async.AwaitTask
             return value } |> Async.StartAsTask :> Task
 
-        Assert.ThrowsAsync<OrleansClusterUnauthorizedAccessException>(fun () -> action) |> ignore
+        Assert.ThrowsAsync<NotAuthorizedException>(fun () -> action) |> ignore
     }
     
 [<Fact>]
@@ -61,7 +61,7 @@ let ``An anonymous user can't invoke the grain method`` () =
                 let! value = simpleGrain.GetWithAuthenticatedUser(String.Empty) |> Async.AwaitTask
                 return value } |> Async.StartAsTask :> Task
 
-        Assert.ThrowsAsync<OrleansClusterUnauthorizedAccessException>(fun () -> action) |> ignore
+        Assert.ThrowsAsync<NotAuthorizedException>(fun () -> action) |> ignore
     }
 
 [<Fact>]

@@ -18,6 +18,10 @@ namespace Orleans.Security.IntegrationTests.Configuration
                     options.ServiceId = TestClusterOptions.ServiceId;
                 }).ConfigureServices(services =>
                 {
+                    services.AddSingleton<IAccessTokenProvider, FakeAccessTokenProvider>();
+                    services.AddSingleton(new IdentityServer4Info("authorityUrl",
+                        "clientScopeName", "clientSecret", "Orleans"));
+
                     services.AddOrleansClusteringAuthorization(
                         config =>
                         {
@@ -28,10 +32,6 @@ namespace Orleans.Security.IntegrationTests.Configuration
                             };
                         },
                         AuthorizationTestConfig.ConfigureServices);
-
-                    services.AddSingleton<IAccessTokenProvider, FakeAccessTokenProvider>();
-                    services.AddSingleton(new IdentityServer4Info("authorityUrl",
-                        "clientScopeName", "clientSecret", "Orleans"));
                 })
                 .UseLocalhostClustering()
                 .Build();

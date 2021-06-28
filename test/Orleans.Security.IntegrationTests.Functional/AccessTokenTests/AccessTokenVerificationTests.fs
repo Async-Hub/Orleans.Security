@@ -16,7 +16,7 @@ let ``Access token verification with valid scope should be passed``
 
         // Act
         let claims =
-            JwtSecurityTokenVerifier.Verify(accessTokenResponse.AccessToken, scope, IdSInstance.discoveryDocument)
+            JwtSecurityTokenVerifier.Verify accessTokenResponse.AccessToken scope IdSInstance.discoveryDocument
 
         // Assert
         Assert.True(claims |> Seq.exists (fun c -> c.Type = "aud" && c.Value = scope))
@@ -35,7 +35,7 @@ let ``Access token verification with invalid scope should be failed``
         let verify =
             fun () ->
                 JwtSecurityTokenVerifier.Verify
-                    (accessTokenResponse.AccessToken, scope, IdSInstance.discoveryDocument) |> ignore
+                    accessTokenResponse.AccessToken scope IdSInstance.discoveryDocument |> ignore
 
         // Assert
         Assert.Throws<SecurityTokenInvalidAudienceException>(verify) |> ignore

@@ -1,6 +1,6 @@
 # All files
 [*]
-guidelines = 80
+guidelines = 80, 120
 
 # C# or VB files
 [*.{cs,vb}]

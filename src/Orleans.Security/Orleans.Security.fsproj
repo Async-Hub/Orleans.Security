@@ -1,0 +1,65 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard2.0</TargetFramework>
+    <LangVersion>4.7</LangVersion>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Include="AssemblyInfo.fs" />
+    <Compile Include="Extensions.fs" />
+    <Compile Include="ConfigurationKeys.fs" />
+    <Compile Include="GrainWithClaimsPrincipal.fs" />
+    <Compile Include="NotAuthorizedException.fs" />
+    <Compile Include="LoggingEvents.fs" />
+    <Compile Include="GlobalSettings.fs" />
+    <Compile Include="Caching\IAccessTokenCache.fs" />
+    <Compile Include="Caching\AccessTokenCache.fs" />
+    <Compile Include="IAccessTokenProvider.fs" />
+    <Compile Include="DiscoveryDocumentShortInfo.fs" />
+    <Compile Include="IdentityServer4Info.fs" />
+    <Compile Include="AccessToken\InvalidAccessTokenException.fs" />
+    <Compile Include="AccessToken\JwtSecurityTokenVerifier.fs" />
+    <Compile Include="AccessToken\AccessTokenType.fs" />
+    <Compile Include="AccessToken\AccessTokenAnalyzer.fs" />
+    <Compile Include="AccessToken\AccessTokenIntrospectionResult.fs" />
+    <Compile Include="AccessToken\IAccessTokenIntrospectionService.fs" />
+    <Compile Include="AccessToken\IdS4DiscoveryDocumentProvider.fs" />
+    <Compile Include="AccessToken\AccessTokenIntrospectionServiceDefault.fs" />
+    <Compile Include="AccessToken\AccessTokenVerificationResult.fs" />
+    <Compile Include="AccessToken\AccessTokenVerifierOptions.fs" />
+    <Compile Include="AccessToken\IAccessTokenVerifier.fs" />
+    <Compile Include="AccessToken\AccessTokenVerifierWithTracing.fs" />
+    <Compile Include="AccessToken\DefaultAccessTokenVerifier.fs" />
+    <Compile Include="AccessToken\AccessTokenVerifierWithCaching.fs" />
+    <Compile Include="Configuration.fs" />
+    <Compile Include="Authorization\IAuthorizationExecutor.fs" />
+    <Compile Include="Authorization\AuthorizationAdmission.fs" />
+    <Compile Include="Authorization\AuthorizationExecutor.fs" />
+    <Compile Include="AccessTokenSetterFilter.fs" />
+    <Compile Include="ServiceCollectionExtensions.fs" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Orleans.Security.Authorization\Orleans.Security.Authorization.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <!--<PackageReference Include="IdentityModel" Version="[3.10.*,4.4)" />-->
+    <PackageReference Include="IdentityModel" Version="4.3.*" />
+    <PackageReference Include="JWT" Version="5.2.*" />
+    <PackageReference Include="Microsoft.CSharp" Version="4.6.*" />
+    <PackageReference Include="Microsoft.Extensions.Caching.Memory" Version="3.1.*" />
+    <PackageReference Include="Microsoft.Extensions.Http" Version="3.1.*" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" Version="[3.1.*,3.2)" />
+    <PackageReference Include="Microsoft.IdentityModel.Tokens" Version="5.5.*" />
+    <PackageReference Include="Microsoft.Orleans.Core.Abstractions" Version="[3.1.*,3.5)" />
+    <PackageReference Include="System.Dynamic.Runtime" Version="4.3.0" />
+    <PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="5.5.*" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Update="FSharp.Core" Version="5.0.0" />
+  </ItemGroup>
+
+</Project>
