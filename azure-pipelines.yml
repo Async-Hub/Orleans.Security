@@ -34,15 +34,16 @@ jobs:
     displayName: Install GitVersion
     inputs:
       versionSpec: '5.x'
+  - task: gitversion/execute@0
   # ...
   # Prepare analysis on SonarCloud
-  - task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
-    displayName: 'Prepare analysis on SonarCloud'
-    inputs:
-      SonarCloud: AsyncHubCloud
-      organization: 'async-hub'
-      projectKey: 'Async-Hub_Orleans.Security'
-      projectName: AsyncHub
+  # - task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
+  #   displayName: 'Prepare analysis on SonarCloud'
+  #   inputs:
+  #     SonarCloud: AsyncHubCloud
+  #     organization: 'async-hub'
+  #     projectKey: 'Async-Hub_Orleans.Security'
+  #     projectName: AsyncHub
   # ...
   # Build Solution
   - task: VSBuild@1
@@ -54,19 +55,19 @@ jobs:
       clean: true
   # ...
   # Run Code Analysis
-  - task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
-    displayName: 'Run Code Analysis'
+  # - task: SonarSource.sonarcloud.ce096e50-6155-4de8-8800-4221aaeed4a1.SonarCloudAnalyze@1
+  #   displayName: 'Run Code Analysis'
   # ...
   # Run Tests
-  - task: DotNetCoreCLI@2
-    displayName: 'Run Tests'
-    inputs:
-      command: test
-      projects: |
-         test/Orleans.Security.IntegrationTests/Orleans.Security.IntegrationTests.csproj
-         test/Orleans.Security.IntegrationTests.Functional/Orleans.Security.IntegrationTests.FSharp.fsproj
-         test/Orleans.Security.IntegrationTests.TokenVerification/Orleans.Security.IntegrationTests.TokenVerification.csproj
-         publishTestResults: true
+  # - task: DotNetCoreCLI@2
+  #   displayName: 'Run Tests'
+  #   inputs:
+  #     command: test
+  #     projects: |
+  #        test/Orleans.Security.IntegrationTests/Orleans.Security.IntegrationTests.csproj
+  #        test/Orleans.Security.IntegrationTests.Functional/Orleans.Security.IntegrationTests.FSharp.fsproj
+  #        test/Orleans.Security.IntegrationTests.TokenVerification/Orleans.Security.IntegrationTests.TokenVerification.csproj
+  #        publishTestResults: true
   # ...
   # Pass $(GitVersion.SemVer) to the next job
   - powershell: echo "##vso[task.setvariable variable=GitVersionSemVer;isOutput=true]$env:GITVERSION_SEMVER"
