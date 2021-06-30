@@ -35,6 +35,7 @@ jobs:
     inputs:
       versionSpec: '5.x'
   - task: gitversion/execute@0
+    displayName: Execute GitVersion
   # ...
   # Prepare analysis on SonarCloud
   # - task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
@@ -72,7 +73,10 @@ jobs:
   # Pass $(GitVersion.SemVer) to the next job
   - powershell: echo "##vso[task.setvariable variable=GitVersionSemVer;isOutput=true]$env:GITVERSION_SEMVER"
     name: gitVersionNumber
+  # ...
+  # Print SemVer Number
   - script: echo $(GitVersion.SemVer)
+  # ...
 #*******
 #For develop branch deploy to the CI feed (https://pkgs.dev.azure.com/asynchub/Orleans.Security/_packaging/Orleans.Security/nuget/v3/index.json).
 #*******
@@ -84,7 +88,11 @@ jobs:
       value: $[ dependencies.General_Build.outputs['gitVersionNumber.GitVersionSemVer'] ]
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
   steps:
-    # NuGet pack Orleans.Security.Build.sln
+  # ...
+  # Print SemVer Number
+  - script: echo $(GitVersion.SemVer)
+  # ...
+  # NuGet pack Orleans.Security.Build.sln
   - task: DotNetCoreCLI@2
     displayName: 'NuGet pack Orleans.Security.Build.sln'
     inputs:
@@ -111,8 +119,11 @@ jobs:
   - name: GitVersion.SemVer
     value: $[ dependencies.General_Build.outputs['gitVersionNumber.GitVersionSemVer'] ] 
   #condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'),contains(variables['Build.SourceBranch'], 'refs/heads/release')))
-  #condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
   steps:
+  # ...
+  # Print SemVer Number
+  - script: echo $(GitVersion.SemVer)
   # ...
   # NuGet pack Orleans.Security.Build.sln
   - task: DotNetCoreCLI@2
@@ -124,10 +135,11 @@ jobs:
       packagesToPack: Orleans.Security.Build.sln
   # ...
   # Push NuGet packs to www.nuget.org
-  # - task: NuGetCommand@2
-  #   displayName: 'NuGet push'
-  #   inputs:
-  #     command: push
-  #     nuGetFeedType: external
-  #     publishFeedCredentials: 'AsyncHub_NuGet'
-  #     versionEnvVar: <VersionVariableName>
+  - task: NuGetCommand@2
+    displayName: 'NuGet push'
+    inputs:
+      command: push
+      nuGetFeedType: external
+      publishFeedCredentials: 'AsyncHub_NuGet'
+      versionEnvVar: <VersionVariableName>
+  # ...
