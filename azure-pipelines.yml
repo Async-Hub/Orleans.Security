@@ -4,8 +4,12 @@
 name: $(date:yyyyMMdd)$(rev:.r)
 
 trigger:
-- develop
-- release/*
+  branches:
+    exclude:
+    - master
+
+variables:
+  shouldDeploy: false
 
 pool:
   name: Hosted Windows 2019 with VS2019
@@ -30,11 +34,12 @@ jobs:
       feedsToUse: config
   # ...
   # Version with GitVersion
-  - task: gittools.gitversion.gitversion-task.GitVersion@5
-    displayName: GitVersion
+  - task: gitversion/setup@0
+    displayName: Install GitVersion
     inputs:
-      updateAssemblyInfo: true
-      preferBundledVersion: false
+      versionSpec: '5.x'
+  - task: gitversion/execute@0
+    displayName: Execute GitVersion
   # ...
   # Prepare analysis on SonarCloud
   - task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
@@ -64,15 +69,20 @@ jobs:
     inputs:
       command: test
       projects: |
-         test/Orleans.Security.IntegrationTests/Orleans.Security.IntegrationTests.csproj
-         test/Orleans.Security.IntegrationTests.Functional/Orleans.Security.IntegrationTests.FSharp.fsproj
-         test/Orleans.Security.IntegrationTests.TokenVerification/Orleans.Security.IntegrationTests.TokenVerification.csproj
-         publishTestResults: true
+        test/Orleans.Security.IntegrationTests/Orleans.Security.IntegrationTests.csproj
+        test/Orleans.Security.IntegrationTests.Functional/Orleans.Security.IntegrationTests.FSharp.fsproj
+        test/Orleans.Security.IntegrationTests.TokenVerification/Orleans.Security.IntegrationTests.TokenVerification.csproj
+        publishTestResults: true
   # ...
-  # Pass $(GitVersion.NuGetVersion) to the next job
-  - powershell: echo "##vso[task.setvariable variable=GitVersionNuGetVersion;isOutput=true]$env:GITVERSION_NUGETVERSION"
+  # Pass $(GitVersion.SemVer) to the next job
+  - powershell: echo "##vso[task.setvariable variable=GitVersionSemVer;isOutput=true]$env:GITVERSION_SEMVER"
+    displayName: 'Pass $(GitVersion.SemVer) to the next job'
     name: gitVersionNumber
-  - script: echo $(gitVersionNumber.GitVersionNuGetVersion)
+  # ...
+  # Print SemVer Number
+  - script: echo $(GitVersion.SemVer)
+    displayName: 'Print SemVer Number'
+  # ...
 #*******
 #For develop branch deploy to the CI feed (https://pkgs.dev.azure.com/asynchub/Orleans.Security/_packaging/Orleans.Security/nuget/v3/index.json).
 #*******
@@ -80,17 +90,22 @@ jobs:
   dependsOn: General_Build
   variables:
     - group: Default
-    - name: GitVersion.NuGetVersion
-      value: $[ dependencies.General_Build.outputs['gitVersionNumber.GitVersionNuGetVersion'] ]
+    - name: GitVersion.SemVer
+      value: $[ dependencies.General_Build.outputs['gitVersionNumber.GitVersionSemVer'] ]
   condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/develop'))
   steps:
-    # NuGet pack Orleans.Security.Build.sln
+  # ...
+  # Print SemVer Number
+  - script: echo $(GitVersion.SemVer)
+    displayName: 'Print SemVer Number'
+  # ...
+  # NuGet pack Orleans.Security.Build.sln
   - task: DotNetCoreCLI@2
     displayName: 'NuGet pack Orleans.Security.Build.sln'
     inputs:
       command: pack
       versioningScheme: byEnvVar
-      versionEnvVar: GitVersion.NuGetVersion
+      versionEnvVar: GitVersion.SemVer
       packagesToPack: Orleans.Security.Build.sln
   # ...
   # Push NuGet packs to Azure Artifacts feed
@@ -108,11 +123,15 @@ jobs:
   dependsOn: General_Build
   variables:
   - group: Default
-  - name: GitVersion.NuGetVersion
-    value: $[ dependencies.General_Build.outputs['gitVersionNumber.GitVersionNuGetVersion'] ] 
+  - name: GitVersion.SemVer
+    value: $[ dependencies.General_Build.outputs['gitVersionNumber.GitVersionSemVer'] ] 
   #condition: and(succeeded(), or(eq(variables['Build.SourceBranch'], 'refs/heads/master'),contains(variables['Build.SourceBranch'], 'refs/heads/release')))
-  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'))
+  condition: and(succeeded(), eq(variables['Build.SourceBranch'], 'refs/heads/master'), eq(variables['variables.shouldDeploy'], true))
   steps:
+  # ...
+  # Print SemVer Number
+  - script: echo $(GitVersion.SemVer)
+    displayName: 'Print SemVer Number'
   # ...
   # NuGet pack Orleans.Security.Build.sln
   - task: DotNetCoreCLI@2
@@ -120,7 +139,7 @@ jobs:
     inputs:
       command: pack
       versioningScheme: byEnvVar
-      versionEnvVar: GitVersion.NuGetVersion
+      versionEnvVar: GitVersion.SemVer
       packagesToPack: Orleans.Security.Build.sln
   # ...
   # Push NuGet packs to www.nuget.org
@@ -131,3 +150,4 @@ jobs:
       nuGetFeedType: external
       publishFeedCredentials: 'AsyncHub_NuGet'
       versionEnvVar: <VersionVariableName>
+  # ...
