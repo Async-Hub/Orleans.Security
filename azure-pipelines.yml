@@ -37,13 +37,13 @@ jobs:
     displayName: Execute GitVersion
   # ...
   # Prepare analysis on SonarCloud
-   - task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
-     displayName: 'Prepare analysis on SonarCloud'
-     inputs:
-       SonarCloud: AsyncHubCloud
-       organization: 'async-hub'
-       projectKey: 'Async-Hub_Orleans.Security'
-       projectName: AsyncHub
+  - task: SonarSource.sonarcloud.14d9cde6-c1da-4d55-aa01-2965cd301255.SonarCloudPrepare@1
+    displayName: 'Prepare analysis on SonarCloud'
+    inputs:
+      SonarCloud: AsyncHubCloud
+      organization: 'async-hub'
+      projectKey: 'Async-Hub_Orleans.Security'
+      projectName: AsyncHub
   # ...
   # Build Solution
   - task: VSBuild@1
