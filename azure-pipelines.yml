@@ -71,10 +71,12 @@ jobs:
   # ...
   # Pass $(GitVersion.SemVer) to the next job
   - powershell: echo "##vso[task.setvariable variable=GitVersionSemVer;isOutput=true]$env:GITVERSION_SEMVER"
+    displayName: 'Pass $(GitVersion.SemVer) to the next job'
     name: gitVersionNumber
   # ...
   # Print SemVer Number
   - script: echo $(GitVersion.SemVer)
+    displayName 'Print SemVer Number'
   # ...
 #*******
 #For develop branch deploy to the CI feed (https://pkgs.dev.azure.com/asynchub/Orleans.Security/_packaging/Orleans.Security/nuget/v3/index.json).
@@ -90,6 +92,7 @@ jobs:
   # ...
   # Print SemVer Number
   - script: echo $(GitVersion.SemVer)
+    displayName 'Print SemVer Number'
   # ...
   # NuGet pack Orleans.Security.Build.sln
   - task: DotNetCoreCLI@2
@@ -123,6 +126,7 @@ jobs:
   # ...
   # Print SemVer Number
   - script: echo $(GitVersion.SemVer)
+    displayName 'Print SemVer Number'
   # ...
   # NuGet pack Orleans.Security.Build.sln
   - task: DotNetCoreCLI@2
