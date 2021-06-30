@@ -3,6 +3,11 @@
 
 name: $(date:yyyyMMdd)$(rev:.r)
 
+trigger:
+  branches:
+    exclude:
+    - master
+
 variables:
   shouldDeploy: true
 
