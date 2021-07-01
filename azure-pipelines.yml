@@ -9,7 +9,7 @@ trigger:
     - master
 
 variables:
-  shouldDeploy: false
+  shouldDeploy: true
 
 pool:
   name: Hosted Windows 2019 with VS2019
